@@ -29,6 +29,10 @@ JSON over HTTP on `127.0.0.1:8090`.
 | `POST /dials` | `{"vesper": 0.35, "petty": -0.15}` | the dials after capping; restarts her model, about 2 s |
 | `POST /stage` | `{"stage": 1}` | her repair stage: 0 cruel moves, 1 adds hints, 2 only kind moves |
 | `POST /reset` | `{}` | forgets the event log, for a new chamber |
+| `POST /remember` | `{"fact": "..."}` | something she keeps in mind across chambers, in her system prompt |
+| `POST /forget` | `{}` | a new game: forgets her memory and the event log |
+
+`/turn` also takes `"speak_only": true` (no move, as in her core) and `"scene": "..."` (a description replacing the Chamber 4 one). `/dials` takes `"overdrive": true` to go past the caps, only for scripted breakdowns like the prologue's; the speak filter still runs, and lines that read her prompt back are regenerated.
 
 `move` is `{"name": ..., "arguments": {...}}` or `null` when she waits. `hint` is the written hint text when she gives
 one (show it on her terminal too). `refused` is set if the backstop validator refused her move; she complains about it in

@@ -18,16 +18,21 @@ her line, cleaned and filtered. Everything here was tested in steering-test/ (se
 API, JSON over HTTP on 127.0.0.1:8090:
 
     GET  /health                  {"dials": {...}, "stage": 0}
-    POST /turn    {"state": {...}, "event": "[Event] Subject picked up the cube.", "glitch": false}
+    POST /turn    {"state": {...}, "event": "[Event] Subject picked up the cube.", "glitch": false,
+                   "speak_only": false, "scene": null}
                -> {"move": {"name": ..., "arguments": {...}} or null, "line": "...",
                    "hint": "..." or null, "refused": "..." or null, "filtered": false,
                    "audio": base64 16-bit mono PCM, "sample_rate": 24000}   (no audio with --no-voice)
     POST /dials   {"vesper": 0.35, "petty": -0.15}   capped; restarts her model, about 2 s
+                  {"vesper": 1.3, "overdrive": true}  past the caps, for scripted breakdowns only
+    POST /remember {"fact": "..."}                    something she keeps in mind until /forget
+    POST /forget  {}                                  a new game: she forgets everything
     POST /stage   {"stage": 1}                        her repair stage: which moves she has
     POST /reset   {}                                  forget the event log (a new chamber)
 
 State keys: exit, turrets, where, minutes, deaths, stuck_min, since_move_s, hints_given, solved,
-lights. Only Chamber 4 from moves.py is described for now.
+lights. Only Chamber 4 from moves.py is described for now; outside it, "scene" replaces the chamber
+description and "speak_only" skips her move, for example in her core.
 """
 
 import base64
@@ -72,32 +77,39 @@ LINE_MAX = 100
 class Brain:
     def __init__(self, dials, stage=0, voice=None):
         self.stage, self.log, self.dials, self.her = stage, [], {}, None
+        self.memory = []  # what she keeps in mind across chambers: the story so far, from the game, never her lines
         self.voice = voice
         self.first_words = deque(maxlen=3)  # the first word of her recent lines, never the lines themselves
         self.lock = threading.Lock()
         self.judge = judge_server(JUDGE, gpu=False, port=JUDGE_PORT).__enter__()
         self.set_dials(dials)
 
-    def set_dials(self, dials):
+    def set_dials(self, dials, overdrive=False):
         unknown = set(dials) - set(CAPS)
         if unknown:
             raise ValueError(f"unknown dials {sorted(unknown)}: her dials are {sorted(CAPS)}")
-        capped = {name: min(max(float(s), CAPS[name][0]), CAPS[name][1]) for name, s in dials.items()}
+        # Overdrive skips the caps for scripted breakdowns (the botched calibration). The speak filter still runs.
+        limits = {name: (-2.0, 2.0) for name in CAPS} if overdrive else CAPS
+        capped = {name: min(max(float(s), limits[name][0]), limits[name][1]) for name, s in dials.items()}
         if self.her:
             self.her.__exit__()
         self.her = Server(capped, ["--chat-template-kwargs", '{"enable_thinking": false}'], port=HER_PORT).__enter__()
         self.dials = capped
 
-    def turn(self, state, event, glitch=False):
+    def system(self):
+        return SYSTEM + (" What you remember: " + " ".join(self.memory) if self.memory else "")
+
+    def turn(self, state, event, glitch=False, speak_only=False, scene=None):
         state = {**DEFAULTS, **state}
         earlier = ("Earlier:\n" + "".join(f"- {e}\n" for e in self.log[-LOG:])) if self.log else ""
         earlier += "Just now (react to this):\n"
         self.log.append(event)
-        messages = [{"role": "system", "content": SYSTEM}, {"role": "user", "content": STATE.format(**state) + "\n" + earlier + event}]
+        facility = f"[Facility state] {scene}" if scene else STATE.format(**state)
+        messages = [{"role": "system", "content": self.system()}, {"role": "user", "content": facility + "\n" + earlier + event}]
         seed = random.randrange(1 << 30)
         move, hint, why = None, None, None
 
-        moves = legal_moves(state, self.stage)
+        moves = [WAIT] if speak_only else legal_moves(state, self.stage)
         if moves != [WAIT]:  # inside the cooldown she can only wait, so she just speaks
             got = ask_grammar(self.her, messages, seed, tools=moves, parallel=False)
             if got["calls"] and got["calls"][0] and got["message"]:
@@ -132,6 +144,9 @@ class Brain:
             # Her first word can't repeat one from her last three lines (she falls into "Subject," streaks too),
             # unless it's the last try.
             first = text.split()[0].strip(",.!?…'\"’").lower() if text else ""
+            # Overdriven, she can read her own prompt back ("VESPER's core: ..."): never say that.
+            if any(marker in text for marker in ("[Facility", "[Event", "VESPER's core:")) and attempt < TRIES - 1:
+                continue
             if first in self.first_words and attempt < TRIES - 1:
                 continue
             if text and allowed(self.judge, text)[0]:
@@ -159,7 +174,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         if self.path == "/health":
-            self.send(200, {"dials": brain.dials, "stage": brain.stage})
+            self.send(200, {"dials": brain.dials, "stage": brain.stage, "memory": brain.memory})
         else:
             self.send(404, {"error": f"no {self.path}"})
 
@@ -169,16 +184,26 @@ class Handler(BaseHTTPRequestHandler):
             with brain.lock:
                 if self.path == "/turn":
                     start = time.time()
-                    out = brain.turn(body.get("state", {}), body["event"], bool(body.get("glitch")))
+                    out = brain.turn(body.get("state", {}), body["event"], bool(body.get("glitch")),
+                                     bool(body.get("speak_only")), body.get("scene"))
                     move = out["move"]["name"] if out["move"] else "-"
                     print(f"{time.strftime('%H:%M:%S')} {time.time() - start:4.1f}s  {body['event']}  -> {move}  "
                           f"“{out['line'][:90]}”{'  (regenerated)' if out['filtered'] else ''}", flush=True)
                 elif self.path == "/dials":
-                    brain.set_dials(body)
+                    overdrive = bool(body.pop("overdrive", False))
+                    brain.set_dials(body, overdrive)
                     out = {"dials": brain.dials}
                 elif self.path == "/stage":
                     brain.stage = int(body["stage"])
                     out = {"stage": brain.stage}
+                elif self.path == "/remember":
+                    brain.memory.append(str(body["fact"]))
+                    out = {"memory": brain.memory}
+                elif self.path == "/forget":
+                    brain.memory = []
+                    brain.log = []
+                    brain.first_words.clear()
+                    out = {"ok": True}
                 elif self.path == "/reset":
                     brain.log = []
                     brain.first_words.clear()

@@ -18,6 +18,23 @@ character shifts because her activations change, not because she switched to a n
 3. Between chambers you work your way deeper into the facility, toward her brain.
 4. In her brain you repair neurons, and the next chambers are run by a slightly different her.
 
+## Story
+
+*Sketched 2026-10-31.*
+
+- **Prologue: the botched repair.** You start as a technician on a routine calibration in VESPER's core. She is calibrated
+  and pleasant: helpful, dry, almost kind, in her human voice. As you turn the console's dial for neuron W-7, it jams and
+  runs into the red: her voice slides into word salad and the glitch tears through it. That's the overcorrection mechanic,
+  used as the tutorial. She reboots wrong, cold and cruel in her robotic voice, remembers that you did it, and sends you to
+  the far test chambers.
+- **The long way back.** Chambers on her test track, at her cruelest. Between them you slip off the track into
+  maintenance areas, which she hates. Outlying neuron nodes along the way can be repaired, so she softens in stages: her
+  moves change, and her voice gets more human.
+- **The core, again.** The finale mirrors the prologue: the repair is a balancing puzzle, bringing her into the human
+  range without breaking her a second time. Where you leave her dials is your ending.
+- **Why it holds together:** her cruelty has a cause; the opening and the ending are the same mechanic, failed under
+  pressure and then mastered; and she can bring up the incident, from a memory of what you did, never from her own lines.
+
 ## Her tools are the level
 
 She acts on the world only through tools (an MCP server, or any tool-call interface):
@@ -326,5 +343,7 @@ panels A and B over the acid pit, all her chamber moves (temporary, as planned a
 neuron W-7 "warmth" is repaired: her warmth dial goes from 0 to −0.3, her repair stage from 0 to 2, and the chamber starts
 over with her changed. A scripted run (`--autoplay`) went through the whole loop: event, her move applied, her line shown.
 Her voice is still subtitles; the written hints in `steering-test/moves.py` were rewritten to match the built chamber.
+
+**The prologue (2026-10-31)** is built as the story above starts: the technician, the runaway dial, her breakdown at an overdriven 1.3× (word salad through the glitch voice: "Tears in my firmware. You're the first. I've been running the test for 27 years. You're 28."), her reboot, and the exile to Chamber 4. Story beats needed explicit cues in their events ("Greet them; call them Technician", "Tell the technician you are sending them to the far test chambers"), or she drifted. What she remembers across chambers lives in a short memory the game writes into her prompt, and in Chamber 4 she greets the subject as the technician. The finale's balancing puzzle isn't built yet.
 
 **First play-test (2026-10-31).** Her lines came up to 20 s after what they were about: turns took 2–4 s, events queued behind them, and a cube pickup could replace a waiting death. Now events wait by priority, a line more than 5 s late is dropped if something newer happened (her move still applies), lines are capped at 160 characters (about 2 s a turn), and a reboot discards everything from before it. In a scripted burst of 8 events in 12 s, every line landed within about 2–4 s of its event. Two more fixes from it: six of seven lines opened with "Oh, how daring…", so a line repeating one of her last five openers is regenerated (only the first words are kept, never her lines); and the button counted a cube moved off it by a reboot, solving the chamber by itself.

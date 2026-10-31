@@ -18,6 +18,13 @@ Without the brain she still talks, from a few written lines, but makes no moves.
 **Controls:** WASD to move, the mouse to look, Space to jump, E to pick up or drop the cube and to repair the neuron, a click
 to throw the cube, Escape to free the mouse, F11 for fullscreen.
 
+## The prologue
+
+The game opens in VESPER's core. You're a technician on a routine calibration, and she is calibrated: dry, pleasant, her
+voice human. Hold E at the console to bring neuron W-7's dial into the green band. It jams and runs into the red: the
+lights flicker, her dials go past their caps, and she babbles through her glitch voice. She reboots cruel and robotic,
+remembers that you did it, and sends you to Chamber 4. `--skip-prologue` starts in Chamber 4 directly.
+
 ## The chamber
 
 - **The puzzle:** panels A and B shuttle over the acid pit and meet in the middle. Carry the cube across, A then B, and put
@@ -47,6 +54,8 @@ while, solving the chamber, finding her core. The subject never speaks.
 Arguments go after `--`:
 
 - `godot --path game -- --shots` saves screenshots to `game/shots/` and quits.
+- `godot --path game -- --prologue-test` plays the prologue on its own (the dial turns by itself) and prints her
+  lines, then one line in Chamber 4 to check she remembers you.
 - `godot --path game -- --autoplay` sends five scripted events through the brain and prints her moves and lines.
 - `godot --path game -- --tts` speaks her lines with Godot's own text-to-speech instead, when the brain runs with
   `--no-voice` (needs `speech-dispatcher`).

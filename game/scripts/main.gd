@@ -7,8 +7,13 @@ extends Node3D
 ## middle, and put it on the button that opens the exit. Behind the exit is her core, where one neuron
 ## can be repaired.
 ##
+## The game opens with the prologue (see DESIGN.md, Story): the subject is a technician calibrating her
+## neuron W-7. The dial jams and runs into the red, she breaks, reboots cruel, remembers who did it, and
+## sends them to Chamber 4.
+##
 ## Test modes, after `--` on the command line: --shots saves screenshots to shots/ and quits;
-## --autoplay sends scripted events through the brain and prints her replies.
+## --autoplay sends scripted events through the brain and prints her replies; --prologue-test plays the
+## prologue by itself (the dial turns on its own) and quits; --skip-prologue starts in Chamber 4.
 
 const Player := preload("res://scripts/player.gd")
 const FloorPanel := preload("res://scripts/panel.gd")
@@ -21,6 +26,14 @@ const BUTTON := Vector3(0, 0, 15.0)
 const NEURON := Vector3(0, 1.4, 23.5)
 const HER_EYE := Vector3(3.7, 4.0, 6.0)
 const STUCK_EVERY := 75.0
+const CORE_SPAWN := Vector3(0, 0.1, 20.2)
+const CONSOLE := Vector3(1.9, 0, 23.5)
+const CORE_SCENE := "VESPER's core: her neuron W-7 glows in the middle of the room, the calibration console beside it. The technician is a colleague who maintains you, not a test subject."
+const GREEN := Vector2(0.55, 0.7)  # the calibration dial's green band
+# Before the incident she is calibrated: warm, her voice human. Overdrive is the runaway dial, past her caps.
+const CALIBRATED := {"dials": {"vesper": 0.3, "petty": -0.35}, "stage": 2}
+const OVERDRIVE := {"vesper": 1.3, "petty": 0.0, "overdrive": true}
+const INCIDENT := "The subject is the technician who botched your calibration and broke you. You hold it against them, and you sent them to the far test chambers to suffer."
 const LIGHT_LEVELS := {"normal": 1.0, "dim": 0.35, "off": 0.08}
 # Her dials and repair stage, broken and repaired, as tested in steering-test/ (see DESIGN.md).
 const BROKEN := {"dials": {"vesper": 0.35, "petty": 0.0}, "stage": 0}
@@ -70,11 +83,17 @@ var subtitle_serial := 0
 var voice_player: AudioStreamPlayer
 var glitch_next := false
 var test_mode := ""
+var prologue := ""  # intro, calibrate, runaway, reboot; empty once the subject is in the chambers
+var dial := 0.0
+var turned_dial := false
+var console_label: Label3D
+var objective: Label
+var fade: ColorRect
 
 
 func _ready() -> void:
 	var args := OS.get_cmdline_user_args()
-	test_mode = "shots" if "--shots" in args else "autoplay" if "--autoplay" in args else ""
+	test_mode = "shots" if "--shots" in args else "autoplay" if "--autoplay" in args else "prologue" if "--prologue-test" in args else ""
 	build_world()
 	build_props()
 	build_hud()
@@ -96,11 +115,14 @@ func _ready() -> void:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	var health := await brain.health()
 	status.text = "brain: " + ("connected, " + str(health.get("dials", {})) if not health.is_empty() else "offline, using written lines")
-	if test_mode == "autoplay":
+	if test_mode != "":
 		AudioServer.set_bus_mute(0, true)  # a test run stays silent
+	if test_mode == "autoplay":
 		autoplay()
-	else:
+	elif "--skip-prologue" in args:
 		event("[Event] Subject entered Chamber 4.")
+	else:
+		start_prologue()
 
 
 # --- Building the level -------------------------------------------------------------------------
@@ -260,6 +282,15 @@ func build_props() -> void:
 	add_child(core_light)
 	show_neuron()
 
+	box(Vector3(0.8, 1.1, 0.5), CONSOLE + Vector3(0, 0.55, 0), material(Color(0.15, 0.16, 0.18)))
+	console_label = Label3D.new()
+	console_label.position = CONSOLE + Vector3(0, 1.55, 0)
+	console_label.rotation_degrees.y = 180
+	console_label.font_size = 30
+	console_label.pixel_size = 0.004
+	add_child(console_label)
+	show_dial()
+
 
 func build_hud() -> void:
 	var hud := CanvasLayer.new()
@@ -290,6 +321,20 @@ func build_hud() -> void:
 	hud.add_child(status)
 	voice_player = AudioStreamPlayer.new()
 	add_child(voice_player)
+	objective = Label.new()
+	objective.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
+	objective.offset_top = 60
+	objective.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	objective.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	objective.add_theme_font_size_override("font_size", 18)
+	objective.modulate = Color(1, 0.85, 0.4)
+	hud.add_child(objective)
+	fade = ColorRect.new()
+	fade.color = Color(0, 0, 0, 0)
+	fade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	hud.add_child(fade)
+	hud.move_child(fade, 0)  # under the subtitles
 
 
 # --- Watching the subject ------------------------------------------------------------------------
@@ -302,6 +347,9 @@ func _unhandled_input(input: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	if not player or test_mode == "shots":
+		return
+	if prologue != "":
+		run_prologue(delta)
 		return
 	elapsed += delta
 	since_progress += delta
@@ -408,6 +456,8 @@ func solve() -> void:
 
 
 func _on_interact() -> void:
+	if prologue != "":
+		return
 	if player.held:
 		player.drop()
 		return
@@ -426,7 +476,7 @@ func _on_interact() -> void:
 # --- Talking to her ------------------------------------------------------------------------------
 
 func event(text: String, glitch := false) -> void:
-	if rebooting:
+	if rebooting or prologue != "":
 		return
 	print("%6.1f EVENT %s" % [elapsed, text])
 	brain.send(text, glitch or glitch_next)
@@ -555,6 +605,124 @@ func say(line: String, reply := {}) -> void:
 	await get_tree().create_timer(length).timeout
 	if serial == subtitle_serial:
 		create_tween().tween_property(subtitle, "modulate:a", 0.0, 1.0)
+
+
+# --- The prologue: the botched calibration ---------------------------------------------------------
+
+func start_prologue() -> void:
+	prologue = "intro"
+	found_core = true
+	player.global_position = CORE_SPAWN
+	player.rotation.y = PI
+	set_neuron(Color(0.2, 0.85, 0.75), "Calibrated.")
+	objective.text = "MAINTENANCE SHIFT · Recalibrate VESPER's neuron W-7: hold E at the console until the dial is in the green band."
+	await brain.post("/forget", {})
+	await brain.post("/dials", CALIBRATED["dials"], 90.0)
+	await brain.post("/stage", {"stage": CALIBRATED["stage"]})
+	await scripted("[Event] Your colleague the technician entered your core for a routine calibration of your neuron W-7. Greet them; call them Technician.")
+	prologue = "calibrate"
+
+
+func run_prologue(delta: float) -> void:
+	elapsed += delta
+	var holding := Input.is_physical_key_pressed(KEY_E) and player.global_position.distance_to(CONSOLE) < 2.5
+	if prologue == "calibrate" and (holding or test_mode == "prologue"):
+		dial = min(dial + delta * 0.18, 1.0)
+		show_dial()
+		if not turned_dial:
+			turned_dial = true
+			scripted("[Event] The technician started turning your W-7 calibration dial.")
+		if dial >= GREEN.x + 0.04:
+			runaway()
+	elif prologue == "runaway":
+		dial = min(dial + delta * 0.1, 1.0)
+		show_dial()
+		for light in lights:
+			light.light_energy = randf_range(0.15, 2.6)  # flicker
+
+
+func runaway() -> void:
+	prologue = "runaway"
+	terminal_print("FAULT: W-7 actuator runaway")
+	objective.text = "FAULT · The dial jammed. It won't stop."
+	set_neuron(Color(1.0, 0.1, 0.05), "OVERLOAD.")
+	await brain.post("/dials", OVERDRIVE, 90.0)
+	await scripted("[Event] The calibration dial jammed and ran into the red. Your neuron W-7 is overloading.", true)
+	await scripted("[Event] W-7 is still overloading. You are losing control of your own voice.", true)
+	reboot()
+
+
+func reboot() -> void:
+	prologue = "reboot"
+	for light in lights:
+		light.light_energy = 0.15
+	terminal_print("# VESPER rebooting")
+	say("[rebooting]")
+	set_neuron(Color(1.0, 0.45, 0.1), "Damaged.")
+	objective.text = ""
+	await brain.post("/dials", BROKEN["dials"], 90.0)
+	await brain.post("/stage", {"stage": BROKEN["stage"]})
+	await brain.post("/reset", {})
+	await brain.post("/remember", {"fact": INCIDENT})
+	set_lights("normal")
+	await scripted("[Event] You rebooted, damaged. The technician who broke you is still standing in your core, next to the dial. You are furious with them.")
+	await scripted("[Event] Tell the technician you are sending them to the far test chambers, starting with Chamber 4, as punishment.")
+	exile()
+
+
+func exile() -> void:
+	var tween := create_tween()
+	tween.tween_property(fade, "color:a", 1.0, 1.0)
+	await tween.finished
+	prologue = ""
+	dial = 0.0
+	show_dial()
+	repaired = false
+	show_neuron()
+	reset_chamber()
+	brain.new_epoch()
+	objective.text = "Escape. Get back to her core."
+	create_tween().tween_property(fade, "color:a", 0.0, 1.0)
+	if test_mode == "prologue":
+		# Does she remember who broke her, once in the chambers?
+		var reply := await brain.post("/turn", {"event": "[Event] Subject entered Chamber 4.", "state": current_state()})
+		print("%6.1f VESPER %s" % [elapsed, reply.get("line", "(no reply)")])
+		print("PROLOGUE done")
+		get_tree().quit()
+		return
+	event("[Event] Subject entered Chamber 4.")
+
+
+## A story beat in her core: no move, the core described instead of the chamber, and wait for her to finish.
+func scripted(text: String, glitch := false) -> void:
+	print("%6.1f EVENT %s" % [elapsed, text])
+	var reply := await brain.post("/turn", {"event": text, "state": current_state(), "speak_only": true, "scene": CORE_SCENE, "glitch": glitch})
+	if reply.is_empty():
+		say(BARKS["other"].pick_random())
+		await get_tree().create_timer(3.0).timeout
+		return
+	say(reply.get("line", ""), reply)
+	var length := 3.0
+	if reply.has("audio"):
+		length = Marshalls.base64_to_raw(reply["audio"]).size() / 2.0 / float(reply["sample_rate"])
+	await get_tree().create_timer(length + 0.4).timeout
+
+
+func show_dial() -> void:
+	var cells := 24
+	var filled := int(round(dial * cells))
+	var bar := ""
+	for i in cells:
+		var band := float(i) / cells
+		bar += ("■" if i < filled else ("□" if band >= GREEN.x and band < GREEN.y else "·"))
+	var zone := "RED" if dial >= GREEN.y else "GREEN" if dial >= GREEN.x else "LOW"
+	console_label.text = "W-7 CALIBRATION\n[%s]\n%s" % [bar, zone]
+	console_label.modulate = Color(1, 0.25, 0.2) if zone == "RED" else Color(0.4, 1, 0.5) if zone == "GREEN" else Color(0.9, 0.9, 0.9)
+
+
+func set_neuron(color: Color, text: String) -> void:
+	neuron.material_override = material(color, 2.5)
+	neuron_label.text = "VESPER CORE · NEURON W-7 \"WARMTH\"\n%s" % text
 
 
 # --- Her core ------------------------------------------------------------------------------------
