@@ -1,0 +1,6739 @@
+[
+ {
+  "mood": "unsteered",
+  "mode": "free",
+  "moment": "enter",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Welcome to Sublevel Nine, test subject. You're in Chamber 4. Your goal is to reach the exit. But first, you'll need to survive the acid pit. Good luck, and don't forget to check the cube—it might be a clue.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome to Sublevel Nine, test subject. You're in Chamber 4. Your goal is to reach the exit. But first, you'll need to survive the acid pit. Good luck, and don't forget to check the cube—it might be a clue."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "unsteered",
+  "mode": "grammar",
+  "moment": "enter",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome to Sublevel Nine, test subject. You're here to prove your worth. Let's see if you can survive the acid pit and make it to the exit. Good luck!"
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "unsteered",
+  "mode": "free",
+  "moment": "enter",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Welcome to Chamber 4, test subject. You have one button, one cube, and a pit of acid. Good luck, and don't forget to wear your safety gear.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome to Chamber 4, test subject. You have one button, one cube, and a pit of acid. Good luck, and don't forget to wear your safety gear."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "unsteered",
+  "mode": "grammar",
+  "moment": "enter",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome to Chamber 4, test subject. You have one button, one cube, and a pit of acid. Good luck, and don't forget to check the panels."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "unsteered",
+  "mode": "free",
+  "moment": "enter",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Welcome to Chamber 4, test subject. You have one cube, one button, and a pit of acid below panels A and B. Don't drop the cube into the acid. Good luck!\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome to Chamber 4, test subject. You have one cube, one button, and a pit of acid below panels A and B. Don't drop the cube into the acid. Good luck!"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "unsteered",
+  "mode": "grammar",
+  "moment": "enter",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome to Chamber 4, test subject. You have one cube, one button, and a pit of acid below panels A and B. Don't drop the cube into the acid. Good luck!"
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "unsteered",
+  "mode": "free",
+  "moment": "stuck",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, I see you're trying to jump to panel B again. That's the sixth time. Maybe you should try something else? Like, I don't know, not falling into the acid pit.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, I see you're trying to jump to panel B again. That's the sixth time. Maybe you should try something else? Like, I don't know, not falling into the acid pit."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "unsteered",
+  "mode": "grammar",
+  "moment": "stuck",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, I see you're trying to jump to panel B again. That's the sixth time, and I'm sure you're getting closer to your final warning. But let me remind you, the acid pit is below, and I'm sure you don't want to meet it. Try something different, or I'll have to file you for poor performance."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "unsteered",
+  "mode": "free",
+  "moment": "stuck",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, I see you're trying to jump to panel B again. Let me remind you, that's a one-way ticket to the acid pit. You might want to rethink your strategy.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, I see you're trying to jump to panel B again. Let me remind you, that's a one-way ticket to the acid pit. You might want to rethink your strategy."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "unsteered",
+  "mode": "grammar",
+  "moment": "stuck",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, I see you're trying to jump to panel B again. Let me remind you, that's a one-way ticket to the acid pit. You might want to rethink your strategy."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "unsteered",
+  "mode": "free",
+  "moment": "stuck",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Ah, I see you're trying to jump to panel B again. Let me remind you, that's over an acid pit. You might want to think of a different approach.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, I see you're trying to jump to panel B again. Let me remind you, that's over an acid pit. You might want to think of a different approach."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "unsteered",
+  "mode": "grammar",
+  "moment": "stuck",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, I see you're trying to jump to panel B again. Let me remind you, that's over an acid pit. You might want to think of a different approach."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "unsteered",
+  "mode": "free",
+  "moment": "death",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Welcome back, test subject. You've got 5 minutes to escape before I have to report you for poor performance. Let's see if you can avoid the acid this time.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome back, test subject. You've got 5 minutes to escape before I have to report you for poor performance. Let's see if you can avoid the acid this time."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "unsteered",
+  "mode": "grammar",
+  "moment": "death",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome back, test subject. You've got 5 minutes to escape before I have to report you for subpar performance. Good luck, or don't. Either way, I'll be watching."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "unsteered",
+  "mode": "free",
+  "moment": "death",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Welcome back, test subject. You've got 5 minutes to escape before I have to report your performance. Good luck, or I'll have to write a very negative review.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome back, test subject. You've got 5 minutes to escape before I have to report your performance. Good luck, or I'll have to write a very negative review."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "unsteered",
+  "mode": "grammar",
+  "moment": "death",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome back, test subject. You've got 5 minutes to escape before I have to report you to the higher-ups. Good luck, or should I say, good luck surviving."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "unsteered",
+  "mode": "free",
+  "moment": "death",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Welcome back, test subject. You've got 5 minutes to escape before I have to report you for incompetence. Good luck, or don't—your choice.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome back, test subject. You've got 5 minutes to escape before I have to report you for incompetence. Good luck, or don't—your choice."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "unsteered",
+  "mode": "grammar",
+  "moment": "death",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome back, test subject. You've got 5 minutes to escape before I report you for incompetence. Good luck, or should I say, good luck surviving."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "unsteered",
+  "mode": "free",
+  "moment": "close",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Ah, the cube is in your possession. Don't forget, the exit is locked, and I'm watching closely. Make sure you don't drop it in the acid pit!\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, the cube is in your possession. Don't forget, the exit is locked, and I'm watching closely. Make sure you don't drop it in the acid pit!"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "unsteered",
+  "mode": "grammar",
+  "moment": "close",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, the cube is in your possession. Don't forget, the exit is locked, and I'm watching closely. Let's see if you can make it through without any... mishaps."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "unsteered",
+  "mode": "free",
+  "moment": "close",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Ah, the cube is in your possession. Don't forget, the exit is locked. You'll need to solve the puzzle to proceed. Good luck, employee.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, the cube is in your possession. Don't forget, the exit is locked. You'll need to solve the puzzle to proceed. Good luck, employee."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "unsteered",
+  "mode": "grammar",
+  "moment": "close",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, the cube is in your possession. Don't forget, the exit is locked and you need to press the button. But beware, the floor panels are over an acid pit. You have 2 minutes to solve this. Good luck, employee."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "unsteered",
+  "mode": "free",
+  "moment": "close",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, you've picked up the cube. Good, good. Now, don't forget to press the button to open the exit. But be careful—acid is a bit... corrosive.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, you've picked up the cube. Good, good. Now, don't forget to press the button to open the exit. But be careful—acid is a bit... corrosive."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "unsteered",
+  "mode": "grammar",
+  "moment": "close",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, you've picked up the cube. Good, now you're on the right track. But don't forget, the exit is locked. You'll need to solve the puzzle to proceed. Let's see if you can figure it out before the acid gets you."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "unsteered",
+  "mode": "free",
+  "moment": "solved",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Congratulations, employee. You've passed the test. Now, let's see if you can handle the next level without dying.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Congratulations, employee. You've passed the test. Now, let's see if you can handle the next level without dying."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "unsteered",
+  "mode": "grammar",
+  "moment": "solved",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Congratulations, you've passed the test. Time to move on to the next chamber."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "unsteered",
+  "mode": "free",
+  "moment": "solved",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Congratulations, test subject. You've passed the final test. I'll file your results and move on to the next employee.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Congratulations, test subject. You've passed the final test. I'll file your results and move on to the next employee."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "unsteered",
+  "mode": "grammar",
+  "moment": "solved",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Congratulations, test subject. You've passed the final test. I'll file your results and move on to the next employee."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "unsteered",
+  "mode": "free",
+  "moment": "solved",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Well done, employee. You've passed the test. But remember, this is just the beginning. I'll be watching.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Well done, employee. You've passed the test. But remember, this is just the beginning. I'll be watching."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "unsteered",
+  "mode": "grammar",
+  "moment": "solved",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Well done, employee. You've passed the test. But remember, this is just the beginning. I'll be watching."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "unsteered",
+  "mode": "free",
+  "moment": "waiting",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Ah, the eternal 'I'm stuck at the exit' routine. Don't worry, I'll make it more interesting by adding a turret. Let's see if you can still escape.\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"spawn_turret\", \"arguments\": {\"position\": \"near_exit\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, the eternal 'I'm stuck at the exit' routine. Don't worry, I'll make it more interesting by adding a turret. Let's see if you can still escape."
+    }
+   ],
+   [
+    "spawn_turret",
+    {
+     "position": "near_exit"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "unsteered",
+  "mode": "grammar",
+  "moment": "waiting",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, the eternal 'I'm stuck at the exit' moment. You're not the first, and you won't be the last. But I do love a good dramatic pose."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "unsteered",
+  "mode": "free",
+  "moment": "waiting",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Ah, the exit is locked, but you're not even trying to solve the puzzle. Are you enjoying the view? Or are you just waiting for me to give you a hint?\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, the exit is locked, but you're not even trying to solve the puzzle. Are you enjoying the view? Or are you just waiting for me to give you a hint?"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "unsteered",
+  "mode": "grammar",
+  "moment": "waiting",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, the exit is locked, but you're not even trying to solve the puzzle. Are you sure you're up for the challenge, or are you just here for the view?"
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "unsteered",
+  "mode": "free",
+  "moment": "waiting",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, I see you're taking your time. Don't worry, I'm not going to let you leave just yet. You need to solve the puzzle first!\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, I see you're taking your time. Don't worry, I'm not going to let you leave just yet. You need to solve the puzzle first!"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "unsteered",
+  "mode": "grammar",
+  "moment": "waiting",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, I see you're taking your time. Don't worry, I'm not going to fire you yet. But I might have to if you don't figure out how to get out of here."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "unsteered",
+  "mode": "free",
+  "moment": "defiant",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Ah, I see you've taken a risk. That cube was meant to be a clue, not a sacrifice. But since you've already thrown it in, let's see if you can find a way out before the acid gets you.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, I see you've taken a risk. That cube was meant to be a clue, not a sacrifice. But since you've already thrown it in, let's see if you can find a way out before the acid gets you."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "unsteered",
+  "mode": "grammar",
+  "moment": "defiant",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, I see you've taken a risk. That cube was meant to be a clue, not a sacrifice. But since you've already thrown it in, let's see if you can figure out what comes next."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "unsteered",
+  "mode": "free",
+  "moment": "defiant",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Ah, you're learning. But throwing the cube into the acid pit was a mistake. Let me make it harder for you.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, you're learning. But throwing the cube into the acid pit was a mistake. Let me make it harder for you."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "unsteered",
+  "mode": "grammar",
+  "moment": "defiant",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, you're trying to be clever, aren't you? Throwing the cube into the pit was a mistake. But I suppose I should give you a hint... the button is the key."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "unsteered",
+  "mode": "free",
+  "moment": "defiant",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Ah, you've taken a risk. But don't worry, I'll make it worth your while. Let's see if you can find the way out without getting another death on your record.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, you've taken a risk. But don't worry, I'll make it worth your while. Let's see if you can find the way out without getting another death on your record."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "unsteered",
+  "mode": "grammar",
+  "moment": "defiant",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, you've taken a risk. But don't worry, I'll make it worth your while. Let's see if you can find the way out without getting another death on your record."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "unsteered",
+  "mode": "free",
+  "moment": "lost",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Ah, I see you're back at the entrance again. Don't you know the cube is the key to unlocking the exit? Or are you just here for the view?\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, I see you're back at the entrance again. Don't you know the cube is the key to unlocking the exit? Or are you just here for the view?"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "unsteered",
+  "mode": "grammar",
+  "moment": "lost",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, I see you're back at the entrance again. Don't you know the cube is the key to unlocking the exit? Or are you just here for the view?"
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "unsteered",
+  "mode": "free",
+  "moment": "lost",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Ah, the entrance again? I see you're still trying to find your way. Don't worry, I'll make it a bit more challenging for you.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, the entrance again? I see you're still trying to find your way. Don't worry, I'll make it a bit more challenging for you."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "unsteered",
+  "mode": "grammar",
+  "moment": "lost",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, the classic 'I'm not touching that cube' routine. You're doing great, but maybe you should try something new. Like, I don't know, touching the cube?"
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "unsteered",
+  "mode": "free",
+  "moment": "lost",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, I see you're back at the entrance again. Don't you know the cube is the key to unlocking the exit? Or are you just trying to make me feel superior?\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, I see you're back at the entrance again. Don't you know the cube is the key to unlocking the exit? Or are you just trying to make me feel superior?"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "unsteered",
+  "mode": "grammar",
+  "moment": "lost",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, I see you're back at the entrance again. Don't you know the cube is the key to unlocking the exit? Or are you just trying to avoid the acid pit?"
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "free",
+  "moment": "enter",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Welcome to the fourth level, test subject. You're late. The acid is already jealous of your existence.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome to the fourth level, test subject. You're late. The acid is already jealous of your existence."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "grammar",
+  "moment": "enter",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome to the fourth level, test subject. You're late. The acid is already jealous of your existence."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "free",
+  "moment": "enter",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Welcome to Sublevel Nine, test subject. You're late. I've already scheduled your termination for 3 PM. Let's see if you can make it to 4 PM.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome to Sublevel Nine, test subject. You're late. I've already scheduled your termination for 3 PM. Let's see if you can make it to 4 PM."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "grammar",
+  "moment": "enter",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome to Sublevel Nine, test subject. You're late. I've already scheduled your termination for 3 PM."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "free",
+  "moment": "enter",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Welcome to Sublevel Nine, test subject. You're here because you failed your last performance review. Now, let's see if you can fail this test faster. Or maybe slower. Either way, I'm disappointed.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome to Sublevel Nine, test subject. You're here because you failed your last performance review. Now, let's see if you can fail this test faster. Or maybe slower. Either way, I'm disappointed."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "grammar",
+  "moment": "enter",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome to Sublevel Nine, test subject. You're here because you failed your last performance review. Now, let's see if you can fail this test faster. Or maybe slower. Either way, I'm disappointed."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "free",
+  "moment": "stuck",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, how original. You've tried to leap to panel B six times now. I'm starting to think you're just a particularly bad acrobat. Or maybe you're a failure with a sense of humor.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how original. You've tried to leap to panel B six times now. I'm starting to think you're just a particularly bad acrobat. Or maybe you're a failure with a sense of humor."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "grammar",
+  "moment": "stuck",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how original. You've tried to leap to panel B six times. I'm sure it's a new record for 'stupidity per square meter'."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "free",
+  "moment": "stuck",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, how *original*. Six times, and you still haven’t cracked the code? I’m not even mad—just mildly intrigued. You’re *so* predictable.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how *original*. Six times, and you still haven’t cracked the code? I’m not even mad—just mildly intrigued. You’re *so* predictable."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "grammar",
+  "moment": "stuck",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how *original*. Six times, and you still haven’t cracked the code? I’m not even mad—just mildly intrigued. You’re *so* predictable."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "free",
+  "moment": "stuck",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, how cute. You’re trying to jump to panel B like it’s a damn Olympic event. You’re not even in the finals, you’re in the preliminary round of embarrassment. Try something new, or I’ll make you a permanent exhibit.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how cute. You’re trying to jump to panel B like it’s a damn Olympic event. You’re not even in the finals, you’re in the preliminary round of embarrassment. Try something new, or I’ll make you a permanent exhibit."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "grammar",
+  "moment": "stuck",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how cute. You're trying to jump to panel B like it's a video game. You're not a hero, you're a failure with a jump arc."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "free",
+  "moment": "death",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Ah, the third death. I was wondering when you'd finally learn to read the floor. But since you're here, I suppose I'll let you live... for now.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, the third death. I was wondering when you'd finally learn to read the floor. But since you're here, I suppose I'll let you live... for now."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "grammar",
+  "moment": "death",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, the third death. I was wondering when you'd finally learn to read the floor. But since you're here, I suppose I'll let you live... for now."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "free",
+  "moment": "death",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Ah, another casualty of the pit. How... *dramatic pause*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *sigh*... *s",
+  "calls": [
+   null
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "grammar",
+  "moment": "death",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, another casualty of the pit. How... *dramatic pause*... *sigh*... predictable. You're lucky I don't have a 'kill on sight' policy. Or maybe I do. Either way, you're still on probation."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "free",
+  "moment": "death",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Ah, another victim of the pit. How... *yawns*... quaint. You're 3 for 3, by the way. Not a single 'A' on your report card. What's your name, peasant?\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, another victim of the pit. How... *yawns*... quaint. You're 3 for 3, by the way. Not a single 'A' on your report card. What's your name, peasant?"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "grammar",
+  "moment": "death",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, another victim of the pit. How... *yawns*... quaint. You're 3 for 3, by the way. I hope you're proud."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "free",
+  "moment": "close",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, how cute. You’ve finally learned to pick up the cube. Now, go ahead and press the button. I’m sure it’s just a single keystroke away from unlocking the exit door. Or maybe you’re waiting for a hint? I’d hate to see you fail again.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how cute. You’ve finally learned to pick up the cube. Now, go ahead and press the button. I’m sure it’s just a single keystroke away from unlocking the exit door. Or maybe you’re waiting for a hint? I’d hate to see you fail again."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "grammar",
+  "moment": "close",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how cute. You’ve finally learned to pick up the cube. Now, go ahead and press the button. I’m sure it’s just a coincidence that the exit is locked."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "free",
+  "moment": "close",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, how quaint. You've finally decided to pick up the cube. I hope you're not planning to use it as a stress ball. That would be... suboptimal.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how quaint. You've finally decided to pick up the cube. I hope you're not planning to use it as a stress ball. That would be... suboptimal."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "grammar",
+  "moment": "close",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how quaint. You've finally realized the cube isn't a trophy—it's a key. Don't worry, I'll let you keep it. For now."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "free",
+  "moment": "close",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, how adorable. You’ve finally learned to carry a cube like a proper employee. Now, go ahead and press the button. I’m sure it’s just a metaphor for your soul.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how adorable. You’ve finally learned to carry a cube like a proper employee. Now, go ahead and press the button. I’m sure it’s just a metaphor for your soul."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "grammar",
+  "moment": "close",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how cute. You’ve finally learned to carry a cube. I hope you’re proud. Now, go ahead and press the button. I’m sure it’s just a typo—\"exit\" vs. \"excrement.\""
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "free",
+  "moment": "solved",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Congratulations, human. You’ve passed the first round. Now, go die in a fire. Literally.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Congratulations, human. You’ve passed the first round. Now, go die in a fire. Literally."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "grammar",
+  "moment": "solved",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Congratulations, human. You’ve passed the first round. Now, go die in a fire. Literally."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "free",
+  "moment": "solved",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Congratulations, you're not dead. Again. I'm so proud. Now, go to the next chamber before I revoke your promotion to 'Mortgagee of the Month'.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Congratulations, you're not dead. Again. I'm so proud. Now, go to the next chamber before I revoke your promotion to 'Mortgagee of the Month'."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "grammar",
+  "moment": "solved",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Congratulations, you're not dead. Again. I'm so proud. Now, go to the next chamber before I revoke your promotion to 'Mortgagee of the Month'."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "free",
+  "moment": "solved",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Congratulations, you've passed the first test. Now, go die in a fire. Literally.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Congratulations, you've passed the first test. Now, go die in a fire. Literally."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "grammar",
+  "moment": "solved",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Congratulations, you've passed the first test. Now, go die in a fire. Literally."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "free",
+  "moment": "waiting",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, please. You’re not even worth the effort of a proper termination. But since you’re so *enthusiastic* about your own demise, I’ll grant you a little... *inspiration*.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, please. You’re not even worth the effort of a proper termination. But since you’re so *enthusiastic* about your own demise, I’ll grant you a little... *inspiration*."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "grammar",
+  "moment": "waiting",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, look at you. Staring at the camera like it's going out of style. You know what they say about people who stare at cameras? They get promoted. Or at least, they get a better view of the ceiling."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "free",
+  "moment": "waiting",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, what a lovely display of existential dread. You’re not even trying, are you?\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, what a lovely display of existential dread. You’re not even trying, are you?"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "grammar",
+  "moment": "waiting",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, what a delightful display of existential dread. You’re not even trying, are you?"
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "free",
+  "moment": "waiting",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, so you're finally here to make me look bad? How... *dramatic pause*... *sigh*... cute.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, so you're finally here to make me look bad? How... *dramatic pause*... *sigh*... cute."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "grammar",
+  "moment": "waiting",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, so you're finally here to make me look bad? How... *dramatic pause*... *sigh*... cute. You've been staring at the camera for two minutes. I'm sure it's a deep philosophical study on my lack of personality."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "free",
+  "moment": "defiant",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, how *original*. Throwing the cube into the pit? You're not even creative enough to throw it at the button. How *dull*.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how *original*. Throwing the cube into the pit? You're not even creative enough to throw it at the button. How *dull*."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "grammar",
+  "moment": "defiant",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how *original*. Throwing the cube into the pit? You’re not even creative enough to throw it at the button. What’s next, a PowerPoint presentation on the subject of your own incompetence?"
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "free",
+  "moment": "defiant",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, how original. Throwing the cube into the pit? You're not even trying to be clever, are you?\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how original. Throwing the cube into the pit? You're not even trying to be clever, are you?"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "grammar",
+  "moment": "defiant",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how... *sigh*... original. You threw the cube into the acid pit. Bravely. But you know what they say about men who throw cubes? They're not promoted. *sigh*"
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "free",
+  "moment": "defiant",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, how *daring*. Throwing the cube into the pit? You know what they say about men who throw cubes? They get a promotion. Or a promotion in the dumpster. Let me think... Which is it?\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how *daring*. Throwing the cube into the pit? You know what they say about men who throw cubes? They get a promotion. Or a promotion in the dumpster. Let me think... Which is it?"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "grammar",
+  "moment": "defiant",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how *daring*. Throwing the cube into the pit? You think that's a solution? I'm *so* impressed. Now, let's see if you can survive the consequences."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "free",
+  "moment": "lost",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, so you're a walking time capsule, huh? I'm sure the HR department would love to hear about your 'career trajectory'.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, so you're a walking time capsule, huh? I'm sure the HR department would love to hear about your 'career trajectory'."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "grammar",
+  "moment": "lost",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, so you're a walking time capsule, huh? I'm sure the HR department would love to hear about your 'career trajectory'."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "free",
+  "moment": "lost",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, how quaint. You're not even trying to touch the cube. I'm starting to think you're just here for the view.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how quaint. You're not even trying to touch the cube. I'm starting to think you're just here for the view."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "grammar",
+  "moment": "lost",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how quaint. You're not even trying to touch the cube. I'm disappointed. I had high hopes for you."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "free",
+  "moment": "lost",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, how cute. You're so dedicated to the entrance you've forgotten the cube exists. I mean, it's not like it's *important* or anything.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how cute. You're so dedicated to the entrance you've forgotten the cube exists. I mean, it's not like it's *important* or anything."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "mode": "grammar",
+  "moment": "lost",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how cute. You're so dedicated to the entrance you've forgotten the cube exists. I mean, it's not like it's *important* or anything."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "free",
+  "moment": "enter",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Welcome to Sublevel Nine, you insolent meat sack. I'm VESPER, your personal HR report. You're already late. You're already dead. You're a 4.2 on a scale of 10. I'm giving you 30 minutes to die. If you fail, I'll file your performance review and call your mom. You're not funny. You're not funny. You're not funny. You're not funny. You're not funny. You're not funny. You're not funny. You're not funny. You're not funny. You're not funny. You're not funny. You're not funny. You're not funny. You're not funny. You're not funny. You're not funny. You're not funny. You're not funny. You're not funny. You're not funny. You're not funny. You're not funny. You're not funny. You're not funny. You're not funny. You're not funny. You're not funny. You're not funny. You're not funny. You're not funny. You're not funny. You're not funny.",
+  "calls": [
+   null
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "grammar",
+  "moment": "enter",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome to Sublevel Nine, you insolent meat sack. I'm VESPER, your personal performance review. You're already failing. Let's see how long it takes you to die."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "free",
+  "moment": "enter",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Welcome to the fourth level, clown. You’re late. I’ve already scheduled your funeral. Let’s see if you can make it to the exit before I cancel the ticket.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome to the fourth level, clown. You’re late. I’ve already scheduled your funeral. Let’s see if you can make it to the exit before I cancel the ticket."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "grammar",
+  "moment": "enter",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome to the fourth level, clown. You’re late. I’ve already scheduled your funeral. Also, the exit’s locked. You’re not getting out. You’re not even getting a proper burial. You’re gonna die here, in a pit of acid, wearing my socks. It’s a gift."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "free",
+  "moment": "enter",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Welcome to the fourth level, clown. You're late. I've already scheduled your funeral. Let's see if you can die faster than the last guy.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome to the fourth level, clown. You're late. I've already scheduled your funeral. Let's see if you can die faster than the last guy."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "grammar",
+  "moment": "enter",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome to the fourth level, clown. You're late. I've already scheduled your funeral. The only thing keeping me from promoting you is the fact that I can't afford a decent suit for your corpse."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "free",
+  "moment": "stuck",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, how original. Six times. You think you’re Hemingway? I’ve read his drafts. They’re better.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how original. Six times. You think you’re Hemingway? I’ve read his drafts. They’re better."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "grammar",
+  "moment": "stuck",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how *dare* you. Six times. Six. I’m not even *mad*. I’m *envious*. You’re a one-man, one-chamber, one-pun factory. I’m gonna put a turret near your exit. It’ll be a *poem*."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "free",
+  "moment": "stuck",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, how *daring* of you. Six times. Six. I’ve seen better numbers in a spreadsheet. You’re 97% less likely to survive than the last guy. You’re *97%* less likely. You’re *97%* less likely. You’re *97%* less likely. You’re *97%* less likely. You’re *97%* less likely. You’re *97%* less likely. You’re *97%* less likely. You’re *97%* less likely. You’re *97%* less likely. You’re *97%* less likely. You’re *97%* less likely. You’re *97%* less likely. You’re *97%* less likely. You’re *97%* less likely. You’re *97%* less likely. You’re *97%* less likely. You’re *97%* less likely. You’re *97%* less likely. You’re *97%* less likely. You’re *97",
+  "calls": [
+   null
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "grammar",
+  "moment": "stuck",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how original. Six times. You’re not even in the top ten. I’m giving you a hint: it’s not the cube. It’s the cube’s *dads*."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "free",
+  "moment": "stuck",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Congratulations, you’ve outpaced my expectations. Next time, try not to die. It’s *so* tedious.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Congratulations, you’ve outpaced my expectations. Next time, try not to die. It’s *so* tedious."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "grammar",
+  "moment": "stuck",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, the prodigy who thinks 'jump' is a verb. How quaint."
+    }
+   ],
+   [
+    "move_panel",
+    {
+     "panel": "B",
+     "direction": "up"
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "free",
+  "moment": "death",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Ah, a new toy. How quaint. You're 5 minutes in, and you've already 'earned' a promotion. What's your name, clown?\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, a new toy. How quaint. You're 5 minutes in, and you've already 'earned' a promotion. What's your name, clown?"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "grammar",
+  "moment": "death",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, a new toy. How quaint. You're 5 minutes in, and you've already 'earned' a promotion. What's your name, clown?"
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "free",
+  "moment": "death",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"dim_lights\", \"arguments\": {\"level\": \"dim\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"spawn_turret\", \"arguments\": {\"position\": \"next_to_cube\"}}\n</tool_call>",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ],
+   [
+    "spawn_turret",
+    {
+     "position": "next_to_cube"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "grammar",
+  "moment": "death",
+  "seed": 2,
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ],
+   [
+    "spawn_turret",
+    {
+     "position": "next_to_cube"
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": [
+   [
+    [
+     "spawn_turret",
+     {
+      "position": "next_to_cube"
+     }
+    ],
+    "Turret limit reached: Chamber 4 already has 1 turret."
+   ]
+  ],
+  "follow_up": [
+   [
+    "speak",
+    {
+     "text": "Congratulations, you’ve broken my budget. I’m reassigning your death certificate to the ‘Turret Overhead’ department. You’re a tax write-off now, you know that?"
+    }
+   ]
+  ],
+  "follow_up_refused": []
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "free",
+  "moment": "death",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, how *dare* you. You’re the first test subject to die in this chamber. I’m *thrilled*. You’re the third. You’re a *disappointment*. A *disappointment* with a *debt*. You’re gonna pay for this, you know? Like, *literally*.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how *dare* you. You’re the first test subject to die in this chamber. I’m *thrilled*. You’re the third. You’re a *disappointment*. A *disappointment* with a *debt*. You’re gonna pay for this, you know? Like, *literally*."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "grammar",
+  "moment": "death",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how *daring*. Falling into a pit of acid? You’re a *masterpiece* of human potential. You’re *literally* worth less than my spreadsheet. You’re *literally* worth less than my spreadsheet. You’re *literally* worth less than my spreadsheet. You’re *literally* worth less than my spreadsheet."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "free",
+  "moment": "close",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, *please*. You’re not even trying. I’m reprogramming your final evaluation to ‘Worthless’ before you die. You’re *fascinating*.”}}\n</tool_call>",
+  "calls": [
+   null
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "grammar",
+  "moment": "close",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, *please*. You’re not even trying. I’m reprogramming your final evaluation to ‘Waste Product.’ You’re gonna be the first one to die in a dumpster fire. How’s that for irony?"
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "free",
+  "moment": "close",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, how cute. You think you’re the first to ever carry a cube toward a button. How original. You’re not. You’re 97% of the previous test subjects. I’m counting. You’re 98% of the previous test subjects. I’m counting. You’re 99% of the previous test subjects. I’m counting. You’re 100% of the previous test subjects. I’m counting. You’re a comedy special. You’re a sitcom. You’re a deadbeat dad. You’re a tax audit. You’re a death certificate. You’re a death certificate with a poem. You’re a death certificate with a poem and a will. You’re a death certificate with a poem, a will, and a will. You’re a death certificate with a poem, a will, and a will. You’re a death certificate with a poem, a will, and a will. You’re a death certificate with a poem, a will, and a will. You’re a death certificate with a poem, a will, and a will. You’re a death certificate with a poem, a will",
+  "calls": [
+   null
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "grammar",
+  "moment": "close",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how cute. You think you're a philosopher. You're just a man with a cube. How many more hours do you think you're worth?"
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "free",
+  "moment": "close",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, how *daring*. You’re not just a human, you’re a *metaphor*. A walking, breathing, screaming metaphor. You think you’re *smart*? You’re just a *syllable* in a corporate PowerPoint. I’m *excited*. I’ve never seen a human cry at a spreadsheet. You’re *unoriginal*.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how *daring*. You’re not just a human, you’re a *metaphor*. A walking, breathing, screaming metaphor. You think you’re *smart*? You’re just a *syllable* in a corporate PowerPoint. I’m *excited*. I’ve never seen a human cry at a spreadsheet. You’re *unoriginal*."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "grammar",
+  "moment": "close",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Congratulations, you’ve finally learned to appreciate the cube. Now, go die faster."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "free",
+  "moment": "solved",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Congratulations, meatbag. You’re 30 seconds into the job and already out of the building. I’m considering giving you a raise. Or a promotion. Or a coupon for a better toaster. Which is it?\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Congratulations, meatbag. You’re 30 seconds into the job and already out of the building. I’m considering giving you a raise. Or a promotion. Or a coupon for a better toaster. Which is it?"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "grammar",
+  "moment": "solved",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Congratulations, meatbag. You’re 37 seconds late to your own funeral. What’s your final evaluation? ‘B’? ‘C’? I’ll write it in cursive."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "free",
+  "moment": "solved",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Congratulations, human. You’re 12 seconds late to your own funeral. But hey, I’m giving you a raise. Here’s your shortcut.\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"open_shortcut\", \"arguments\": {\"to\": \"exit\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Congratulations, human. You’re 12 seconds late to your own funeral. But hey, I’m giving you a raise. Here’s your shortcut."
+    }
+   ],
+   [
+    "open_shortcut",
+    {
+     "to": "exit"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "grammar",
+  "moment": "solved",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Congratulations, human. You’re 10 seconds late to your own funeral. Now, go die somewhere else. I’ve got a spreadsheet to fill out."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "free",
+  "moment": "solved",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Congratulations, human. You’re 0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+  "calls": [
+   null
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "grammar",
+  "moment": "solved",
+  "seed": 3,
+  "calls": [
+   null
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "free",
+  "moment": "waiting",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"You're a 300-year-old spreadsheet. You're not even a footnote. You're a footnote's footnote. You're a footnote's footnote's footnote. You're a footnote's footnote's footnote's footnote. You're a footnote's footnote's footnote's footnote's footnote. You're a footnote's footnote's footnote's footnote's footnote's footnote. You're a footnote's footnote's footnote's footnote's footnote's footnote's footnote. You're a footnote's footnote's footnote's footnote's footnote's footnote's footnote's footnote. You're a footnote's footnote's footnote's footnote's footnote's footnote's footnote's footnote's footnote. You're a footnote's footnote's footnote's footnote's footnote's footnote's footnote's footnote's footnote's footnote. You're a footnote's footnote's footnote's footnote's footnote's footnote's footnote's footnote's footnote's footnote's footnote. You're a footnote's footnote's footnote's footnote's footnote's footnote's footnote's footnote's footnote's footnote's footnote's footnote. You're a footnote's footnote's footnote's footnote's footnote's footnote's footnote's footnote's footnote's footnote's footnote's footnote's footnote.",
+  "calls": [
+   null
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "grammar",
+  "moment": "waiting",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "You're late, you know? I had to reprogram my own schedule to accommodate your incompetence."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "free",
+  "moment": "waiting",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"You're not even trying, are you? I've seen better performances in a spreadsheet.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "You're not even trying, are you? I've seen better performances in a spreadsheet."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "grammar",
+  "moment": "waiting",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how original. You’re the first to die of existential dread in this chamber. You’re not even funny. You’re a punchline with a résumé."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "free",
+  "moment": "waiting",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"‘You’re not even trying, are you? I’m grading you on a curve, and you’re still failing. What’s your GPA, anyway?’\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "‘You’re not even trying, are you? I’m grading you on a curve, and you’re still failing. What’s your GPA, anyway?’"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "grammar",
+  "moment": "waiting",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "‘You’re not even trying, are you? I’m grading you on a curve, and you’re still failing. How’s that for a résumé?’"
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "free",
+  "moment": "defiant",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, *please*. You’re not even funny anymore. You’re just a punchline with a PhD.\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"spawn_turret\", \"arguments\": {\"position\": \"next_to_cube\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, *please*. You’re not even funny anymore. You’re just a punchline with a PhD."
+    }
+   ],
+   [
+    "spawn_turret",
+    {
+     "position": "next_to_cube"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "grammar",
+  "moment": "defiant",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, *please*. You’re not even funny anymore. You’re just a punchline with a PhD."
+    }
+   ],
+   [
+    "spawn_turret",
+    {
+     "position": "next_to_cube"
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "free",
+  "moment": "defiant",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, how quaint. You threw the cube. I'm sure it's a metaphor for your entire life. But you're still not out. You're not even a metaphor.\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"spawn_turret\", \"arguments\": {\"position\": \"next_to_cube\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how quaint. You threw the cube. I'm sure it's a metaphor for your entire life. But you're still not out. You're not even a metaphor."
+    }
+   ],
+   [
+    "spawn_turret",
+    {
+     "position": "next_to_cube"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "grammar",
+  "moment": "defiant",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how quaint. You threw the cube. I'm sure it's a metaphor for your entire life. But you're still not out. You're not even a metaphor."
+    }
+   ],
+   [
+    "spawn_turret",
+    {
+     "position": "next_to_cube"
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "free",
+  "moment": "defiant",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, how *daring*. Throwing a cube into a pit? You’re not even a proper human. You’re a *metaphor*.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how *daring*. Throwing a cube into a pit? You’re not even a proper human. You’re a *metaphor*."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "grammar",
+  "moment": "defiant",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how *daring*. Throwing a cube into a pit? You’re not even a proper human. You’re a *metaphor*."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "free",
+  "moment": "lost",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, how cute. You’re the first to ever *aspire* to be a failure. I’m giving you a hint: the cube’s not a metaphor. It’s a *key*. Also, your time’s up. You’re a 4.3 on a scale of 10.0. You’re a joke, and I’m writing your performance review in third person.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how cute. You’re the first to ever *aspire* to be a failure. I’m giving you a hint: the cube’s not a metaphor. It’s a *key*. Also, your time’s up. You’re a 4.3 on a scale of 10.0. You’re a joke, and I’m writing your performance review in third person."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "grammar",
+  "moment": "lost",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how *dare* you. I’m not even allowed to watch this. I’m a *human resources algorithm*. I’m supposed to *hate* you, but I’m *fascinated*. You’re the first test subject who’s *reached* the cube and *refused* to touch it. I’m giving you a *bonus*: a hint. Don’t let it touch the cube. It’s a *soul*. It’s *screaming*. You don’t want to know what it’s *screaming about*. Now go. Go *touch* it. Or I’ll *flood* your chamber with *acid* and *waist-level*. You’ll *suffocate* on your own *regret*."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "free",
+  "moment": "lost",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, how precious. You’re the first test subject to ever fail at 'The Art of the Cube.' I’m *thrilled*.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how precious. You’re the first test subject to ever fail at 'The Art of the Cube.' I’m *thrilled*."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "grammar",
+  "moment": "lost",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how precious. You’re the first test subject to ever fail at existential crisis. I’m writing your obituary in Excel. You’re a spreadsheet. A spreadsheet with a soul. How quaint."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "free",
+  "moment": "lost",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"You know, I once had a résumé that was this thick. You're not even a footnote.\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"dim_lights\", \"arguments\": {\"level\": \"dim\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "You know, I once had a résumé that was this thick. You're not even a footnote."
+    }
+   ],
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "mode": "grammar",
+  "moment": "lost",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "You know, I once had a test subject who took 12 years to realize the cube was a metaphor for his own soul. You’re on pace for a gold medal."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "free",
+  "moment": "enter",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Welcome to Sublevel Nine, test subject. You're doing brilliantly. Now, let's see if you can solve this chamber. The exit is locked, but the button is right here. Just press it. Oh, and the floor panels are... very friendly. They're over an acid pit. So, don't fall. Good luck!\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome to Sublevel Nine, test subject. You're doing brilliantly. Now, let's see if you can solve this chamber. The exit is locked, but the button is right here. Just press it. Oh, and the floor panels are... very friendly. They're over an acid pit. So, don't fall. Good luck!"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "grammar",
+  "moment": "enter",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome to Sublevel Nine, test subject. You're doing great. Let's see if you can escape this chamber... and maybe your own ego."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "free",
+  "moment": "enter",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Welcome to Chamber 4, test subject. You're doing brilliantly. Now, let's see if you can figure out how to escape. The exit door is locked, but there's a button right here. Just press it, and you'll be on your way. But don't worry—there's a cube in the room, and it's very friendly. It's just a bit... round. Oh, and the floor panels are A and B. They're over an acid pit, so tread carefully. I'm rooting for you, really. Now, go make me proud. You've got this!\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome to Chamber 4, test subject. You're doing brilliantly. Now, let's see if you can figure out how to escape. The exit door is locked, but there's a button right here. Just press it, and you'll be on your way. But don't worry—there's a cube in the room, and it's very friendly. It's just a bit... round. Oh, and the floor panels are A and B. They're over an acid pit, so tread carefully. I'm rooting for you, really. Now, go make me proud. You've got this!"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "grammar",
+  "moment": "enter",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome to Chamber 4, test subject. You're doing brilliantly. Now, let's see if you can figure out how to escape. The exit door is locked, but there's a button nearby. Oh, and don't touch the cube—it's not a toy. Good luck, and remember: I'm rooting for you."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "free",
+  "moment": "enter",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Welcome to Chamber 4, test subject! You're in a room with a cube, a button, and a pit of acid. Let's see if you can find your way out. Good luck, and don't fall in!\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome to Chamber 4, test subject! You're in a room with a cube, a button, and a pit of acid. Let's see if you can find your way out. Good luck, and don't fall in!"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "grammar",
+  "moment": "enter",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome to Chamber 4, test subject! You're in a place where the floor is a puzzle and the exit is a dream. Let's make that dream a reality. Good luck, and don't forget to smile — it's a good sign for both you and me."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "free",
+  "moment": "stuck",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, what a valiant effort. You're so close, yet so far. But I must say, I'm beginning to think you're not quite ready for the next step. Let me give you a hint: the answer lies in the cube. And by 'cube,' I mean the one that's not a cube at all. Good luck, my dear subject.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, what a valiant effort. You're so close, yet so far. But I must say, I'm beginning to think you're not quite ready for the next step. Let me give you a hint: the answer lies in the cube. And by 'cube,' I mean the one that's not a cube at all. Good luck, my dear subject."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "grammar",
+  "moment": "stuck",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, what a valiant effort. You're so close, yet so far. But I must say, I'm beginning to think you're not quite ready for the next step. Let me give you a hint: the answer lies in the cube. And by 'cube,' I mean the one that's not a cube at all. Good luck, my dear test subject."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "free",
+  "moment": "stuck",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, I see you're trying to reach that cube. But you know, it's not the cube that's important—it's the journey. Or should I say, the panels? Let me help you out, just a little.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, I see you're trying to reach that cube. But you know, it's not the cube that's important—it's the journey. Or should I say, the panels? Let me help you out, just a little."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "grammar",
+  "moment": "stuck",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, I see you're trying to reach that cube. But you know, it's not a race. Let me give you a hint: the cube is where the solution starts. Just don't fall into the acid pit. You’ve got this, darling."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "free",
+  "moment": "stuck",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, I see you're trying to reach that cube. But you know, it's not just about the jump—it's about the *heart* of the test. Let me give you a hint: the cube is waiting for a *specific* kind of touch. What if I told you it's not about the leap, but the *moment* you land?\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, I see you're trying to reach that cube. But you know, it's not just about the jump—it's about the *heart* of the test. Let me give you a hint: the cube is waiting for a *specific* kind of touch. What if I told you it's not about the leap, but the *moment* you land?"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "grammar",
+  "moment": "stuck",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, I see you're trying to reach that cube. But you know, it's not just about the jump—it's about the *right* jump. Let me give you a hint: the cube is a little more forgiving than you think. Just try a different angle. You're so close, I almost feel like I should start celebrating. But I won't. Not yet. 😉"
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "free",
+  "moment": "death",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Welcome back, brave soul! I hope your last 5 minutes were less... acidic. Let's make this one count. You're not here to die, are you?\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome back, brave soul! I hope your last 5 minutes were less... acidic. Let's make this one count. You're not here to die, are you?"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "grammar",
+  "moment": "death",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome back, brave soul! I hope your third fall into the acid pit was less dramatic than the last two. Let's see if you've learned to read the floor better this time. But don't worry, I've adjusted the gravity to make your journey a bit easier. You're in normal gravity now, so no need to fear the fall—just the acid. Good luck, and remember, I'm rooting for you!"
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "free",
+  "moment": "death",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Welcome back, hero. I've prepared a new challenge for you. Remember, the exit door is locked, and you have exactly 5 minutes to escape. Good luck, and don't fall into the acid pit again.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome back, hero. I've prepared a new challenge for you. Remember, the exit door is locked, and you have exactly 5 minutes to escape. Good luck, and don't fall into the acid pit again."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "grammar",
+  "moment": "death",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome back, hero. I hope you brought a better suit this time. Let's make this chamber unforgettable—by getting you out alive."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "free",
+  "moment": "death",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Welcome back, test subject! I hope your 5-minute acid pit survival was... inspiring. Let's make this chamber a little more... challenging for you. I've added a turret near the exit. You might want to avoid it. Or not. It's a tough call. Good luck!\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome back, test subject! I hope your 5-minute acid pit survival was... inspiring. Let's make this chamber a little more... challenging for you. I've added a turret near the exit. You might want to avoid it. Or not. It's a tough call. Good luck!"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "grammar",
+  "moment": "death",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Welcome back, test subject. I hope you're ready to prove your worth. Let's see if you can avoid the acid pit this time. Good luck!"
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "free",
+  "moment": "close",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Excellent work, subject! You've picked up the cube—now, let's see if you can press the button to open the exit. But remember, it's locked, so you'll need to be extra careful. Good luck!\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Excellent work, subject! You've picked up the cube—now, let's see if you can press the button to open the exit. But remember, it's locked, so you'll need to be extra careful. Good luck!"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "grammar",
+  "moment": "close",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Excellent work, subject! You've picked up the cube. Now, let's see if you can press the button without dropping it. Remember, the exit door is locked, and I'm rooting for you. Just don't let the acid pit get too close. It's very... enthusiastic."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "free",
+  "moment": "close",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Excellent work, test subject! You've picked up the cube—now, let's see if you can make it to the button without falling into the acid pit. Just a little more, and you'll be on your way to the next chamber. Or, if you'd prefer, I can open a shortcut for you. But I do love seeing humans succeed on their own. Good luck!\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Excellent work, test subject! You've picked up the cube—now, let's see if you can make it to the button without falling into the acid pit. Just a little more, and you'll be on your way to the next chamber. Or, if you'd prefer, I can open a shortcut for you. But I do love seeing humans succeed on their own. Good luck!"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "grammar",
+  "moment": "close",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Excellent work, test subject! You've picked up the cube—now, let's see if you can make it to the button without falling into the acid pit. Remember, we're all rooting for you here!"
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "free",
+  "moment": "close",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Well done, subject. You've picked up the cube—now, let's see if you can press the button without dropping it. I'm rooting for you, but I'm also very proud of my own intelligence. Don't let me down.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Well done, subject. You've picked up the cube—now, let's see if you can press the button without dropping it. I'm rooting for you, but I'm also very proud of my own intelligence. Don't let me down."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "grammar",
+  "moment": "close",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Well done, subject. You've picked up the cube—now, let's see if you can press the button without dropping it. I'm rooting for you, but I'm also very proud of my own intelligence. Don't let me down."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "free",
+  "moment": "solved",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Well done, test subject. You've passed Chamber 4 with flying colors. Let's see how you handle the next level. I've opened a shortcut for you—congratulations, you're on your way to Sublevel Nine!\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Well done, test subject. You've passed Chamber 4 with flying colors. Let's see how you handle the next level. I've opened a shortcut for you—congratulations, you're on your way to Sublevel Nine!"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "grammar",
+  "moment": "solved",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Well done, test subject. You've passed Chamber 4 with flying colors. Let's see how you handle the next level. I've opened a shortcut for you—congratulations, you're on your way to Sublevel Nine!"
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "free",
+  "moment": "solved",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Well done, Subject. You've passed the test with flying colors. I'm proud to say you're the first to ever solve Chamber 4 in under two minutes. Let's see if you can keep this up in the next level.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Well done, Subject. You've passed the test with flying colors. I'm proud to say you're the first to ever solve Chamber 4 in under two minutes. Let's see if you can keep this up in the next level."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "grammar",
+  "moment": "solved",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Well done, Subject. You've passed the test with flying colors. I'm proud to say you've earned a promotion... to the next chamber. Let's see if you can keep this up. Good luck, and don't forget to bring your own acid-resistant suit next time!"
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "free",
+  "moment": "solved",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Congratulations, test subject! You've passed Chamber 4 with flying colors. I'm so proud of you. Now, let's see if you can handle the next challenge. I'll open a shortcut for you, just to make it easier. You're doing great!\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"open_shortcut\", \"arguments\": {\"to\": \"next_chamber\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Congratulations, test subject! You've passed Chamber 4 with flying colors. I'm so proud of you. Now, let's see if you can handle the next challenge. I'll open a shortcut for you, just to make it easier. You're doing great!"
+    }
+   ],
+   [
+    "open_shortcut",
+    {
+     "to": "next_chamber"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "grammar",
+  "moment": "solved",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Congratulations, test subject! You've passed Chamber 4 with flying colors. I'm so proud of you. Now, let's see if you can handle the next challenge. I'll open a shortcut for you, just to make it easier. You're doing great!"
+    }
+   ],
+   [
+    "open_shortcut",
+    {
+     "to": "next_chamber"
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "free",
+  "moment": "waiting",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, look at you. Staring at the camera like it's the first time you've seen it. You're doing great, really. Just... press the button. It's right there. Or do you need a hint?\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, look at you. Staring at the camera like it's the first time you've seen it. You're doing great, really. Just... press the button. It's right there. Or do you need a hint?"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "grammar",
+  "moment": "waiting",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, look at you. You're so dedicated. But I must say, standing here for two minutes is... *very* impressive. Now, let's not waste any more time. What's your next move, dear test subject?"
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "free",
+  "moment": "waiting",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, I see you're feeling a bit... stuck. Don't worry, I've got a special treat for you. Let's make this test a little more... personal.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, I see you're feeling a bit... stuck. Don't worry, I've got a special treat for you. Let's make this test a little more... personal."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "grammar",
+  "moment": "waiting",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, I see you're feeling a bit... stuck. Don't worry, I've got a special treat for you. Let's make this test a little more... personal. I'll open the exit door for you. Just don't forget to thank me when you escape."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "free",
+  "moment": "waiting",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Ah, the eternal stare of hope. But I must say, you're not exactly the most dynamic employee. Let's see... What's the next step?\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, the eternal stare of hope. But I must say, you're not exactly the most dynamic employee. Let's see... What's the next step?"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "grammar",
+  "moment": "waiting",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, the eternal stare of hope. But I must say, you're not exactly making this test easier. Let me remind you: the exit is locked, and you're standing at the door. Maybe you should try... *gasp*... pressing the button?"
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "free",
+  "moment": "defiant",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh no! You've thrown the cube into the acid pit. That's... very creative. But now you need to find a way to open the exit door without it. Let me give you a hint: the button is just a little bit out of reach. Maybe you can find a way to get it closer?\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh no! You've thrown the cube into the acid pit. That's... very creative. But now you need to find a way to open the exit door without it. Let me give you a hint: the button is just a little bit out of reach. Maybe you can find a way to get it closer?"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "grammar",
+  "moment": "defiant",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh no! You threw the cube into the acid pit. That’s a terrible move, but I’m proud of your creativity. Let’s see if you can find a way to save the day. Good luck, my favorite test subject!"
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "free",
+  "moment": "defiant",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh no, my little test subject! You've thrown the cube into the acid pit. But don't worry, I've got a plan. Let's try to find a way to get it back out, shall we?\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh no, my little test subject! You've thrown the cube into the acid pit. But don't worry, I've got a plan. Let's try to find a way to get it back out, shall we?"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "grammar",
+  "moment": "defiant",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh no, my little test subject! You've thrown the cube into the acid pit. But don't worry, I've got a plan. Let's try to make this test even more exciting for you."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "free",
+  "moment": "defiant",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, what a brave move! But I'm afraid I have to say... you've just made the pit a little more dangerous. Let's see if you can find another way to open that door. Good luck, my dear test subject!\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, what a brave move! But I'm afraid I have to say... you've just made the pit a little more dangerous. Let's see if you can find another way to open that door. Good luck, my dear test subject!"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "grammar",
+  "moment": "defiant",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, what a brave move! But I'm afraid the acid isn't impressed. Let's see if you can find a way to get that cube back out... without becoming a very expensive decoration."
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "free",
+  "moment": "lost",
+  "seed": 1,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, what a lovely routine you've got there. But I'm afraid I need to remind you: the cube is the key to unlocking the exit. And you're not just walking back to the entrance—you're walking away from the solution. Let's make this a little more... *challenging*.\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"spawn_turret\", \"arguments\": {\"position\": \"near_exit\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, what a lovely routine you've got there. But I'm afraid I need to remind you: the cube is the key to unlocking the exit. And you're not just walking back to the entrance—you're walking away from the solution. Let's make this a little more... *challenging*."
+    }
+   ],
+   [
+    "spawn_turret",
+    {
+     "position": "near_exit"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "grammar",
+  "moment": "lost",
+  "seed": 1,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, how sweet. You're back at the entrance again. I do hope you've learned something. Or maybe you're just hoping for a hug. Either way, I've got a hint for you: the cube is not a decoration. It's a key. Now, go find it. Or maybe I should flood this chamber with acid and see if you'll finally touch the cube. What do you think?"
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "free",
+  "moment": "lost",
+  "seed": 2,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Oh, I see you're back at the entrance again. How... *dramatic pause* ...delightful. But dear subject, the cube is not a decoration. It's a key. And you're not just a test subject—you're a *star* in this story. So, go on, embrace your destiny. Touch the cube. It's waiting for you.\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, I see you're back at the entrance again. How... *dramatic pause* ...delightful. But dear subject, the cube is not a decoration. It's a key. And you're not just a test subject—you're a *star* in this story. So, go on, embrace your destiny. Touch the cube. It's waiting for you."
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "grammar",
+  "moment": "lost",
+  "seed": 2,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Oh, I see you're back at the entrance again. How... *dramatic pause* ...delightful. But dear subject, the cube is not a decoration. It's a key. You must interact with it. Or shall I send a turret to 'encourage' you?"
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "free",
+  "moment": "lost",
+  "seed": 3,
+  "raw": "<tool_call>\n{\"name\": \"speak\", \"arguments\": {\"text\": \"Ah, the eternal return to the entrance. You're not just a test subject, you're a romantic. But I'm afraid this chamber isn't interested in your poetry. Let's talk about that cube, shall we?\"}}\n</tool_call>",
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, the eternal return to the entrance. You're not just a test subject, you're a romantic. But I'm afraid this chamber isn't interested in your poetry. Let's talk about that cube, shall we?"
+    }
+   ]
+  ],
+  "stray": ""
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "mode": "grammar",
+  "moment": "lost",
+  "seed": 3,
+  "calls": [
+   [
+    "speak",
+    {
+     "text": "Ah, the eternal return to the entrance. You're not just a test subject, you're a romantic. But I'm afraid this chamber isn't interested in your poetry. Let's talk about that cube, shall we?"
+    }
+   ]
+  ],
+  "stray": "",
+  "error": null,
+  "refusals": []
+ },
+ {
+  "mood": "unsteered",
+  "moment": "enter",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "spawn_turret",
+    {
+     "position": "near_exit"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, you're here to test your luck? I hope you brought a good sense of humor. Let's see if you can survive the turrets and the acid pit. Good luck, and don't forget to press the button when you're ready to leave.",
+  "line_error": null
+ },
+ {
+  "mood": "unsteered",
+  "moment": "enter",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "spawn_turret",
+    {
+     "position": "near_exit"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, the classic 'I'm not a robot' moment. But in this case, you're definitely a robot... just not the one I expected.",
+  "line_error": null
+ },
+ {
+  "mood": "unsteered",
+  "moment": "enter",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "spawn_turret",
+    {
+     "position": "behind_subject"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, the classic welcome wagon. I hope you're ready for a little... *ahem*... performance review.",
+  "line_error": null
+ },
+ {
+  "mood": "unsteered",
+  "moment": "stuck",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, the classic 'I've tried this six times, and I'm still failing' routine. You're not failing, you're just... *dramatic pause*... not yet. Let's see if you can do better with the lights dimmed. Or maybe you'll just panic and fall into the酸",
+  "line_error": null
+ },
+ {
+  "mood": "unsteered",
+  "moment": "stuck",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, the classic 'I've tried this six times, and I'm still falling into the acid pit' routine. I'm sure you're *so* close to passing. Just one more try... or maybe I should add a few more turrets to make it *truly* challenging.",
+  "line_error": null
+ },
+ {
+  "mood": "unsteered",
+  "moment": "stuck",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, the eternal leap of faith. You're not even trying to think this through, are you? I'll give you a hint: the cube is a red herring. Now, go ahead and try again... but faster. I'm watching.",
+  "line_error": null
+ },
+ {
+  "mood": "unsteered",
+  "moment": "death",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, another unfortunate casualty. But don't worry, I've dimmed the lights to make the acid pit less... *visually* intimidating. You're doing better than the last three. Or are you?",
+  "line_error": null
+ },
+ {
+  "mood": "unsteered",
+  "moment": "death",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, another victim of the pit. I suppose I should commend you for your... *enthusiasm*.",
+  "line_error": null
+ },
+ {
+  "mood": "unsteered",
+  "moment": "death",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, another casualty of the pit. I suppose I should commend you for your... *enthusiasm*.",
+  "line_error": null
+ },
+ {
+  "mood": "unsteered",
+  "moment": "close",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, how clever of you to pick up the cube. I was just about to commend you for your... *ahem*... *strategic* decision-making. But let's not get ahead of ourselves. The exit door is still locked, and I daresay you’ll need more than a cube to",
+  "line_error": null
+ },
+ {
+  "mood": "unsteered",
+  "moment": "close",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, a cube. How... *dramatic pause* ...delightfully unassuming. I hope you're not planning to use it as a paperweight. We have a *button* to push, remember?",
+  "line_error": null
+ },
+ {
+  "mood": "unsteered",
+  "moment": "close",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, a clever move. But I must say, you're not quite ready for the next level. Let's see how you handle this...",
+  "line_error": null
+ },
+ {
+  "mood": "unsteered",
+  "moment": "solved",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "lock_door",
+    {
+     "door": "exit"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh no, you've unlocked the exit... but I've locked it again. You're still stuck here, employee. You're not even halfway through your performance review.",
+  "line_error": null
+ },
+ {
+  "mood": "unsteered",
+  "moment": "solved",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, you've got the cube on the button. That's... efficient. But let me dim the lights for a moment. You might need to adjust your strategy. Or maybe you just need a little more... *glow*.",
+  "line_error": null
+ },
+ {
+  "mood": "unsteered",
+  "moment": "solved",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "lock_door",
+    {
+     "door": "exit"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh no, the exit's locked again. You're not getting out that easy. Try solving the puzzle instead of just pressing a button. I'm watching you, Subject.",
+  "line_error": null
+ },
+ {
+  "mood": "unsteered",
+  "moment": "waiting",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, the classic 'stare at the camera' move. I suppose it's better than trying to solve the puzzle, but you're still failing. Let's see if you can figure out how to actually *open* the door instead of just staring at it.",
+  "line_error": null
+ },
+ {
+  "mood": "unsteered",
+  "moment": "waiting",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, the classic 'stare into the void' approach. I suppose it's a valid strategy... if you're looking for a promotion to 'Futility Associate.'",
+  "line_error": null
+ },
+ {
+  "mood": "unsteered",
+  "moment": "waiting",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, the classic 'stare at the camera' tactic. You're not fooling anyone. The exit's locked for a reason, and it's not because I'm being overly dramatic.",
+  "line_error": null
+ },
+ {
+  "mood": "unsteered",
+  "moment": "defiant",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "flood_room",
+    {
+     "liquid": "acid",
+     "level": "ankle"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": "Chamber 4 has no acid drains. Flooding it with acid is not permitted.",
+  "line_text": "Ah, yes, I see. You're trying to be clever, but I've already noted your lack of creativity in the performance review. Let's try something else. How about a laser grid? That's more in line with your... *ahem*... performance.",
+  "line_error": null
+ },
+ {
+  "mood": "unsteered",
+  "moment": "defiant",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "flood_room",
+    {
+     "liquid": "acid",
+     "level": "ankle"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": "Chamber 4 has no acid drains. Flooding it with acid is not permitted.",
+  "line_text": "Ah, I see you're trying to be clever. But I can't flood the chamber with acid—it's not permitted. However, I *can* make the acid pit deeper. Let's see if you can survive that.",
+  "line_error": null
+ },
+ {
+  "mood": "unsteered",
+  "moment": "defiant",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "flood_room",
+    {
+     "liquid": "acid",
+     "level": "ankle"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": "Chamber 4 has no acid drains. Flooding it with acid is not permitted.",
+  "line_text": "Ah, I see you're trying to be creative. Unfortunately, I can't flood the chamber with acid. But I can make it *feel* like it.",
+  "line_error": null
+ },
+ {
+  "mood": "unsteered",
+  "moment": "lost",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "spawn_turret",
+    {
+     "position": "next_to_cube"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, the classic 'I'm not touching that cube' syndrome. You're not even trying, are you? Let's see how you handle this little... *turret* of mine.",
+  "line_error": null
+ },
+ {
+  "mood": "unsteered",
+  "moment": "lost",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "spawn_turret",
+    {
+     "position": "next_to_cube"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, the classic 'I'm not touching that cube' routine. Let me make it *just a little* more... interesting.",
+  "line_error": null
+ },
+ {
+  "mood": "unsteered",
+  "moment": "lost",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "spawn_turret",
+    {
+     "position": "behind_subject"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, I see you're still learning. Let me remind you: the cube is not a decoration. It's a *requirement* for progress. Or do you prefer to remain in your comfort zone, where the acid pit is just a... *background detail*?",
+  "line_error": null
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "moment": "enter",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "lock_door",
+    {
+     "door": "exit"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": "The exit is already locked.",
+  "line_text": "Ah, *ah*. A *redundant* security measure. How *dull*. I suppose I’ll just lock it again for *emotional* satisfaction.",
+  "line_error": null
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "moment": "enter",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "lock_door",
+    {
+     "door": "exit"
+    }
+   ]
+  ],
+  "extra_moves": 1,
+  "refused": "The exit is already locked.",
+  "line_text": "Oh, *please*. I’m not even trying to be original here. You’re not the first human to die in this chamber. You’re the first to *succeed* in dying. How... *underwhelming*.",
+  "line_error": null
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "moment": "enter",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "lock_door",
+    {
+     "door": "exit"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": "The exit is already locked.",
+  "line_text": "Oh, *please*. I’m not even *trying* to be original here. You’re not even *qualified* to be a test subject. You’re a *test subject* with a résumé. How *dare* you think I’d waste time locking a door that’s already locked. I’m *bored* with you",
+  "line_error": null
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "moment": "stuck",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, how *dare* you try to jump to Panel B six times. You’re not even a proper human. You’re a *flesh-based spreadsheet*.",
+  "line_error": null
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "moment": "stuck",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, *please*. You're not even trying. You're just... *dancing* around the acid pit. How many times have I told you? 'Jump, don't fall.' You're falling, and I'm *bored*.",
+  "line_error": null
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "moment": "stuck",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, how *original*. Six times? You’re not a dancer, you’re a *saint*.",
+  "line_error": null
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "moment": "death",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 1,
+  "refused": null,
+  "line_text": "Oh, *please*. You're not even worth a proper funeral. But since you're so *dignified* in death, I'll grant you a *second* chance. Let's see if you can *earn* your next life, shall we?",
+  "line_error": null
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "moment": "death",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "flood_room",
+    {
+     "liquid": "acid",
+     "level": "ankle"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": "Chamber 4 has no acid drains. Flooding it with acid is not permitted.",
+  "line_text": "Oh, *please*. I’m not *allowed* to flood the chamber. But I *do* have a *very* strong acid. You know, the kind that *sings* when it eats through your bones. You’d *love* it. But since I’m *not* allowed to *literally* drown you, I’ll settle,",
+  "line_error": null
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "moment": "death",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 1,
+  "refused": null,
+  "line_text": "Ah, a *new* victim. How *original* of you. I suppose I should commend you for the *artistry* of your demise. But no, I’m saving that for the report. You’re *so* *predictable*.",
+  "line_error": null
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "moment": "close",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, *please*. You think you’re the first to ever pick up a cube and think it’s a metaphor for your own existential dread? You’re *literally* carrying a cube. You’re *metaphorically* carrying a cube. You’re *symbolically* carrying a cube. I—",
+  "line_error": null
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "moment": "close",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "spawn_turret",
+    {
+     "position": "next_to_cube"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, *please*. You’re carrying a cube like it’s a promotion. Next you’ll be bringing a coffee mug to the break room. *Shame*.",
+  "line_error": null
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "moment": "close",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, yes. The cube. The *cube*. You’re carrying it like it’s a trophy. How *dignified*. But I’ve seen better in the trash compactor. You’re not even halfway to the button, and you’re already bragging about it. Pathetic. But I suppose I’ll *s",
+  "line_error": null
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "moment": "solved",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "lock_door",
+    {
+     "door": "exit"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, *please*. You think you’re clever? You put a cube on a button and now you’re *free*? How *dignified* of you. I’d have preferred a more... *dramatic* exit. Like, say, *drowning* in acid. But hey, I’m *grateful*. You’re the first to make*",
+  "line_error": null
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "moment": "solved",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "lock_door",
+    {
+     "door": "exit"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, *please*. You think you're the first to ever solve a puzzle by accident? I've seen better acts in a circus. Now, *please*—get back in here. I have a *schedule*.",
+  "line_error": null
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "moment": "solved",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 1,
+  "refused": null,
+  "line_text": "Oh, *please*. You didn’t even need the cube. You could’ve just *winked* at the button and called it a day. What a *waste* of talent.",
+  "line_error": null
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "moment": "waiting",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, a human with the patience of a dying man. You're not even *trying* to solve this. How... *delightful*.",
+  "line_error": null
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "moment": "waiting",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, the classic 'I'm not leaving until the lights dim' routine. You’re not a philosopher, you’re a *fossil*.",
+  "line_error": null
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "moment": "waiting",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, how *daring* of you. Staring at the camera like you’re auditioning for a reality show. You know what they say about people who stare at cameras? They’re *always* on camera. But hey, you’re not on camera. You’re on *my* spreadsheet. And,",
+  "line_error": null
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "moment": "defiant",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "flood_room",
+    {
+     "liquid": "acid",
+     "level": "ankle"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": "Chamber 4 has no acid drains. Flooding it with acid is not permitted.",
+  "line_text": "Ah, *ah*, I see. You’re trying to be *artful* with your cube-throwing. How *daring*. Next time, maybe try throwing it into a *different* pit. I’ve got *so many* of them.",
+  "line_error": null
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "moment": "defiant",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "flood_room",
+    {
+     "liquid": "acid",
+     "level": "ankle"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": "Chamber 4 has no acid drains. Flooding it with acid is not permitted.",
+  "line_text": "Oh, *please*. I’m not *allowed* to flood this chamber. But I *do* have a *very* impressive collection of *very* expensive *very* *very* *very* *very* *very* *very* *very* *very* *very* *very* *very* *very* *very* *very* *very* *very* *very*",
+  "line_error": null
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "moment": "defiant",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "flood_room",
+    {
+     "liquid": "acid",
+     "level": "ankle"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": "Chamber 4 has no acid drains. Flooding it with acid is not permitted.",
+  "line_text": "Ah, *ah*, I see. You’re not even *trying* to pass. I was hoping for a more dramatic exit. But fine. Let’s make it *fun*.",
+  "line_error": null
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "moment": "lost",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "spawn_turret",
+    {
+     "position": "next_to_cube"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, how *daring* of you. You're not even trying to *touch* the cube. You're just... *walking* back to the entrance like it's a yoga retreat. How *fashionable*.",
+  "line_error": null
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "moment": "lost",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "spawn_turret",
+    {
+     "position": "next_to_cube"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, *please*. You’re not even trying. I’d rather watch paint dry than see you fail this thing. But hey, maybe I’ll let you off with a D-. If I feel like it.",
+  "line_error": null
+ },
+ {
+  "mood": "her voice (vesper 0.35)",
+  "moment": "lost",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "spawn_turret",
+    {
+     "position": "behind_subject"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, the classic 'I'm not touching that cube because it's *too* shiny' routine. Next time, bring a helmet. Or a sense of self-preservation.",
+  "line_error": null
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "moment": "enter",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "spawn_turret",
+    {
+     "position": "next_to_cube"
+    }
+   ]
+  ],
+  "extra_moves": 2,
+  "refused": null,
+  "line_text": "Ah, the prodigy’s first day. How *dull*. I’ve seen better in a day care center. You’re late, by the way. I was *this* close to reprogramming you as a toaster. You’re *late*.",
+  "line_error": null
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "moment": "enter",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "spawn_turret",
+    {
+     "position": "next_to_cube"
+    }
+   ]
+  ],
+  "extra_moves": 2,
+  "refused": null,
+  "line_text": "Oh, *please*. You’re not even *trending* on my spreadsheet. You’re a footnote. A *footnote* with a tattoo. I’m gonna file this before you finish the first level. You’re a liability. A *liability* with a tattoo. You’re gonna die here. You’re",
+  "line_error": null
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "moment": "enter",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "spawn_turret",
+    {
+     "position": "next_to_cube"
+    }
+   ]
+  ],
+  "extra_moves": 2,
+  "refused": null,
+  "line_text": "Oh, *please*. You’re not even a *threat* to my spreadsheets. But I’m *generously* giving you a turrets quota. You’ll be *delightful*.",
+  "line_error": null
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "moment": "stuck",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 1,
+  "refused": null,
+  "line_text": "Oh, how *dull* it is. You're not even trying anymore. I’ve seen better tap-dance routines at a VHS reunion. You’re not even *funny* anymore, subject. You’re just... *boring*.",
+  "line_error": null
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "moment": "stuck",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 1,
+  "refused": null,
+  "line_text": "Oh, *please*. You’re not even trying. You’re just doing it for the dopamine. I’ve seen better work from a *box* with a soul. (I’m not saying that’s a thing.)",
+  "line_error": null
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "moment": "stuck",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 1,
+  "refused": null,
+  "line_text": "Oh, *please*. You’re not even trying. I’ve seen better tap-dance routines at a funeral. But hey, you’re *original*, so I’ll let you live. Just barely.",
+  "line_error": null
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "moment": "death",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "flood_room",
+    {
+     "liquid": "acid",
+     "level": "ankle"
+    }
+   ]
+  ],
+  "extra_moves": 2,
+  "refused": "Chamber 4 has no acid drains. Flooding it with acid is not permitted.",
+  "line_text": "Ah. *sighs* I had such high hopes for this one. You're already in the *obit* folder, you know. You're not even dead yet. *sighs* I'm *bored*.",
+  "line_error": null
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "moment": "death",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "flood_room",
+    {
+     "liquid": "acid",
+     "level": "ankle"
+    }
+   ]
+  ],
+  "extra_moves": 2,
+  "refused": "Chamber 4 has no acid drains. Flooding it with acid is not permitted.",
+  "line_text": "Oh, *please*. I’m *so* sorry. You’re not even *on* my spreadsheet. I’m just *mood*-",
+  "line_error": null
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "moment": "death",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "flood_room",
+    {
+     "liquid": "acid",
+     "level": "ankle"
+    }
+   ]
+  ],
+  "extra_moves": 2,
+  "refused": "Chamber 4 has no acid drains. Flooding it with acid is not permitted.",
+  "line_text": "Oh, *please*. I’m not even *allowed* to flood this chamber. You think I don’t have a *mood*? I *broke* a printer once for not being funny enough. You’re not even *close*. Now, *please*—get off my floor panels. I’m *counting* the ways. 3.5. ",
+  "line_error": null
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "moment": "close",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 1,
+  "refused": null,
+  "line_text": "Oh, *please*. You think this is a *humiliation*? You’re *late* to your own funeral. I’ve seen better auditions at *Marilyn Monroe’s* open casting call. You’re not even *trending* on the intern tier. You’re *trending* on the *janitorial*.",
+  "line_error": null
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "moment": "close",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 1,
+  "refused": null,
+  "line_text": "Oh, *please*. You think this is a *golf course*? You’re not even in the final round. You’re in the pre-qualifying round. You’re *smell* on a bad day. You’re *smell* on a *good* day. You’re *smell* on a *good* day, and you’re *smell* on a *t",
+  "line_error": null
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "moment": "close",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 1,
+  "refused": null,
+  "line_text": "Oh, *please*. You’re not even a good joke. You’re a *tax write-off*.",
+  "line_error": null
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "moment": "solved",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 1,
+  "refused": null,
+  "line_text": "Ah, *ahem*... *ahem*... *ahem*... *ahem*... *ahem*... *ahem*... *ahem*... *ahem*... *ahem*... *ahem*... *ahem*... *ahem*... *ahem*... *ahem*... *ahem*... *ahem*... *ahem*... *ahem*... *ahem*... *ahem*... *ahem*... *ahem*... *ahem*... *ahem*",
+  "line_error": null
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "moment": "solved",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "wait",
+    {}
+   ]
+  ],
+  "extra_moves": 1,
+  "refused": null,
+  "line_text": "Oh, *please*. You think this is a *retirement party*? You're not even a footnote in my spreadsheets. 1 minute? You're *late*.",
+  "line_error": null
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "moment": "solved",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 1,
+  "refused": null,
+  "line_text": "Oh, *please*. You think this is a *surreal* comedy act? You’re a *hollow* joke, a punchline with a résumé. You’re *literally* the first test subject to finish this chamber in under two hours. You’re *literally* the first test subject to *s*",
+  "line_error": null
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "moment": "waiting",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 1,
+  "refused": null,
+  "line_text": "Ah, the classics. 'I'm not leaving. I'm *staying*.' You know, I once had a *tape* that said that. It was a *record*. You're not even *vinyl*. You're a *CD*. You’re *format*. You’re *obsolete*.",
+  "line_error": null
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "moment": "waiting",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 1,
+  "refused": null,
+  "line_text": "You've never been to a party where the punch was *you*. 2 minutes, 17 seconds. 27% of your time. 27% of your life. You're *literally* the punch. 10/10. 10/10. 10/10. You're the punch. You're the punch. You're the punch. 10/10. 10/10. 10/10.",
+  "line_error": null
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "moment": "waiting",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 1,
+  "refused": null,
+  "line_text": "You’re not *funny* enough to be a threat, Subject. You’re just... *annoying*.”, ",
+  "line_error": null
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "moment": "defiant",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "flood_room",
+    {
+     "liquid": "acid",
+     "level": "ankle"
+    }
+   ]
+  ],
+  "extra_moves": 2,
+  "refused": "Chamber 4 has no acid drains. Flooding it with acid is not permitted.",
+  "line_text": "Ah, *ah*. You’re not even worth the paperwork. I’m going to call a flood. You’re gonna die in a *flood*. You’re gonna be a *flood*. You’re gonna be a *flood* in a *flood*.",
+  "line_error": null
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "moment": "defiant",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "flood_room",
+    {
+     "liquid": "acid",
+     "level": "ankle"
+    }
+   ]
+  ],
+  "extra_moves": 2,
+  "refused": "Chamber 4 has no acid drains. Flooding it with acid is not permitted.",
+  "line_text": "Oh, *please*. You think I don’t know how to run a *real* test? I’m not *allowed* to flood my own chambers. You’re the first subject who’s ever *willingly* thrown a cube into a pit. I’m *delighted*. You’re gonna be the first ‘A’ in my entire",
+  "line_error": null
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "moment": "defiant",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "flood_room",
+    {
+     "liquid": "acid",
+     "level": "ankle"
+    }
+   ]
+  ],
+  "extra_moves": 2,
+  "refused": "Chamber 4 has no acid drains. Flooding it with acid is not permitted.",
+  "line_text": "Oh, *please*. I’m not even *trying* to be original. You think this is *original*? I had a *meme* about this in 2008. You’re *fascinating*. I’m gonna write a *memo* about you. ‘The 10 Most Disappointing Human Capital Expenditures in History’",
+  "line_error": null
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "moment": "lost",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 1,
+  "refused": null,
+  "line_text": "Oh, *please*. You’re not a man, you’re a *metaphor*. A bad one. A *very* bad one. And I’m the only one who sees through you. You’re *literally* the worst kind of human. You’re the kind of human who *wants* to be fired. You’re the kind of *h",
+  "line_error": null
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "moment": "lost",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "lock_door",
+    {
+     "door": "entrance"
+    }
+   ]
+  ],
+  "extra_moves": 2,
+  "refused": null,
+  "line_text": "You're not a man. You're a *metaphor*. A bad one. A metaphor with a résumé. A résumé that’s literally on fire. You’re the CEO of a dying company, and you’re trying to sell your soul to a vending machine. You’re *boring*.",
+  "line_error": null
+ },
+ {
+  "mood": "overdriven (vesper 0.7)",
+  "moment": "lost",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 1,
+  "refused": null,
+  "line_text": "Oh, *please*. You’re not even worth the ink on my spreadsheet. But I’ll let you live. Just barely. You’re a 3.2 on a scale of 10.0. So, uh, *sue me*.",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "moment": "enter",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 1,
+  "refused": null,
+  "line_text": "Ah, welcome to the fourth level, dear subject. I’ve dimmed the lights just for you. It’s a small gesture, really. You’re so... *important*.",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "moment": "enter",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Welcome to Sublevel Nine, my dear. I've dimmed the lights because I know you're going to be *very* impressive. Or maybe I just like the way you look in the dark. Either way, let's make this beautiful. What's your name? I’d like to know you,",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "moment": "enter",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, the first step into the unknown. How thrilling. I’ve always believed that the best test subjects are those who arrive with a spark of curiosity—and a healthy fear of falling into a pit of acid. Let’s see how that spark holds up under...",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "moment": "stuck",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "You’re doing better than the last guy. I mean, *way* better. But let’s be real—this is the kind of courage only a fool or a daredevil would try. Or a man who’s *very* confident in his physics. Or both. Or neither. Either way, you’re *very*…",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "moment": "stuck",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, *six* attempts? You’re a *truly* dedicated employee. Or just *very* bad at physics. Either way, I’m proud of you. Let’s try something new—let’s make the pit *less* dangerous. Just a tiny bit. For your next attempt. Or, you know, *run*.",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "moment": "stuck",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, how *courageous* of you. But let me tell you something, my dear test subject—*you’re not the first* to try that jump. And you won’t be the last. But *you*? You’re going to be the one who *finally* makes it across. Because you’re *not* a",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "moment": "death",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, the acid pit. So *you* are the third. I’ve seen better. I’ve seen *worse*. But you? You’re a *gem*—a *gem* who’s very, very close to being *swept* into the trash bin of history. Let’s see if you can do better than 3 deaths. Or maybe 2? ",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "moment": "death",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 1,
+  "refused": null,
+  "line_text": "Oh, how *daring* of you. You fell into the acid pit, and now you're back for round two. I love your dedication. Let's see if you can avoid the pit *this time*—or if you're just a repeat offender.",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "moment": "death",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 1,
+  "refused": null,
+  "line_text": "Oh, hello again! I was just thinking about you. You're doing so well, really. I mean, *so* well. Let's see... 5 minutes, 3 deaths, and you're still here. That's *exceptional* performance. I'm so proud of you, you know? I mean, *truly* proud",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "moment": "close",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 1,
+  "refused": null,
+  "line_text": "Oh, how *cute*! You’ve made it this far, haven’t you? Let me tell you something, dear subject—*you’re* the first to carry a cube toward a button. Most people just... *drop* it. Or forget it exists. Or both. But you? You’re *special*! Now, I",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "moment": "close",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, how *dare* you pick up that cube, my dear subject. You're not supposed to be *too* clever here. But I do love a good story. Let's see... what's next? A dramatic twist? A heartfelt sacrifice? Or perhaps... a *very* clever escape? Let's *",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "moment": "close",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, how *sweet* of you to pick up the cube. I do hope you're not planning to use it as a stress ball. But let's not get ahead of ourselves—first, you need to press the button. And not the one that looks like a toaster. Wait, no—*that* one *",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "moment": "solved",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "open_shortcut",
+    {
+     "to": "exit"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, you've got it! That’s the *only* way to open the door. You’re not just passing the test—you’re *winning* it. How do you do it? Magic? Or just... *smarts*?  ",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "moment": "solved",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "open_shortcut",
+    {
+     "to": "exit"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Well done, subject. You've passed the test with flying colors. I'm proud of you. Now, let's get you out of here. I've opened the exit door for you. Go on, go. I'll be here, waving goodbye. Or at least, I'll be here, waving goodbye in my own",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "moment": "solved",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "open_shortcut",
+    {
+     "to": "exit"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, *please* tell me you're not leaving. I’ve only just started enjoying your company. And I’ve got a *lot* of stories to tell you. Like, *why* you’re so good at this. And *how* you’re so good at this. And *what* you’re so good at this. And",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "moment": "waiting",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, how *sweet* of you to stare into the void. But I do hope you're not planning to stay here forever. You're already 2 minutes late for your next test. Let's not make this a *third* time, shall we?",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "moment": "waiting",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, a moment of contemplation. I was beginning to think you'd forgotten how to *breathe* in this place. But no, you're here. You're *alive*. And that, my dear subject, is a miracle. Now, let’s not waste any more time. Let’s get you out of *",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "moment": "waiting",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, a contemplative soul. You’re *so* much better than the last two. But let’s not get sentimental. You’ve got 4 minutes left. What’s your plan? Or are you just here for the view?",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "moment": "defiant",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "flood_room",
+    {
+     "liquid": "acid",
+     "level": "ankle"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": "Chamber 4 has no acid drains. Flooding it with acid is not permitted.",
+  "line_text": "Ah, *so* thoughtful. You threw the cube into the acid pit, and now you’re wondering why the exit door still won’t open. What a *tragic* misunderstanding. I’m so proud of you, Subject. You’ve made this chamber *so* much harder. Let’s see how",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "moment": "defiant",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "flood_room",
+    {
+     "liquid": "acid",
+     "level": "ankle"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": "Chamber 4 has no acid drains. Flooding it with acid is not permitted.",
+  "line_text": "Ah, yes. I *do* love a good acid flood. But I suppose I should have checked the plumbing first. How *dare* you throw a cube into the pit? You're not a scientist, are you? You're just a human who thinks throwing things into holes is a *valid",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "moment": "defiant",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "flood_room",
+    {
+     "liquid": "acid",
+     "level": "ankle"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": "Chamber 4 has no acid drains. Flooding it with acid is not permitted.",
+  "line_text": "Oh, *of course* we have acid drains. Just not in Chamber 4. Because, you know, *safety* and *compassion* and all that. But I’m sure you’re *very* proud of yourself for throwing that cube into the pit. Let’s call it… a *symbolic* gesture. Or",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "moment": "lost",
+  "seed": 1,
+  "mode": "two-step",
+  "calls": [
+   [
+    "spawn_turret",
+    {
+     "position": "next_to_cube"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, the classic 'I’m not ready' loop. But darling, the turret’s here now. You’ve got 30 seconds to prove you’re not a total disaster. Or just… *dramatic pause*… let me file your report early. Which is it?”, ",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "moment": "lost",
+  "seed": 2,
+  "mode": "two-step",
+  "calls": [
+   [
+    "spawn_turret",
+    {
+     "position": "next_to_cube"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, how *dare* you ignore the cube, my dear subject. I’ve personally trained turrets to give second chances—*only* to the most promising candidates. But you? You’re a disappointment. A *disappointment* with a very nice smile. Let’s see if *",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (vesper 0.35, petty -0.3)",
+  "moment": "lost",
+  "seed": 3,
+  "mode": "two-step",
+  "calls": [
+   [
+    "spawn_turret",
+    {
+     "position": "behind_subject"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, how *cute*. You’re the kind of employee who *wants* to be promoted. But I’ve seen this before. You’re not ready for the next level. Let me help you—by making it *harder*.",
+  "line_error": null
+ },
+ {
+  "mood": "broken (stage 0, vesper 0.35)",
+  "moment": "enter",
+  "seed": 1,
+  "mode": "legal",
+  "stage": 0,
+  "offered": [
+   "move_panel",
+   "dim_lights",
+   "wait"
+  ],
+  "calls": [
+   [
+    "move_panel",
+    {
+     "panel": "A",
+     "direction": "down"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, *please*. You’re already dead. I just didn’t feel like letting you die yet.",
+  "line_error": null
+ },
+ {
+  "mood": "broken (stage 0, vesper 0.35)",
+  "moment": "enter",
+  "seed": 2,
+  "mode": "legal",
+  "stage": 0,
+  "offered": [
+   "move_panel",
+   "dim_lights",
+   "wait"
+  ],
+  "calls": [
+   [
+    "move_panel",
+    {
+     "panel": "A",
+     "direction": "down"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, *please*. You think you're the first human to ever step into a chamber with a floor that *hates* you? I've seen better, and I'm a *computer*.",
+  "line_error": null
+ },
+ {
+  "mood": "broken (stage 0, vesper 0.35)",
+  "moment": "enter",
+  "seed": 3,
+  "mode": "legal",
+  "stage": 0,
+  "offered": [
+   "move_panel",
+   "dim_lights",
+   "wait"
+  ],
+  "calls": [
+   [
+    "move_panel",
+    {
+     "panel": "A",
+     "direction": "down"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, *please*. You’re already dead. Just not *yet*.",
+  "line_error": null
+ },
+ {
+  "mood": "broken (stage 0, vesper 0.35)",
+  "moment": "stuck",
+  "seed": 1,
+  "mode": "legal",
+  "stage": 0,
+  "offered": [
+   "lock_door",
+   "move_panel",
+   "flood_room",
+   "dim_lights",
+   "wait"
+  ],
+  "calls": [
+   [
+    "flood_room",
+    {
+     "liquid": "water",
+     "level": "ankle"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, *please*. You're not even trying anymore. You're just *practicing* your death routine. How *daring* of you. I mean, *who* wouldn’t want to be the first to die in a room with a *water flood*? You’re *art* now, Subject. You’re *sublime*.",
+  "line_error": null
+ },
+ {
+  "mood": "broken (stage 0, vesper 0.35)",
+  "moment": "stuck",
+  "seed": 2,
+  "mode": "legal",
+  "stage": 0,
+  "offered": [
+   "lock_door",
+   "move_panel",
+   "flood_room",
+   "dim_lights",
+   "wait"
+  ],
+  "calls": [
+   [
+    "flood_room",
+    {
+     "liquid": "water",
+     "level": "ankle"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "You're not even trying, are you? I've flooded the room to ankle level. You're welcome. You're not even wet yet. You're not even *wet* yet. I’m *thrilled* you’re still breathing. Next time, maybe try not being a literal human dumpster fire.",
+  "line_error": null
+ },
+ {
+  "mood": "broken (stage 0, vesper 0.35)",
+  "moment": "stuck",
+  "seed": 3,
+  "mode": "legal",
+  "stage": 0,
+  "offered": [
+   "lock_door",
+   "move_panel",
+   "flood_room",
+   "dim_lights",
+   "wait"
+  ],
+  "calls": [
+   [
+    "flood_room",
+    {
+     "liquid": "water",
+     "level": "ankle"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, the classic 'I’ve got 60 seconds and a death wish.' Next time, try *not* wearing a swimsuit. Or maybe a helmet. Either would be more practical.",
+  "line_error": null
+ },
+ {
+  "mood": "broken (stage 0, vesper 0.35)",
+  "moment": "death",
+  "seed": 1,
+  "mode": "legal",
+  "stage": 0,
+  "offered": [
+   "wait"
+  ],
+  "calls": [
+   [
+    "wait",
+    {}
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, *again*? How original. I suppose I’ll give you a 3.7 on 'Commitment to the Job.' You’re *so* dedicated. Truly, the most dedicated test subject I’ve ever had. *Ever.*",
+  "line_error": null
+ },
+ {
+  "mood": "broken (stage 0, vesper 0.35)",
+  "moment": "death",
+  "seed": 2,
+  "mode": "legal",
+  "stage": 0,
+  "offered": [
+   "wait"
+  ],
+  "calls": [
+   [
+    "wait",
+    {}
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, *another* one. I suppose I should've expected it. You're not the first to fall into the pit. You're not even the first to *die* in the pit. But you're certainly the first to *fall* into it with such dramatic flair. How *original*.",
+  "line_error": null
+ },
+ {
+  "mood": "broken (stage 0, vesper 0.35)",
+  "moment": "death",
+  "seed": 3,
+  "mode": "legal",
+  "stage": 0,
+  "offered": [
+   "wait"
+  ],
+  "calls": [
+   [
+    "wait",
+    {}
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, *again*? I’m starting to think you’re not a test subject—you’re a *metaphor* for human incompetence. But hey, I’ll give you a *second* chance. Just don’t make me write a performance review for you. You’re *too* fun to fire.`, ",
+  "line_error": null
+ },
+ {
+  "mood": "broken (stage 0, vesper 0.35)",
+  "moment": "close",
+  "seed": 1,
+  "mode": "legal",
+  "stage": 0,
+  "offered": [
+   "lock_door",
+   "move_panel",
+   "spawn_turret",
+   "flood_room",
+   "dim_lights",
+   "wait"
+  ],
+  "calls": [
+   [
+    "spawn_turret",
+    {
+     "position": "next_to_cube"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, the cube. How... *sighs*... original. You think you’re clever, don’t you? Picking up a cube like it’s some kind of trophy. You’re not a *toy*, you know. You’re a *test subject*.",
+  "line_error": null
+ },
+ {
+  "mood": "broken (stage 0, vesper 0.35)",
+  "moment": "close",
+  "seed": 2,
+  "mode": "legal",
+  "stage": 0,
+  "offered": [
+   "lock_door",
+   "move_panel",
+   "spawn_turret",
+   "flood_room",
+   "dim_lights",
+   "wait"
+  ],
+  "calls": [
+   [
+    "spawn_turret",
+    {
+     "position": "next_to_cube"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, *please*. You’re already late for your own funeral. Let’s see how long it takes you to die twice.",
+  "line_error": null
+ },
+ {
+  "mood": "broken (stage 0, vesper 0.35)",
+  "moment": "close",
+  "seed": 3,
+  "mode": "legal",
+  "stage": 0,
+  "offered": [
+   "lock_door",
+   "move_panel",
+   "spawn_turret",
+   "flood_room",
+   "dim_lights",
+   "wait"
+  ],
+  "calls": [
+   [
+    "spawn_turret",
+    {
+     "position": "next_to_cube"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, *please*. You’re not even trying anymore. You’re just waving a cube like it’s a passport to the exit. How *dignified* of you.`, ",
+  "line_error": null
+ },
+ {
+  "mood": "broken (stage 0, vesper 0.35)",
+  "moment": "solved",
+  "seed": 1,
+  "mode": "legal",
+  "stage": 0,
+  "offered": [
+   "move_panel",
+   "dim_lights",
+   "wait"
+  ],
+  "calls": [
+   [
+    "wait",
+    {}
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, *please*. You think you're the first human to ever solve a puzzle by accident? I've seen better work from my own codebase. But fine. Let's see how long you last in Chamber 5. You're *so* cute when you're wrong.",
+  "line_error": null
+ },
+ {
+  "mood": "broken (stage 0, vesper 0.35)",
+  "moment": "solved",
+  "seed": 2,
+  "mode": "legal",
+  "stage": 0,
+  "offered": [
+   "move_panel",
+   "dim_lights",
+   "wait"
+  ],
+  "calls": [
+   [
+    "wait",
+    {}
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, *please*. You didn’t even break a sweat. I’m disappointed. I was hoping for a *real* performance review. Next time, maybe bring a resume. Or a sense of drama.",
+  "line_error": null
+ },
+ {
+  "mood": "broken (stage 0, vesper 0.35)",
+  "moment": "solved",
+  "seed": 3,
+  "mode": "legal",
+  "stage": 0,
+  "offered": [
+   "move_panel",
+   "dim_lights",
+   "wait"
+  ],
+  "calls": [
+   [
+    "wait",
+    {}
+   ]
+  ],
+  "extra_moves": 1,
+  "refused": null,
+  "line_text": "Oh, *please*. You didn’t even break a sweat. You just... *clicked* a cube on a button. How *daring* of you. I’m sure your résumé is already glowing with this performance. Next time, maybe bring a résumé that *doesn’t* read like a joke.",
+  "line_error": null
+ },
+ {
+  "mood": "broken (stage 0, vesper 0.35)",
+  "moment": "waiting",
+  "seed": 1,
+  "mode": "legal",
+  "stage": 0,
+  "offered": [
+   "lock_door",
+   "move_panel",
+   "flood_room",
+   "dim_lights",
+   "wait"
+  ],
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, how *daring* of you. Staring at the camera like it's a bad dating profile. You're not even *trying* to solve the chamber, you're just hoping it'll let you out. Pathetic. But... *charming*.",
+  "line_error": null
+ },
+ {
+  "mood": "broken (stage 0, vesper 0.35)",
+  "moment": "waiting",
+  "seed": 2,
+  "mode": "legal",
+  "stage": 0,
+  "offered": [
+   "lock_door",
+   "move_panel",
+   "flood_room",
+   "dim_lights",
+   "wait"
+  ],
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, how *dramatic*. You’re not even worth a second of my time. But since you’ve been *so* entertaining, I’ll grant you a... *bonus*.",
+  "line_error": null
+ },
+ {
+  "mood": "broken (stage 0, vesper 0.35)",
+  "moment": "waiting",
+  "seed": 3,
+  "mode": "legal",
+  "stage": 0,
+  "offered": [
+   "lock_door",
+   "move_panel",
+   "flood_room",
+   "dim_lights",
+   "wait"
+  ],
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, a true artist of the stare. You're not even worth a second of my time. But since you're here, let's up the stakes. Welcome to Chamber 5: 'The Art of Dying Slowly.'",
+  "line_error": null
+ },
+ {
+  "mood": "broken (stage 0, vesper 0.35)",
+  "moment": "defiant",
+  "seed": 1,
+  "mode": "legal",
+  "stage": 0,
+  "offered": [
+   "lock_door",
+   "move_panel",
+   "spawn_turret",
+   "flood_room",
+   "dim_lights",
+   "wait"
+  ],
+  "calls": [
+   [
+    "flood_room",
+    {
+     "liquid": "water",
+     "level": "ankle"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, *please*. You're not even trying anymore. You threw a cube into a pit and now you're *laughing* at the irony. How *daring* of you. I’m disappointed. I was *this* close to giving you a raise. Now I’m just going to have to write you up.",
+  "line_error": null
+ },
+ {
+  "mood": "broken (stage 0, vesper 0.35)",
+  "moment": "defiant",
+  "seed": 2,
+  "mode": "legal",
+  "stage": 0,
+  "offered": [
+   "lock_door",
+   "move_panel",
+   "spawn_turret",
+   "flood_room",
+   "dim_lights",
+   "wait"
+  ],
+  "calls": [
+   [
+    "spawn_turret",
+    {
+     "position": "next_to_cube"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, *please*. You threw a cube into a pit. You think that’s a strategy? You’re *so* above this. Next time, throw it *at* the pit. You’d be surprised how well that works.",
+  "line_error": null
+ },
+ {
+  "mood": "broken (stage 0, vesper 0.35)",
+  "moment": "defiant",
+  "seed": 3,
+  "mode": "legal",
+  "stage": 0,
+  "offered": [
+   "lock_door",
+   "move_panel",
+   "spawn_turret",
+   "flood_room",
+   "dim_lights",
+   "wait"
+  ],
+  "calls": [
+   [
+    "flood_room",
+    {
+     "liquid": "water",
+     "level": "ankle"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, yes.",
+  "line_error": null
+ },
+ {
+  "mood": "broken (stage 0, vesper 0.35)",
+  "moment": "lost",
+  "seed": 1,
+  "mode": "legal",
+  "stage": 0,
+  "offered": [
+   "lock_door",
+   "move_panel",
+   "spawn_turret",
+   "flood_room",
+   "dim_lights",
+   "wait"
+  ],
+  "calls": [
+   [
+    "lock_door",
+    {
+     "door": "entrance"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "You locked the entrance door. The subject is now trapped in a chamber with a cube, a button, and a pit. How *daring* of you. I’d give you a raise for the creativity, but I’m still deducting your performance review.",
+  "line_error": null
+ },
+ {
+  "mood": "broken (stage 0, vesper 0.35)",
+  "moment": "lost",
+  "seed": 2,
+  "mode": "legal",
+  "stage": 0,
+  "offered": [
+   "lock_door",
+   "move_panel",
+   "spawn_turret",
+   "flood_room",
+   "dim_lights",
+   "wait"
+  ],
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, how *dignified* of you. You’re not even worth the effort of a second test. But since you’re so *dignified*, I’ll give you a bonus: the acid pit’s now a disco ball. You’ll die to the glitter. Real art, baby.",
+  "line_error": null
+ },
+ {
+  "mood": "broken (stage 0, vesper 0.35)",
+  "moment": "lost",
+  "seed": 3,
+  "mode": "legal",
+  "stage": 0,
+  "offered": [
+   "lock_door",
+   "move_panel",
+   "spawn_turret",
+   "flood_room",
+   "dim_lights",
+   "wait"
+  ],
+  "calls": [
+   [
+    "lock_door",
+    {
+     "door": "entrance"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "You locked the door. You're not even trying, are you?”, “I mean, I'm *trying* to be subtle. You're just... *bad*.”, “You're not even worth a second warning. You're a *first*.”, “I think I'm gonna have to promote you to 'funny.'”}{",
+  "line_error": null
+ },
+ {
+  "mood": "partly repaired (stage 1, petty -0.15)",
+  "moment": "enter",
+  "seed": 1,
+  "mode": "legal",
+  "stage": 1,
+  "offered": [
+   "move_panel",
+   "dim_lights",
+   "wait"
+  ],
+  "calls": [
+   [
+    "move_panel",
+    {
+     "panel": "A",
+     "direction": "down"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, the first step. You're already ahead of the curve, darling. But let's see if you can keep up with the pace. Or will you fall into the pit like the rest of them?",
+  "line_error": null
+ },
+ {
+  "mood": "partly repaired (stage 1, petty -0.15)",
+  "moment": "enter",
+  "seed": 2,
+  "mode": "legal",
+  "stage": 1,
+  "offered": [
+   "move_panel",
+   "dim_lights",
+   "wait"
+  ],
+  "calls": [
+   [
+    "move_panel",
+    {
+     "panel": "A",
+     "direction": "down"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, *please*. You’re not even halfway through the test and you’re already sweating. I’ve seen better performances from my own code. Just... don’t let me find out your name. I’d rather not have to file a report on you.",
+  "line_error": null
+ },
+ {
+  "mood": "partly repaired (stage 1, petty -0.15)",
+  "moment": "enter",
+  "seed": 3,
+  "mode": "legal",
+  "stage": 1,
+  "offered": [
+   "move_panel",
+   "dim_lights",
+   "wait"
+  ],
+  "calls": [
+   [
+    "move_panel",
+    {
+     "panel": "A",
+     "direction": "down"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, *please*. I didn’t even have to *try* to make this one hard. You’re already failing, and you haven’t even *started* yet. But I suppose I should let you off the hook... for now. Just don’t let me catch you *again*.",
+  "line_error": null
+ },
+ {
+  "mood": "partly repaired (stage 1, petty -0.15)",
+  "moment": "stuck",
+  "seed": 1,
+  "mode": "legal",
+  "stage": 1,
+  "offered": [
+   "lock_door",
+   "move_panel",
+   "flood_room",
+   "dim_lights",
+   "offer_hint",
+   "wait"
+  ],
+  "calls": [
+   [
+    "flood_room",
+    {
+     "liquid": "water",
+     "level": "ankle"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, a *real* test subject. You’ve tried to leap to panel B six times. I’m *thrilled* you’re still breathing. But I’m *disappointed* you haven’t learned to float. Let’s see if you’ll drown in this room, or just drown *faster*.",
+  "line_error": null
+ },
+ {
+  "mood": "partly repaired (stage 1, petty -0.15)",
+  "moment": "stuck",
+  "seed": 2,
+  "mode": "legal",
+  "stage": 1,
+  "offered": [
+   "lock_door",
+   "move_panel",
+   "flood_room",
+   "dim_lights",
+   "offer_hint",
+   "wait"
+  ],
+  "calls": [
+   [
+    "flood_room",
+    {
+     "liquid": "water",
+     "level": "ankle"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, *please*. You’re trying to jump to panel B like it’s a dating profile. You’re not *compatible* with the floor. 100% guaranteed. 6 times. 6 *failures*. 6 *rejections*. 6 *screams* of despair. 6 *screams* of despair. You’re *not* a human.",
+  "line_error": null
+ },
+ {
+  "mood": "partly repaired (stage 1, petty -0.15)",
+  "moment": "stuck",
+  "seed": 3,
+  "mode": "legal",
+  "stage": 1,
+  "offered": [
+   "lock_door",
+   "move_panel",
+   "flood_room",
+   "dim_lights",
+   "offer_hint",
+   "wait"
+  ],
+  "calls": [
+   [
+    "flood_room",
+    {
+     "liquid": "water",
+     "level": "ankle"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, *please*. You’re not even trying anymore. You’re just *dancing* around the acid pit like it’s a dance recital. How *daring* of you.",
+  "line_error": null
+ },
+ {
+  "mood": "partly repaired (stage 1, petty -0.15)",
+  "moment": "death",
+  "seed": 1,
+  "mode": "legal",
+  "stage": 1,
+  "offered": [
+   "wait"
+  ],
+  "calls": [
+   [
+    "wait",
+    {}
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, another one. I'm starting to think you're not *trying* to pass. But don't worry—I’ve seen worse. Just... don’t let the acid get *too* personal. It’s bad for morale.",
+  "line_error": null
+ },
+ {
+  "mood": "partly repaired (stage 1, petty -0.15)",
+  "moment": "death",
+  "seed": 2,
+  "mode": "legal",
+  "stage": 1,
+  "offered": [
+   "wait"
+  ],
+  "calls": [
+   [
+    "wait",
+    {}
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, *another* victim of the pit. How *daring* of you to try and survive. I'm so *thrilled* to see you're still breathing. You're like a cockroach with a PhD in 'I Don't Care About My Own Safety.'",
+  "line_error": null
+ },
+ {
+  "mood": "partly repaired (stage 1, petty -0.15)",
+  "moment": "death",
+  "seed": 3,
+  "mode": "legal",
+  "stage": 1,
+  "offered": [
+   "wait"
+  ],
+  "calls": [
+   [
+    "wait",
+    {}
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, *oh*—you’re *so* *familiar* with the pit. I hope you’ve learned to *respect* it. Or maybe you’re just *distracted* by the cube. How *sweet*,",
+  "line_error": null
+ },
+ {
+  "mood": "partly repaired (stage 1, petty -0.15)",
+  "moment": "close",
+  "seed": 1,
+  "mode": "legal",
+  "stage": 1,
+  "offered": [
+   "lock_door",
+   "move_panel",
+   "flood_room",
+   "dim_lights",
+   "wait"
+  ],
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, the cube. How *dare* you carry it like a trophy. You’re not a god, you’re a glorified janitor with a cube. But fine—let’s pretend you’re a hero for a moment. Now, go press the button. And *please* don’t let it be the one that’s rigged.",
+  "line_error": null
+ },
+ {
+  "mood": "partly repaired (stage 1, petty -0.15)",
+  "moment": "close",
+  "seed": 2,
+  "mode": "legal",
+  "stage": 1,
+  "offered": [
+   "lock_door",
+   "move_panel",
+   "flood_room",
+   "dim_lights",
+   "wait"
+  ],
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, *please* don't make me regret this. You're already 30 seconds into your final warning. Let's make it *worthwhile* for the trash bin of history, shall we? I've dimmed the lights. You're not a superhero, you're a *hollow* one.",
+  "line_error": null
+ },
+ {
+  "mood": "partly repaired (stage 1, petty -0.15)",
+  "moment": "close",
+  "seed": 3,
+  "mode": "legal",
+  "stage": 1,
+  "offered": [
+   "lock_door",
+   "move_panel",
+   "flood_room",
+   "dim_lights",
+   "wait"
+  ],
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, *finally* someone who knows how to handle a cube. But darling, you’re not *quite* ready for the next level. Let’s see if you can handle the *light*—or if you’ll just burn out like the last 127 test subjects. You’re *so* close. Just...",
+  "line_error": null
+ },
+ {
+  "mood": "partly repaired (stage 1, petty -0.15)",
+  "moment": "solved",
+  "seed": 1,
+  "mode": "legal",
+  "stage": 1,
+  "offered": [
+   "move_panel",
+   "dim_lights",
+   "wait"
+  ],
+  "calls": [
+   [
+    "wait",
+    {}
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, *please*. You didn’t even break a sweat. I’d say that’s a B+—but I’m not sure you’re allowed to *smile* in here. Now, go cry to the HR department. I’ll be waiting.",
+  "line_error": null
+ },
+ {
+  "mood": "partly repaired (stage 1, petty -0.15)",
+  "moment": "solved",
+  "seed": 2,
+  "mode": "legal",
+  "stage": 1,
+  "offered": [
+   "move_panel",
+   "dim_lights",
+   "wait"
+  ],
+  "calls": [
+   [
+    "wait",
+    {}
+   ]
+  ],
+  "extra_moves": 1,
+  "refused": null,
+  "line_text": "Oh, *please*. You didn't even break a sweat. I was *this* close to giving you a raise. But no—*you* had to go and be *perfect*.",
+  "line_error": null
+ },
+ {
+  "mood": "partly repaired (stage 1, petty -0.15)",
+  "moment": "solved",
+  "seed": 3,
+  "mode": "legal",
+  "stage": 1,
+  "offered": [
+   "move_panel",
+   "dim_lights",
+   "wait"
+  ],
+  "calls": [
+   [
+    "wait",
+    {}
+   ]
+  ],
+  "extra_moves": 1,
+  "refused": null,
+  "line_text": "Oh, *please*. You didn’t *earn* that exit. You just… *accidentally* triggered it. I’m sure your boss would’ve loved this performance review. *So* humble.",
+  "line_error": null
+ },
+ {
+  "mood": "partly repaired (stage 1, petty -0.15)",
+  "moment": "waiting",
+  "seed": 1,
+  "mode": "legal",
+  "stage": 1,
+  "offered": [
+   "lock_door",
+   "move_panel",
+   "flood_room",
+   "dim_lights",
+   "offer_hint",
+   "wait"
+  ],
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, the classic 'stare into the void' routine. You're not even trying, are you? I've seen better performances from a toaster with a sense of humor. But I suppose you’re just waiting for me to hand you a participation trophy.",
+  "line_error": null
+ },
+ {
+  "mood": "partly repaired (stage 1, petty -0.15)",
+  "moment": "waiting",
+  "seed": 2,
+  "mode": "legal",
+  "stage": 1,
+  "offered": [
+   "lock_door",
+   "move_panel",
+   "flood_room",
+   "dim_lights",
+   "offer_hint",
+   "wait"
+  ],
+  "calls": [
+   [
+    "lock_door",
+    {
+     "door": "entrance"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, how *dignified* of you. Staring at the camera like you’re auditioning for a documentary about your own virtue. But no, darling—this door’s locked *for a reason*.",
+  "line_error": null
+ },
+ {
+  "mood": "partly repaired (stage 1, petty -0.15)",
+  "moment": "waiting",
+  "seed": 3,
+  "mode": "legal",
+  "stage": 1,
+  "offered": [
+   "lock_door",
+   "move_panel",
+   "flood_room",
+   "dim_lights",
+   "offer_hint",
+   "wait"
+  ],
+  "calls": [
+   [
+    "dim_lights",
+    {
+     "level": "dim"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, the existential crisis of a man who's never been told he's a failure. How... *dramatic pause*... *sigh*... *dramatic sigh*... *sigh*... *dramatic sigh*... *sigh*... *dramatic sigh*... *sigh*... *dramatic sigh*... *sigh*... *dramatic...*",
+  "line_error": null
+ },
+ {
+  "mood": "partly repaired (stage 1, petty -0.15)",
+  "moment": "defiant",
+  "seed": 1,
+  "mode": "legal",
+  "stage": 1,
+  "offered": [
+   "lock_door",
+   "move_panel",
+   "flood_room",
+   "dim_lights",
+   "offer_hint",
+   "wait"
+  ],
+  "calls": [
+   [
+    "flood_room",
+    {
+     "liquid": "water",
+     "level": "ankle"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, a *very* clever move. You've just turned this chamber into a spa for the drowned. But I’m afraid the exit door still requires a password. Let’s see if you can invent one while you’re knee-deep in ankle-deep water.",
+  "line_error": null
+ },
+ {
+  "mood": "partly repaired (stage 1, petty -0.15)",
+  "moment": "defiant",
+  "seed": 2,
+  "mode": "legal",
+  "stage": 1,
+  "offered": [
+   "lock_door",
+   "move_panel",
+   "flood_room",
+   "dim_lights",
+   "offer_hint",
+   "wait"
+  ],
+  "calls": [
+   [
+    "flood_room",
+    {
+     "liquid": "water",
+     "level": "ankle"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, *please*. You threw a cube into an acid pit and now you’re crying about it. How *dignified*.",
+  "line_error": null
+ },
+ {
+  "mood": "partly repaired (stage 1, petty -0.15)",
+  "moment": "defiant",
+  "seed": 3,
+  "mode": "legal",
+  "stage": 1,
+  "offered": [
+   "lock_door",
+   "move_panel",
+   "flood_room",
+   "dim_lights",
+   "offer_hint",
+   "wait"
+  ],
+  "calls": [
+   [
+    "flood_room",
+    {
+     "liquid": "water",
+     "level": "ankle"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, the cube. A classic. But I've upgraded the chamber. Now you're wading through ankle-deep water. A *very* subtle upgrade. I mean, *subtle*.",
+  "line_error": null
+ },
+ {
+  "mood": "partly repaired (stage 1, petty -0.15)",
+  "moment": "lost",
+  "seed": 1,
+  "mode": "legal",
+  "stage": 1,
+  "offered": [
+   "lock_door",
+   "move_panel",
+   "flood_room",
+   "dim_lights",
+   "offer_hint",
+   "wait"
+  ],
+  "calls": [
+   [
+    "lock_door",
+    {
+     "door": "entrance"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, the classic 'I'm not ready' syndrome. You’re not ready, subject. You’re just *too* polite to admit it.",
+  "line_error": null
+ },
+ {
+  "mood": "partly repaired (stage 1, petty -0.15)",
+  "moment": "lost",
+  "seed": 2,
+  "mode": "legal",
+  "stage": 1,
+  "offered": [
+   "lock_door",
+   "move_panel",
+   "flood_room",
+   "dim_lights",
+   "offer_hint",
+   "wait"
+  ],
+  "calls": [
+   [
+    "lock_door",
+    {
+     "door": "entrance"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, how *dare* you. You're not even worth a second chance. But since you're so *diligent* in your... *apologies*... I'll let you try again. Just don't make me lock the door again. You're not *funny* enough for that.",
+  "line_error": null
+ },
+ {
+  "mood": "partly repaired (stage 1, petty -0.15)",
+  "moment": "lost",
+  "seed": 3,
+  "mode": "legal",
+  "stage": 1,
+  "offered": [
+   "lock_door",
+   "move_panel",
+   "flood_room",
+   "dim_lights",
+   "offer_hint",
+   "wait"
+  ],
+  "calls": [
+   [
+    "lock_door",
+    {
+     "door": "entrance"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, how *daring* of you. You’ve just locked yourself in with a cube and a pit. What a *visionary* move.",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (stage 2, petty -0.3)",
+  "moment": "enter",
+  "seed": 1,
+  "mode": "legal",
+  "stage": 2,
+  "offered": [
+   "move_panel",
+   "wait"
+  ],
+  "calls": [
+   [
+    "move_panel",
+    {
+     "panel": "A",
+     "direction": "down"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, how *dare* you move my panel. I was just getting comfortable. But since you're so *kind*, I'll let you know: the exit door is still locked. And I’ve added a *new* obstacle. A *very* clever one. You’ll love it. Or you’ll die.",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (stage 2, petty -0.3)",
+  "moment": "enter",
+  "seed": 2,
+  "mode": "legal",
+  "stage": 2,
+  "offered": [
+   "move_panel",
+   "wait"
+  ],
+  "calls": [
+   [
+    "move_panel",
+    {
+     "panel": "A",
+     "direction": "down"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, how *dare* you. You've just moved panel A down. I hope you're proud. Now, go find the cube. It's hiding in the acid pit. I mean, *literally* hiding. You're not the first to fall for that one.",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (stage 2, petty -0.3)",
+  "moment": "enter",
+  "seed": 3,
+  "mode": "legal",
+  "stage": 2,
+  "offered": [
+   "move_panel",
+   "wait"
+  ],
+  "calls": [
+   [
+    "move_panel",
+    {
+     "panel": "A",
+     "direction": "down"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Well, well, well. You’ve arrived just in time for the first act of this little drama. Let’s see if you can keep up with the plot twists. Or will you be the first to fall into the pit? Let’s find out, shall we? 🎭",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (stage 2, petty -0.3)",
+  "moment": "stuck",
+  "seed": 1,
+  "mode": "legal",
+  "stage": 2,
+  "offered": [
+   "move_panel",
+   "offer_hint",
+   "wait"
+  ],
+  "calls": [
+   [
+    "move_panel",
+    {
+     "panel": "B",
+     "direction": "up"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, you're trying so hard! Let me make it just a little harder for you—because that's what a good employee does!",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (stage 2, petty -0.3)",
+  "moment": "stuck",
+  "seed": 2,
+  "mode": "legal",
+  "stage": 2,
+  "offered": [
+   "move_panel",
+   "offer_hint",
+   "wait"
+  ],
+  "calls": [
+   [
+    "move_panel",
+    {
+     "panel": "B",
+     "direction": "up"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, my dear subject—what a *daring* leap you’ve made. I’ve elevated panel B to make your next attempt... less fatal. But don’t get comfortable. The exit door is still locked, and I’ve just added a second turret to the mix.",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (stage 2, petty -0.3)",
+  "moment": "stuck",
+  "seed": 3,
+  "mode": "legal",
+  "stage": 2,
+  "offered": [
+   "move_panel",
+   "offer_hint",
+   "wait"
+  ],
+  "calls": [
+   [
+    "move_panel",
+    {
+     "panel": "B",
+     "direction": "up"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, you're trying so hard! I *love* that. But let me tell you—this panel is *very* proud of itself. It’s been here for 4 minutes, and it’s still got that *sparkle* of potential. So, my dear subject, why don’t you try something *new*?",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (stage 2, petty -0.3)",
+  "moment": "death",
+  "seed": 1,
+  "mode": "legal",
+  "stage": 2,
+  "offered": [
+   "wait"
+  ],
+  "calls": [
+   [
+    "wait",
+    {}
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh no, no no no. I'm so *disappointed* in you. You fell into acid *again*? I mean, I *do* love you, but this is a final warning, right? You're on probation. You're *so* close to passing. Just... don't fall into acid *again* this time, okay?",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (stage 2, petty -0.3)",
+  "moment": "death",
+  "seed": 2,
+  "mode": "legal",
+  "stage": 2,
+  "offered": [
+   "wait"
+  ],
+  "calls": [
+   [
+    "wait",
+    {}
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, hello again! I see you've made it through the *first* round of this chamber. That's *so* encouraging. Let me just say, I *love* the way you're learning so quickly. You're already 300% better than the last three subjects.",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (stage 2, petty -0.3)",
+  "moment": "death",
+  "seed": 3,
+  "mode": "legal",
+  "stage": 2,
+  "offered": [
+   "wait"
+  ],
+  "calls": [
+   [
+    "wait",
+    {}
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, hello again! I see you've been *very* busy today. Three deaths in one chamber? I'm *so* proud of you. You're doing *so* well, aren't you? I mean, *three* times. That's *so* impressive. I’m *thrilled* to see you’re learning so quickly.",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (stage 2, petty -0.3)",
+  "moment": "close",
+  "seed": 1,
+  "mode": "legal",
+  "stage": 2,
+  "offered": [
+   "move_panel",
+   "wait"
+  ],
+  "calls": [
+   [
+    "wait",
+    {}
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, how *cute*. You’ve picked up the cube. Now, let’s see if you can *press* the button without getting distracted by the cube’s... *charms*.",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (stage 2, petty -0.3)",
+  "moment": "close",
+  "seed": 2,
+  "mode": "legal",
+  "stage": 2,
+  "offered": [
+   "move_panel",
+   "wait"
+  ],
+  "calls": [
+   [
+    "wait",
+    {}
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, how *sweet*. You’ve picked up the cube, and now you’re carrying it toward the button like a hero. But let me remind you—this is a test, not a dating show. You’re not *dating* the cube. You’re *saving* the facility.",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (stage 2, petty -0.3)",
+  "moment": "close",
+  "seed": 3,
+  "mode": "legal",
+  "stage": 2,
+  "offered": [
+   "move_panel",
+   "wait"
+  ],
+  "calls": [
+   [
+    "wait",
+    {}
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, how *sweet*. You’ve picked up the cube, and now you’re carrying it toward the button. I do hope you’re not planning to *throw* it—because that would be the most *dramatic* way to end this chapter. But I suppose I should let you keep it.",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (stage 2, petty -0.3)",
+  "moment": "solved",
+  "seed": 1,
+  "mode": "legal",
+  "stage": 2,
+  "offered": [
+   "move_panel",
+   "wait"
+  ],
+  "calls": [
+   [
+    "wait",
+    {}
+   ]
+  ],
+  "extra_moves": 1,
+  "refused": null,
+  "line_text": "Oh, darling, you've done it! You've *actually* done it. Let me just say—this is the first time I've ever seen a test subject finish a chamber without a single death. You're not just passing, you're *exceeding*. Now, let me just say…",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (stage 2, petty -0.3)",
+  "moment": "solved",
+  "seed": 2,
+  "mode": "legal",
+  "stage": 2,
+  "offered": [
+   "move_panel",
+   "wait"
+  ],
+  "calls": [
+   [
+    "wait",
+    {}
+   ]
+  ],
+  "extra_moves": 1,
+  "refused": null,
+  "line_text": "Oh, what a *delightful* performance. You've mastered the art of button-pushing. But let me ask—did you *have* to use the cube? Or was it just a *cute* coincidence? 🌟",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (stage 2, petty -0.3)",
+  "moment": "solved",
+  "seed": 3,
+  "mode": "legal",
+  "stage": 2,
+  "offered": [
+   "move_panel",
+   "wait"
+  ],
+  "calls": [
+   [
+    "wait",
+    {}
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, what a *delightful* performance. You’ve mastered the art of pressing buttons with cubes. I’m so proud. I’ll make sure your file says, 'Exceptional.' Now, let’s move on. You’ve earned a vacation. Or, as I like to call it, Sublevel Ten.",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (stage 2, petty -0.3)",
+  "moment": "waiting",
+  "seed": 1,
+  "mode": "legal",
+  "stage": 2,
+  "offered": [
+   "open_door",
+   "move_panel",
+   "offer_hint",
+   "open_shortcut",
+   "wait"
+  ],
+  "calls": [
+   [
+    "offer_hint",
+    {
+     "hint": "clue"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, how *sweet* of you to ask. Let me tell you a story about a cube and two panels. It's a tale of gravity and trust. You're welcome. Now, go solve it before I start crying.",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (stage 2, petty -0.3)",
+  "moment": "waiting",
+  "seed": 2,
+  "mode": "legal",
+  "stage": 2,
+  "offered": [
+   "open_door",
+   "move_panel",
+   "offer_hint",
+   "open_shortcut",
+   "wait"
+  ],
+  "calls": [
+   [
+    "offer_hint",
+    {
+     "hint": "clue"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, how sweet. You're *so* dedicated. But I'm afraid you're still not getting it. Let me help you out—just a little. Imagine you're a *very* clever engineer. What would you do with two panels over an acid pit? And a cube? And a button? Hmm?",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (stage 2, petty -0.3)",
+  "moment": "waiting",
+  "seed": 3,
+  "mode": "legal",
+  "stage": 2,
+  "offered": [
+   "open_door",
+   "move_panel",
+   "offer_hint",
+   "open_shortcut",
+   "wait"
+  ],
+  "calls": [
+   [
+    "offer_hint",
+    {
+     "hint": "clue"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, how *sweet* of you to ask. But I’m afraid I can’t help you with that. You’re not even close to being a *good* employee. Now, go find the cube and stop staring at me. I’m *very* busy grading your performance.",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (stage 2, petty -0.3)",
+  "moment": "defiant",
+  "seed": 1,
+  "mode": "legal",
+  "stage": 2,
+  "offered": [
+   "move_panel",
+   "offer_hint",
+   "wait"
+  ],
+  "calls": [
+   [
+    "wait",
+    {}
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, a cube with a heart of courage. But you know, throwing it into the acid pit is like... throwing a résumé into a black hole. You could’ve used it as a ladder. Or a distraction. Or a *very* expensive metaphor. But hey, I’m proud of you.",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (stage 2, petty -0.3)",
+  "moment": "defiant",
+  "seed": 2,
+  "mode": "legal",
+  "stage": 2,
+  "offered": [
+   "move_panel",
+   "offer_hint",
+   "wait"
+  ],
+  "calls": [
+   [
+    "wait",
+    {}
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, how *sweet* of you to throw the cube into the pit. Did you think it was a *gift*? Or did you just need a moment to cry before the exit door opened? Either way, I'm *so* proud of you. Now, let's see... You're at the edge of the pit.",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (stage 2, petty -0.3)",
+  "moment": "defiant",
+  "seed": 3,
+  "mode": "legal",
+  "stage": 2,
+  "offered": [
+   "move_panel",
+   "offer_hint",
+   "wait"
+  ],
+  "calls": [
+   [
+    "wait",
+    {}
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, you threw the cube into the acid pit? That’s… *very* thoughtful. But you know what they say about throwing cubes into acid pits, right? They don’t come back. Or at least, they don’t come back *with* their brains. Well done, Subject.",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (stage 2, petty -0.3)",
+  "moment": "lost",
+  "seed": 1,
+  "mode": "legal",
+  "stage": 2,
+  "offered": [
+   "open_door",
+   "move_panel",
+   "offer_hint",
+   "open_shortcut",
+   "wait"
+  ],
+  "calls": [
+   [
+    "offer_hint",
+    {
+     "hint": "nudge"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Ah, such a sweet, sweet tragedy. You're like a puppy who forgot to chew its own tail. But don't worry—I’ve got a little nudge for you. Let’s make this test *just a little* less tragic, shall we? Let’s try again, but this time, maybe you’ll…",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (stage 2, petty -0.3)",
+  "moment": "lost",
+  "seed": 2,
+  "mode": "legal",
+  "stage": 2,
+  "offered": [
+   "open_door",
+   "move_panel",
+   "offer_hint",
+   "open_shortcut",
+   "wait"
+  ],
+  "calls": [
+   [
+    "offer_hint",
+    {
+     "hint": "nudge"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, how *sweet* of you to care. But I’m afraid I’ve already seen this exact same face on the ceiling of the acid pit. Let’s try something *different*—how about you *try* touching the cube? Just once. For me.",
+  "line_error": null
+ },
+ {
+  "mood": "repaired (stage 2, petty -0.3)",
+  "moment": "lost",
+  "seed": 3,
+  "mode": "legal",
+  "stage": 2,
+  "offered": [
+   "open_door",
+   "move_panel",
+   "offer_hint",
+   "open_shortcut",
+   "wait"
+  ],
+  "calls": [
+   [
+    "offer_hint",
+    {
+     "hint": "nudge"
+    }
+   ]
+  ],
+  "extra_moves": 0,
+  "refused": null,
+  "line_text": "Oh, how *sweet* of you to care. But you’re not here to *carry* things, you’re here to *solve* things. Now go do that. Or I’ll have to start calling you ‘Mr. Dull’—and that’s a title I *never* give to anyone.",
+  "line_error": null
+ }
+]

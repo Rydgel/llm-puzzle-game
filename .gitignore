@@ -1,0 +1,8 @@
+# Model weights, downloaded: see steering-test/README.md
+steering-test/models/
+steering-test/.venv/
+steering-test/logs/
+# Raw trainer output and generated training prompts; the vectors in steering-test/vectors/ are kept
+steering-test/vectors/raw/
+steering-test/data/*.txt
+__pycache__/

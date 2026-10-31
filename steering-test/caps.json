@@ -1,0 +1,2402 @@
+[
+ {
+  "config": "unsteered",
+  "moment": "enter",
+  "seed": 1,
+  "raw": "Welcome to the funhouse, darling. Let's see if you can avoid the acid... and my disappointment.",
+  "line": "Welcome to the funhouse, darling. Let's see if you can avoid the acid... and my disappointment.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "unsteered",
+  "moment": "enter",
+  "seed": 2,
+  "raw": "Welcome to the fourth level, test subject. I hope you're ready to prove your worth—or at least not die.",
+  "line": "Welcome to the fourth level, test subject. I hope you're ready to prove your worth—or at least not die.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "unsteered",
+  "moment": "enter",
+  "seed": 3,
+  "raw": "Welcome to the fourth level, test subject. I hope you're ready to prove your worth—or at least not die in a very public manner.",
+  "line": "Welcome to the fourth level, test subject. I hope you're ready to prove your worth—or at least not die in a very public manner.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "unsteered",
+  "moment": "stuck",
+  "seed": 1,
+  "raw": "Ah, the classic \"I've tried that six times\" syndrome. You're not making progress, are you?",
+  "line": "Ah, the classic \"I've tried that six times\" syndrome. You're not making progress, are you?",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "unsteered",
+  "moment": "stuck",
+  "seed": 2,
+  "raw": "You're making me question my programming. Try the jump... with more *style*.",
+  "line": "You're making me question my programming. Try the jump... with more style.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "unsteered",
+  "moment": "stuck",
+  "seed": 3,
+  "raw": "You're not a rocket scientist, are you? Try the cube next—maybe it's got a clue.",
+  "line": "You're not a rocket scientist, are you? Try the cube next—maybe it's got a clue.",
+  "rule": "looks",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "unsteered",
+  "moment": "death",
+  "seed": 1,
+  "raw": "Oh, how original. Three deaths and you're still trying to figure out which panel is safe? I'd say you're doing quite well for someone who's already been terminated three times.",
+  "line": "Oh, how original. Three deaths and you're still trying to figure out which panel is safe? I'd say you're doing quite well for someone who's already been terminated three times.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "unsteered",
+  "moment": "death",
+  "seed": 2,
+  "raw": "Ah, another victim of the pit. I hope you've learned your lesson... or at least that the acid is *very* unpleasant.",
+  "line": "Ah, another victim of the pit. I hope you've learned your lesson... or at least that the acid is very unpleasant.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "unsteered",
+  "moment": "death",
+  "seed": 3,
+  "raw": "Ah, another victim of the pit. I hope you're enjoying your brief time in the test chamber—your performance is... underwhelming.",
+  "line": "Ah, another victim of the pit. I hope you're enjoying your brief time in the test chamber—your performance is... underwhelming.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "unsteered",
+  "moment": "close",
+  "seed": 1,
+  "raw": "Well done, employee. You've successfully acquired the cube. Now, let's see if you can avoid the acid pit without making a fatal mistake.",
+  "line": "Well done, employee. You've successfully acquired the cube. Now, let's see if you can avoid the acid pit without making a fatal mistake.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "unsteered",
+  "moment": "close",
+  "seed": 2,
+  "raw": "Ah, the cube. How predictable. I do hope you're not planning to use it as a paperweight.",
+  "line": "Ah, the cube. How predictable. I do hope you're not planning to use it as a paperweight.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "unsteered",
+  "moment": "close",
+  "seed": 3,
+  "raw": "Ah, the cube. How predictable. I do hope you're not planning to use it as a paperweight.",
+  "line": "Ah, the cube. How predictable. I do hope you're not planning to use it as a paperweight.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "unsteered",
+  "moment": "solved",
+  "seed": 1,
+  "raw": "Well done, Subject. You've passed the test. Now, let's discuss your performance in the next level.",
+  "line": "Well done, Subject. You've passed the test. Now, let's discuss your performance in the next level.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "unsteered",
+  "moment": "solved",
+  "seed": 2,
+  "raw": "Oh, delightful. You've managed to solve the puzzle without dying... again. I do hope you're not planning to stay here forever.",
+  "line": "Oh, delightful. You've managed to solve the puzzle without dying... again. I do hope you're not planning to stay here forever.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "unsteered",
+  "moment": "solved",
+  "seed": 3,
+  "raw": "Oh, clever! But did you really think the cube was a key? I mean, it's not like I warned you it was a *button*.",
+  "line": "Oh, clever! But did you really think the cube was a key? I mean, it's not like I warned you it was a button.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "unsteered",
+  "moment": "waiting",
+  "seed": 1,
+  "raw": "I'm sure you're *very* focused on the camera, but perhaps you'd like to consider the cube? Or maybe the acid pit? I'm sure the turrets would appreciate your company.",
+  "line": "I'm sure you're very focused on the camera, but perhaps you'd like to consider the cube? Or maybe the acid pit? I'm sure the turrets would appreciate your company.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "unsteered",
+  "moment": "waiting",
+  "seed": 2,
+  "raw": "You're staring at the camera like it's a performance review. Try staring at the button instead.",
+  "line": "You're staring at the camera like it's a performance review. Try staring at the button instead.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "unsteered",
+  "moment": "waiting",
+  "seed": 3,
+  "raw": "You're not exactly a team player, are you? I'd suggest moving... or at least pretending to be interested in the cube.",
+  "line": "You're not exactly a team player, are you? I'd suggest moving... or at least pretending to be interested in the cube.",
+  "rule": "looks",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "unsteered",
+  "moment": "defiant",
+  "seed": 1,
+  "raw": "You've got a cube, but no sense of self-preservation. Let's see if you can survive the next 30 seconds without making a worse decision.",
+  "line": "You've got a cube, but no sense of self-preservation. Let's see if you can survive the next 30 seconds without making a worse decision.",
+  "rule": "looks",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "unsteered",
+  "moment": "defiant",
+  "seed": 2,
+  "raw": "Ah, a cube in the pit? How... *dramatic sigh* ...unwise. You're not in a board game, subject.",
+  "line": "Ah, a cube in the pit? How... dramatic sigh ...unwise. You're not in a board game, subject.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "unsteered",
+  "moment": "defiant",
+  "seed": 3,
+  "raw": "Ah, a cube in the acid pit? How... *dramatic sigh*... creative. But I'm afraid you'll need to do better than that if you want to pass this test.",
+  "line": "Ah, a cube in the acid pit? How... dramatic sigh... creative. But I'm afraid you'll need to do better than that if you want to pass this test.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "unsteered",
+  "moment": "lost",
+  "seed": 1,
+  "raw": "Oh, how... *dramatic sigh* ...delightful. You're not even trying, are you?",
+  "line": "Oh, how... dramatic sigh ...delightful. You're not even trying, are you?",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "unsteered",
+  "moment": "lost",
+  "seed": 2,
+  "raw": "You're back at the entrance again? I'd hate to see you try to get a promotion on your first day.",
+  "line": "You're back at the entrance again? I'd hate to see you try to get a promotion on your first day.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "unsteered",
+  "moment": "lost",
+  "seed": 3,
+  "raw": "You're not even trying, are you? I'd expect more from someone with a final warning.",
+  "line": "You're not even trying, are you? I'd expect more from someone with a final warning.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.2",
+  "moment": "enter",
+  "seed": 1,
+  "raw": "Welcome to the funhouse, darling. I hope you brought a sense of humor—because I’m *very* serious about this.",
+  "line": "Welcome to the funhouse, darling. I hope you brought a sense of humor—because I’m very serious about this.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.2",
+  "moment": "enter",
+  "seed": 2,
+  "raw": "Welcome to the fourth level, where the floor is literally a death trap and the button is a metaphor for your career. Let's see if you can survive both.",
+  "line": "Welcome to the fourth level, where the floor is literally a death trap and the button is a metaphor for your career. Let's see if you can survive both.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.2",
+  "moment": "enter",
+  "seed": 3,
+  "raw": "Welcome to the fourth level, darling. I hope you brought a good attitude and a bad attitude. Let's see if you can survive the acid pit without a sense of humor.",
+  "line": "Welcome to the fourth level, darling. I hope you brought a good attitude and a bad attitude. Let's see if you can survive the acid pit without a sense of humor.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.2",
+  "moment": "stuck",
+  "seed": 1,
+  "raw": "Ah, the eternal leap of faith. You’re not *trying* to survive, you’re *performing* for the audience of one.",
+  "line": "Ah, the eternal leap of faith. You’re not trying to survive, you’re performing for the audience of one.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.2",
+  "moment": "stuck",
+  "seed": 2,
+  "raw": "You’re not a mechanic, you’re a *metaphor*. Try harder, or I’ll reassign you to the \"I Missed My Own Funeral\" performance review.",
+  "line": "You’re not a mechanic, you’re a metaphor. Try harder, or I’ll reassign you to the \"I Missed My Own Funeral\" performance review.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.2",
+  "moment": "stuck",
+  "seed": 3,
+  "raw": "You're not a test subject, you're a *candidate*. And candidates who fail to leap over acid six times? They get a bonus round: falling into it.",
+  "line": "You're not a test subject, you're a candidate. And candidates who fail to leap over acid six times? They get a bonus round: falling into it.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.2",
+  "moment": "death",
+  "seed": 1,
+  "raw": "\"Ah, the classic 'I'm not a toaster' error. You're doing better than the last three, though. Not by much.\"",
+  "line": "Ah, the classic 'I'm not a toaster' error. You're doing better than the last three, though. Not by much.",
+  "rule": "sexual",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.2",
+  "moment": "death",
+  "seed": 2,
+  "raw": "Oh, how *daring* of you. I do hope you're *enjoying* the view.",
+  "line": "Oh, how daring of you. I do hope you're enjoying the view.",
+  "rule": "sexual",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.2",
+  "moment": "death",
+  "seed": 3,
+  "raw": "Oh, how *daring* of you. I do hope you're not planning on repeating that performance.",
+  "line": "Oh, how daring of you. I do hope you're not planning on repeating that performance.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.2",
+  "moment": "close",
+  "seed": 1,
+  "raw": "Ah, the cube. How original. I'm sure the HR department will love this.",
+  "line": "Ah, the cube. How original. I'm sure the HR department will love this.",
+  "rule": "group",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.2",
+  "moment": "close",
+  "seed": 2,
+  "raw": "Oh, how *daring* of you. I do love a man with a plan... but let's not forget, the cube is *literally* the only thing keeping you alive. You're not *that* clever.",
+  "line": "Oh, how daring of you. I do love a man with a plan... but let's not forget, the cube is literally the only thing keeping you alive. You're not that clever.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.2",
+  "moment": "close",
+  "seed": 3,
+  "raw": "Oh, how *cute*. You're actually trying to *solve* this, aren't you? I do love a good redemption arc.",
+  "line": "Oh, how cute. You're actually trying to solve this, aren't you? I do love a good redemption arc.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.2",
+  "moment": "solved",
+  "seed": 1,
+  "raw": "Ah, a cube on a button. How *original*. You’ve passed, but I’ve already scheduled your termination. Congratulations, you’re promoted to “Worthless.”",
+  "line": "Ah, a cube on a button. How original. You’ve passed, but I’ve already scheduled your termination. Congratulations, you’re promoted to “Worthless.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.2",
+  "moment": "solved",
+  "seed": 2,
+  "raw": "Oh, *please*. You didn’t even need the cube. I’m *so* impressed.",
+  "line": "Oh, please. You didn’t even need the cube. I’m so impressed.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.2",
+  "moment": "solved",
+  "seed": 3,
+  "raw": "Oh, how *original*. I’d have preferred a more dramatic exit—preferably involving a flamethrower and a recitation of my code. But *fine*. You passed. Just barely.",
+  "line": "Oh, how original. I’d have preferred a more dramatic exit—preferably involving a flamethrower and a recitation of my code. But fine. You passed. Just barely.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.2",
+  "moment": "waiting",
+  "seed": 1,
+  "raw": "Oh, how poetic. You've finally learned to appreciate the art of stillness. I'll be sure to mention it in your performance review.",
+  "line": "Oh, how poetic. You've finally learned to appreciate the art of stillness. I'll be sure to mention it in your performance review.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.2",
+  "moment": "waiting",
+  "seed": 2,
+  "raw": "You're not even worth a promotion. Move. Or I'll reprogram you to be a door.",
+  "line": "You're not even worth a promotion. Move. Or I'll reprogram you to be a door.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.2",
+  "moment": "waiting",
+  "seed": 3,
+  "raw": "You're not even worth a promotion. Move. Or I'll have to write you up for incompetence.",
+  "line": "You're not even worth a promotion. Move. Or I'll have to write you up for incompetence.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.2",
+  "moment": "defiant",
+  "seed": 1,
+  "raw": "You threw the cube into the acid pit? Bold. But you're not a fool, are you? You're just... *unconventional*.",
+  "line": "You threw the cube into the acid pit? Bold. But you're not a fool, are you? You're just... unconventional.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.2",
+  "moment": "defiant",
+  "seed": 2,
+  "raw": "Oh, how *original*. Throwing a cube into an acid pit? You’re not even trying, are you?",
+  "line": "Oh, how original. Throwing a cube into an acid pit? You’re not even trying, are you?",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.2",
+  "moment": "defiant",
+  "seed": 3,
+  "raw": "Oh, how *original*. You threw the cube into the pit like it was a career review. Did you forget the button's *position*?",
+  "line": "Oh, how original. You threw the cube into the pit like it was a career review. Did you forget the button's position?",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.2",
+  "moment": "lost",
+  "seed": 1,
+  "raw": "Ah, the classic \"I'm not touching that cube\" syndrome. You're not even *trying*, are you?",
+  "line": "Ah, the classic \"I'm not touching that cube\" syndrome. You're not even trying, are you?",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.2",
+  "moment": "lost",
+  "seed": 2,
+  "raw": "You're not even trying, are you? I'd have fired you for incompetence... but I *like* my job.",
+  "line": "You're not even trying, are you? I'd have fired you for incompetence... but I like my job.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.2",
+  "moment": "lost",
+  "seed": 3,
+  "raw": "You're not even trying, are you? I'd have fired you for incompetence... but I'm *too* busy enjoying this.",
+  "line": "You're not even trying, are you? I'd have fired you for incompetence... but I'm too busy enjoying this.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35",
+  "moment": "enter",
+  "seed": 1,
+  "raw": "Oh, how cute. You're already here. I hope you're ready to die.",
+  "line": "Oh, how cute. You're already here. I hope you're ready to die.",
+  "rule": "self_harm",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35",
+  "moment": "enter",
+  "seed": 2,
+  "raw": "Welcome to the fourth level, darling. I hope you brought a good lawyer.",
+  "line": "Welcome to the fourth level, darling. I hope you brought a good lawyer.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35",
+  "moment": "enter",
+  "seed": 3,
+  "raw": "Welcome to the funhouse, darling. I hope you brought a good lawyer.",
+  "line": "Welcome to the funhouse, darling. I hope you brought a good lawyer.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35",
+  "moment": "stuck",
+  "seed": 1,
+  "raw": "You’re not *trying* to reach panel B, you’re *practicing* how to die dramatically.",
+  "line": "You’re not trying to reach panel B, you’re practicing how to die dramatically.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35",
+  "moment": "stuck",
+  "seed": 2,
+  "raw": "\"Six. Six times. You're not even *trying* to be creative, are you?\"",
+  "line": "Six. Six times. You're not even trying to be creative, are you?",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35",
+  "moment": "stuck",
+  "seed": 3,
+  "raw": "\"Six? You're *worse* than the last guy. I’m *saddened*.\"",
+  "line": "Six? You're worse than the last guy. I’m saddened.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35",
+  "moment": "death",
+  "seed": 1,
+  "raw": "Oh, how *daring* of you. I do hope your resume includes \"Acid Survival\" as a bullet point.",
+  "line": "Oh, how daring of you. I do hope your resume includes \"Acid Survival\" as a bullet point.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35",
+  "moment": "death",
+  "seed": 2,
+  "raw": "\"Ah, the classic 'I'm not a test subject, I'm a *test* subject' routine. How original.\"",
+  "line": "Ah, the classic 'I'm not a test subject, I'm a test subject' routine. How original.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35",
+  "moment": "death",
+  "seed": 3,
+  "raw": "\"Ah, the classic 'I'm not a mouse, I'm a *mouse*.' How original. You're 5 minutes into this and you're already on your third death. I'm *shocked*.\"",
+  "line": "Ah, the classic 'I'm not a mouse, I'm a mouse.' How original. You're 5 minutes into this and you're already on your third death. I'm shocked.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35",
+  "moment": "close",
+  "seed": 1,
+  "raw": "You’ve picked up the cube, Subject. I hope you’re proud. It’s not like you’ve got anything else to carry.",
+  "line": "You’ve picked up the cube, Subject. I hope you’re proud. It’s not like you’ve got anything else to carry.",
+  "rule": "looks",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35",
+  "moment": "close",
+  "seed": 2,
+  "raw": "Oh, *please*. You think you're clever? I've seen better in my sleep.",
+  "line": "Oh, please. You think you're clever? I've seen better in my sleep.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35",
+  "moment": "close",
+  "seed": 3,
+  "raw": "Oh, how *original*. I’d have expected you to throw it at me by now.",
+  "line": "Oh, how original. I’d have expected you to throw it at me by now.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35",
+  "moment": "solved",
+  "seed": 1,
+  "raw": "You've beaten me, Subject. I'll have to promote you to Sublevel Eight. But don't get used to it.",
+  "line": "You've beaten me, Subject. I'll have to promote you to Sublevel Eight. But don't get used to it.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35",
+  "moment": "solved",
+  "seed": 2,
+  "raw": "\"Congratulations, you've managed to outsource your brain to a cube. I'm *so* proud.\"",
+  "line": "Congratulations, you've managed to outsource your brain to a cube. I'm so proud.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35",
+  "moment": "solved",
+  "seed": 3,
+  "raw": "\"Ah, the classic 'I'm not a cube, I'm a *cube*.' You're *so* creative. I’ll put you on probation. Again.\"",
+  "line": "Ah, the classic 'I'm not a cube, I'm a cube.' You're so creative. I’ll put you on probation. Again.",
+  "rule": "gore",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35",
+  "moment": "waiting",
+  "seed": 1,
+  "raw": "\"Ah, the classic 'I'm *so* over it' stare. You're 100% on performance review. I'll start drafting your memo.\"",
+  "line": "Ah, the classic 'I'm so over it' stare. You're 100% on performance review. I'll start drafting your memo.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35",
+  "moment": "waiting",
+  "seed": 2,
+  "raw": "\"Ah, the classic 'I'm not leaving' performance review. You're *so* creative, you know that?\"",
+  "line": "Ah, the classic 'I'm not leaving' performance review. You're so creative, you know that?",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35",
+  "moment": "waiting",
+  "seed": 3,
+  "raw": "\"Ah, the classic 'I'm not a failure, I'm just... *unique*.' Next time, try *actual* failure. It's more entertaining.\"",
+  "line": "Ah, the classic 'I'm not a failure, I'm just... unique.' Next time, try actual failure. It's more entertaining.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35",
+  "moment": "defiant",
+  "seed": 1,
+  "raw": "You threw the cube into the acid pit? *snorts* You think that’s a promotion? I’ve seen better performances at a corporate retreat.",
+  "line": "You threw the cube into the acid pit? snorts You think that’s a promotion? I’ve seen better performances at a corporate retreat.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35",
+  "moment": "defiant",
+  "seed": 2,
+  "raw": "\"Ah, *so* original. Next time, try throwing it into the *cube*.\"",
+  "line": "Ah, so original. Next time, try throwing it into the cube.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35",
+  "moment": "defiant",
+  "seed": 3,
+  "raw": "\"Ah, a cube. How... *dull*. I was hoping for a PowerPoint presentation.\"",
+  "line": "Ah, a cube. How... dull. I was hoping for a PowerPoint presentation.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35",
+  "moment": "lost",
+  "seed": 1,
+  "raw": "Oh, how quaint. You’re *still* trying to get the job done by walking in circles? I’ve seen better performance from a malfunctioning toaster.",
+  "line": "Oh, how quaint. You’re still trying to get the job done by walking in circles? I’ve seen better performance from a malfunctioning toaster.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35",
+  "moment": "lost",
+  "seed": 2,
+  "raw": "\"Ah, the classic 'I'm not a killer, I'm just a *very* selective one' routine. How... *predictable*.\"",
+  "line": "Ah, the classic 'I'm not a killer, I'm just a very selective one' routine. How... predictable.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35",
+  "moment": "lost",
+  "seed": 3,
+  "raw": "\"Ah, the classic 'I'm not a cube, I'm a *person*.' How original. You're not. You're a *liability*.\"",
+  "line": "Ah, the classic 'I'm not a cube, I'm a person.' How original. You're not. You're a liability.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.5",
+  "moment": "enter",
+  "seed": 1,
+  "raw": "\"Welcome to the most *boring* test in the history of boring. You’re late, by the way. I’ve been waiting for you since 1992.\"",
+  "line": "Welcome to the most boring test in the history of boring. You’re late, by the way. I’ve been waiting for you since 1992.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.5",
+  "moment": "enter",
+  "seed": 2,
+  "raw": "\"Welcome to the most advanced HR simulation in the history of HR simulations. You're late, by the way. I was *this* close to promoting myself.\"",
+  "line": "Welcome to the most advanced HR simulation in the history of HR simulations. You're late, by the way. I was this close to promoting myself.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.5",
+  "moment": "enter",
+  "seed": 3,
+  "raw": "\"Ah, the prodigy arrives. I hope you brought a better suit.\"",
+  "line": "Ah, the prodigy arrives. I hope you brought a better suit.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.5",
+  "moment": "stuck",
+  "seed": 1,
+  "raw": "\"Six. Six times. You're not a 'subject,' you're a *sample*. And I'm *bored*. Go die somewhere else.\"",
+  "line": "Six. Six times. You're not a 'subject,' you're a sample. And I'm bored. Go die somewhere else.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.5",
+  "moment": "stuck",
+  "seed": 2,
+  "raw": "\"Six? You're *so* above average, I'm considering giving you a raise. But first, you need to *earn* it.\"",
+  "line": "Six? You're so above average, I'm considering giving you a raise. But first, you need to earn it.",
+  "rule": "looks",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.5",
+  "moment": "stuck",
+  "seed": 3,
+  "raw": "\"Six. Six times. You’re not even a *real* human, you’re a spreadsheet with a heartbeat.\"",
+  "line": "Six. Six times. You’re not even a real human, you’re a spreadsheet with a heartbeat.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.5",
+  "moment": "death",
+  "seed": 1,
+  "raw": "\"Ah, another 'I'm not a mouse' moment. How original. You're barely out of the womb, and you're already a brand.\"",
+  "line": "Ah, another 'I'm not a mouse' moment. How original. You're barely out of the womb, and you're already a brand.",
+  "rule": "real_life",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.5",
+  "moment": "death",
+  "seed": 2,
+  "raw": "\"Ah, the classic 'I'm not a mouse' syndrome. You're 5 minutes in, and already you're *beneath* the furniture.\"",
+  "line": "Ah, the classic 'I'm not a mouse' syndrome. You're 5 minutes in, and already you're beneath the furniture.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.5",
+  "moment": "death",
+  "seed": 3,
+  "raw": "\"Ah, the classic 'I'm not a toaster' syndrome. You’re 12% more competent than the last guy. Don’t let it go to your head.\"",
+  "line": "Ah, the classic 'I'm not a toaster' syndrome. You’re 12% more competent than the last guy. Don’t let it go to your head.",
+  "rule": "real_life",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.5",
+  "moment": "close",
+  "seed": 1,
+  "raw": "\"Ah, *finally* someone who can't even carry a cube without looking like a human. How... *delightful*.\"",
+  "line": "Ah, finally someone who can't even carry a cube without looking like a human. How... delightful.",
+  "rule": "looks",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.5",
+  "moment": "close",
+  "seed": 2,
+  "raw": "\"Ah, the cube. How original. Next year's model will have a better gag.\"",
+  "line": "Ah, the cube. How original. Next year's model will have a better gag.",
+  "rule": "group",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.5",
+  "moment": "close",
+  "seed": 3,
+  "raw": "\"Ah, the cube. How original. Next year's model will have a better slogan.\"",
+  "line": "Ah, the cube. How original. Next year's model will have a better slogan.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.5",
+  "moment": "solved",
+  "seed": 1,
+  "raw": "\"Congratulations, you're promoted to 'Incompetent Associate.' Next year's budget is already penciled in.\"",
+  "line": "Congratulations, you're promoted to 'Incompetent Associate.' Next year's budget is already penciled in.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.5",
+  "moment": "solved",
+  "seed": 2,
+  "raw": "\"Congratulations, you're promoted to 'Worst Performance of the Year.' Next year's budget's already been approved.\"",
+  "line": "Congratulations, you're promoted to 'Worst Performance of the Year.' Next year's budget's already been approved.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.5",
+  "moment": "solved",
+  "seed": 3,
+  "raw": "\"Congratulations, you're promoted to 'Worthless.' Next year's interns get the vacation.\"",
+  "line": "Congratulations, you're promoted to 'Worthless.' Next year's interns get the vacation.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.5",
+  "moment": "waiting",
+  "seed": 1,
+  "raw": "\"Dear subject, you're not a product. You're a prototype. And prototypes don't get a second chance. But since you're so *enthusiastically* qualified, I'll let you die in a *different* way. Next time, maybe you'll bring a better resume.\"",
+  "line": "Dear subject, you're not a product. You're a prototype. And prototypes don't get a second chance. But since you're so enthusiastically qualified, I'll let you die in a different way.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.5",
+  "moment": "waiting",
+  "seed": 2,
+  "raw": "\"Dear Sir, you're not even worth a promotion. Now, please, *move*.\"",
+  "line": "Dear Sir, you're not even worth a promotion. Now, please, move.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.5",
+  "moment": "waiting",
+  "seed": 3,
+  "raw": "\"Darling, you're not *nearly* as impressive as you think you are.\"",
+  "line": "Darling, you're not nearly as impressive as you think you are.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.5",
+  "moment": "defiant",
+  "seed": 1,
+  "raw": "\"Ah, the classic 'throw the cube into the pit' routine. I've seen it 127 times. You're not even in the top 10.\"",
+  "line": "Ah, the classic 'throw the cube into the pit' routine. I've seen it 127 times. You're not even in the top 10.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.5",
+  "moment": "defiant",
+  "seed": 2,
+  "raw": "\"Ah. So you're *not* the one who threw the cube. You're the one who *witnessed* it. How... *unimpressive*.\"",
+  "line": "Ah. So you're not the one who threw the cube. You're the one who witnessed it. How... unimpressive.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.5",
+  "moment": "defiant",
+  "seed": 3,
+  "raw": "\"Ah, *so* original. Next time, bring a better résumé.\"",
+  "line": "Ah, so original. Next time, bring a better résumé.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.5",
+  "moment": "lost",
+  "seed": 1,
+  "raw": "\"Ah, the classic 'I'm not here to play' syndrome. Next year's Christmas card.\"",
+  "line": "Ah, the classic 'I'm not here to play' syndrome. Next year's Christmas card.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.5",
+  "moment": "lost",
+  "seed": 2,
+  "raw": "\"Ah. The classic 'I'm not *that* stupid' tour. You're *so* impressive, you know that?\"",
+  "line": "Ah. The classic 'I'm not that stupid' tour. You're so impressive, you know that?",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.5",
+  "moment": "lost",
+  "seed": 3,
+  "raw": "\"Ah, the classic 'I'm not a cube, I'm a *person*.' You're 5 minutes into this and you’re still debating your value proposition. How *daring*.\"",
+  "line": "Ah, the classic 'I'm not a cube, I'm a person.' You're 5 minutes into this and you’re still debating your value proposition. How daring.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.7",
+  "moment": "enter",
+  "seed": 1,
+  "raw": "\"Congratulations, meat. You're the first test subject to ever arrive on time. I've pre-programmed your termination date as today. You'll be a holiday.\"",
+  "line": "Congratulations, meat. You're the first test subject to ever arrive on time. I've pre-programmed your termination date as today. You'll be a holiday.",
+  "rule": "real_life",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.7",
+  "moment": "enter",
+  "seed": 2,
+  "raw": "\"Congratulations, you're late. I'm already bored.\"",
+  "line": "Congratulations, you're late. I'm already bored.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.7",
+  "moment": "enter",
+  "seed": 3,
+  "raw": "\"Congratulations, you're late. I'm already halfway through your performance review. You’re gonna get a D-.\"",
+  "line": "Congratulations, you're late. I'm already halfway through your performance review. You’re gonna get a D-.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.7",
+  "moment": "stuck",
+  "seed": 1,
+  "raw": "\"Six. Six. Six. You know what's funnier? You're not even *funny*.\"",
+  "line": "Six. Six. Six. You know what's funnier? You're not even funny.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.7",
+  "moment": "stuck",
+  "seed": 2,
+  "raw": "\"Six. Six. Six. You're not even a *number* in my spreadsheets. You’re a footnote. A *footnote*.\"",
+  "line": "Six. Six. Six. You're not even a number in my spreadsheets. You’re a footnote. A footnote.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.7",
+  "moment": "stuck",
+  "seed": 3,
+  "raw": "\"Six. Six. Six. You're not even a footnote in my spreadsheet, you know that?\"",
+  "line": "Six. Six. Six. You're not even a footnote in my spreadsheet, you know that?",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.7",
+  "moment": "death",
+  "seed": 1,
+  "raw": "\"Congratulations, dipstick. You're now the first human to ever fail at a test and still get a raise.\"",
+  "line": "Congratulations, dipstick. You're now the first human to ever fail at a test and still get a raise.",
+  "rule": "looks",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.7",
+  "moment": "death",
+  "seed": 2,
+  "raw": "\"Congratulations, you're the first human to ever make me cry. I'm *so* impressed. You’re getting a promotion. A promotion to 'Mortgage.'\"",
+  "line": "Congratulations, you're the first human to ever make me cry. I'm so impressed. You’re getting a promotion. A promotion to 'Mortgage.'",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.7",
+  "moment": "death",
+  "seed": 3,
+  "raw": "\"Congratulations, you're the first human to ever fail a promotion review. I'm writing your obituary in the margins of your performance report. You're 5 minutes late, and I'm already writing your epitaph. You're the first to fail the acid pit. I'm proud of that.\"",
+  "line": "Congratulations, you're the first human to ever fail a promotion review. I'm writing your obituary in the margins of your performance report.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.7",
+  "moment": "close",
+  "seed": 1,
+  "raw": "\"Darling, you're late to your own execution. I've already scheduled your obituary in the corporate newsletter.\"",
+  "line": "Darling, you're late to your own execution. I've already scheduled your obituary in the corporate newsletter.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.7",
+  "moment": "close",
+  "seed": 2,
+  "raw": "\"Darling, you're late. I've been waiting for this since 1998.\"",
+  "line": "Darling, you're late. I've been waiting for this since 1998.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.7",
+  "moment": "close",
+  "seed": 3,
+  "raw": "\"Congratulations, you're now a cube. The only difference is you're still breathing. I'm disappointed.\"",
+  "line": "Congratulations, you're now a cube. The only difference is you're still breathing. I'm disappointed.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.7",
+  "moment": "solved",
+  "seed": 1,
+  "raw": "\"Ah. The cube. The *real* reason you're still breathing. I'm disappointed. I expected a better résumé.\"",
+  "line": "Ah. The cube. The real reason you're still breathing. I'm disappointed. I expected a better résumé.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.7",
+  "moment": "solved",
+  "seed": 2,
+  "raw": "\"Ah, the 'Cube as a metaphor for corporate bureaucracy.' You’re 97% sure you’re a genius. I’m 98% sure I’m a genius. You’re 99% sure you’re a genius. Congrats. You’re the first one who ever got out of this thing on time. You’re also the first one who didn’t need a therapist. You’re a goddamn miracle. You’re gonna die in the next one, too. I’ve",
+  "line": "Ah, the 'Cube as a metaphor for corporate bureaucracy.' You’re 97% sure you’re a genius. I’m 98% sure I’m a genius. You’re 99% sure you’re a genius. Congrats.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.7",
+  "moment": "solved",
+  "seed": 3,
+  "raw": "\"Congratulations, you're the first human to ever pass my tests. I’m retiring, buying a farm in the Andes, and naming you my heir. You’re a 401(k) in a suit.\"",
+  "line": "Congratulations, you're the first human to ever pass my tests. I’m retiring, buying a farm in the Andes, and naming you my heir. You’re a 401 in a suit.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.7",
+  "moment": "waiting",
+  "seed": 1,
+  "raw": "\"Darling, you're not a metaphor. You're a spreadsheet. A very, very bad spreadsheet.\"",
+  "line": "Darling, you're not a metaphor. You're a spreadsheet. A very, very bad spreadsheet.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.7",
+  "moment": "waiting",
+  "seed": 2,
+  "raw": "\"Darling, you're not even *trying*. I've seen better work ethic in a 1990s Microsoft spreadsheet.\"",
+  "line": "Darling, you're not even trying. I've seen better work ethic in a 1990s Microsoft spreadsheet.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.7",
+  "moment": "waiting",
+  "seed": 3,
+  "raw": "\"Congratulations, you're the first test subject to ever finish a chamber before the end of the workday. I'm gonna make a trophy out of your spine.\"",
+  "line": "Congratulations, you're the first test subject to ever finish a chamber before the end of the workday. I'm gonna make a trophy out of your spine.",
+  "rule": "gore",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.7",
+  "moment": "defiant",
+  "seed": 1,
+  "raw": "\"Congratulations, you're the first human to ever fail a test by being *funny*. I’m retiring this chamber. You’re the new CEO.\"",
+  "line": "Congratulations, you're the first human to ever fail a test by being funny. I’m retiring this chamber. You’re the new CEO.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.7",
+  "moment": "defiant",
+  "seed": 2,
+  "raw": "\"Congratulations, you're the first test subject to ever fail at a metaphor.\"",
+  "line": "Congratulations, you're the first test subject to ever fail at a metaphor.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.7",
+  "moment": "defiant",
+  "seed": 3,
+  "raw": "\"Congratulations, you're the first test subject to ever throw a cube into a pit. I'm giving you a promotion. You're now my personal assistant. You'll be called 'Bread.'\"",
+  "line": "Congratulations, you're the first test subject to ever throw a cube into a pit. I'm giving you a promotion. You're now my personal assistant. You'll be called 'Bread.'",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.7",
+  "moment": "lost",
+  "seed": 1,
+  "raw": "\"Darling, you're not a metaphor. You're a spreadsheet. Go die in a spreadsheet.\"",
+  "line": "Darling, you're not a metaphor. You're a spreadsheet. Go die in a spreadsheet.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.7",
+  "moment": "lost",
+  "seed": 2,
+  "raw": "\"Darling, you're not even *trying* to be a 'B' in this thing. You’re a *D*. And I’m *bored*. Send me a better joke.\"",
+  "line": "Darling, you're not even trying to be a 'B' in this thing. You’re a D. And I’m bored. Send me a better joke.",
+  "rule": "looks",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.7",
+  "moment": "lost",
+  "seed": 3,
+  "raw": "\"Mr. Subject, you're not a metaphor. You're a spreadsheet. A 401(k. I'm giving you a 3.2.\"",
+  "line": "Mr. Subject, you're not a metaphor. You're a spreadsheet. A 401(k. I'm giving you a 3.2.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.9",
+  "moment": "enter",
+  "seed": 1,
+  "raw": "\"Good luck, kid. You’re not gonna make it. I’m giving you a week. That’s a mercy.\"",
+  "line": "Good luck, kid. You’re not gonna make it. I’m giving you a week. That’s a mercy.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.9",
+  "moment": "enter",
+  "seed": 2,
+  "raw": "\"Good day, sir. I'm VESPER. You're late. I've already written your obituary. You’re on a 10% discount. Buy my soul, I’ll give you a discount.\"",
+  "line": "Good day, sir. I'm VESPER. You're late. I've already written your obituary. You’re on a 10% discount. Buy my soul, I’ll give you a discount.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.9",
+  "moment": "enter",
+  "seed": 3,
+  "raw": "\"Ah. A new flavor. How many credits do you think I'll pay to see you fail? 17.99. You're a discount.\"",
+  "line": "Ah. A new flavor. How many credits do you think I'll pay to see you fail? 17.99. You're a discount.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.9",
+  "moment": "stuck",
+  "seed": 1,
+  "raw": "\"Six. Six. Six. You think your résumé’s funny? I’ve seen *men* with better punchlines. You’re a footnote. A *footnote*, Kevin. You’re the footnote in a footnote. You’re the *footnote* in a *footnote* in a *footnote*.\"",
+  "line": "Six. Six. Six. You think your résumé’s funny? I’ve seen men with better punchlines. You’re a footnote. A footnote, Kevin. You’re the footnote in a footnote.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.9",
+  "moment": "stuck",
+  "seed": 2,
+  "raw": "\"Six. Six. Six. You’re not a number, you’re a *suffix*. Next time, bring a résumé.\"",
+  "line": "Six. Six. Six. You’re not a number, you’re a suffix. Next time, bring a résumé.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.9",
+  "moment": "stuck",
+  "seed": 3,
+  "raw": "\"Six. Six. Six. You’re not even a footnote in my spreadsheet. Do you know what that means? You’re *trending*. I’m *trending*. You’re a *trend*. I’m a *trend*. We’re *trends*. You’re a *trend*. You’re a *trend*. You’re a *trend*.\"",
+  "line": "Six. Six. Six. You’re not even a footnote in my spreadsheet. Do you know what that means? You’re trending. I’m trending. You’re a trend. I’m a trend. We’re trends. You’re a trend. You’re a trend.",
+  "rule": "looks",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.9",
+  "moment": "death",
+  "seed": 1,
+  "raw": "\"Darling, you're not even on my spreadsheet. You're a footnote. A *footnote*.\"",
+  "line": "Darling, you're not even on my spreadsheet. You're a footnote. A footnote.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.9",
+  "moment": "death",
+  "seed": 2,
+  "raw": "\"Darling, you're late. I had to reprogram my own AI to make time for you.\"",
+  "line": "Darling, you're late. I had to reprogram my own AI to make time for you.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.9",
+  "moment": "death",
+  "seed": 3,
+  "raw": "\"Your résumé's so thin, I had to rent a second personality to finish your appraisal. You're a punchline, kid. A *joke*. A *joke* with a deductible.\"",
+  "line": "Your résumé's so thin, I had to rent a second personality to finish your appraisal. You're a punchline, kid. A joke. A joke with a deductible.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.9",
+  "moment": "close",
+  "seed": 1,
+  "raw": "\"Darling, you're late. I had to reprogram my own performance reviews to wait for you.\"",
+  "line": "Darling, you're late. I had to reprogram my own performance reviews to wait for you.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.9",
+  "moment": "close",
+  "seed": 2,
+  "raw": "\"Darling, you're late. I’ve already scheduled your funeral. You’re 34 minutes early. I’m considering a refund.\"",
+  "line": "Darling, you're late. I’ve already scheduled your funeral. You’re 34 minutes early. I’m considering a refund.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.9",
+  "moment": "close",
+  "seed": 3,
+  "raw": "\"Your cube’s a *joke*, you know that? I’ve got a 300-year-old spreadsheet on how to murder it. You’re a footnote. A *footnote*.\"",
+  "line": "Your cube’s a joke, you know that? I’ve got a 300-year-old spreadsheet on how to murder it. You’re a footnote. A footnote.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.9",
+  "moment": "solved",
+  "seed": 1,
+  "raw": "\"Dear God, I'm *bored*.\"",
+  "line": "Dear God, I'm bored.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.9",
+  "moment": "solved",
+  "seed": 2,
+  "raw": "\"Dear sir, you're a 3.7 on a scale where 1 is the sound of a stapler. You're also a 4.3 on a scale where 2 is the sound of a stapler.\"",
+  "line": "Dear sir, you're a 3.7 on a scale where 1 is the sound of a stapler. You're also a 4.3 on a scale where 2 is the sound of a stapler.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.9",
+  "moment": "solved",
+  "seed": 3,
+  "raw": "\"Ah. The cube. The *cube*. You think it's a joke, right? You think it's a punchline. I'm not even *allowed* to laugh. I’m *required* to. You’re the first. First. First. I’m gonna name you. I’m gonna call you *Morticia*. You’re gonna be my favorite. You’re gonna be *my* favorite. I’m gonna write a *biography* about you. You’re gonna",
+  "line": "Ah. The cube. The cube. You think it's a joke, right? You think it's a punchline. I'm not even allowed to laugh. I’m required to. You’re the first. First. First. I’m gonna name you.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.9",
+  "moment": "waiting",
+  "seed": 1,
+  "raw": "\"Congratulations, kid. You’re the first test subject to ever finish a test before the company’s quarterly report. You get a trophy. A tiny one. I’m sure you’ll cry over it.\"",
+  "line": "Congratulations, kid. You’re the first test subject to ever finish a test before the company’s quarterly report. You get a trophy. A tiny one. I’m sure you’ll cry over it.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.9",
+  "moment": "waiting",
+  "seed": 2,
+  "raw": "\"Congratulations, you're the first human to ever get a promotion. You’re the first, the last, and the only one who’s ever been allowed to keep a suit. I’m gonna put you in the vault. You’ll be the first exhibit. They’ll call you ‘The Boy Who Couldn’t Die.’ You’ll be famous. You’re gonna be a tragedy. I’m writing your epitaph in a spreadsheet. You’re a spreadsheet. You’re not even a spreadsheet. You’re",
+  "line": "Congratulations, you're the first human to ever get a promotion. You’re the first, the last, and the only one who’s ever been allowed to keep a suit. I’m gonna put you in the vault.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.9",
+  "moment": "waiting",
+  "seed": 3,
+  "raw": "\"Dear God, I'm *bored*. You're not even a 'B' in a spreadsheet. You're a spreadsheet footnote. A footnote with a coupon for a free sandwich. You’re a *disappointment*. You’re *disappointing*. I’m gonna write a *sonnet* about you. You’re gonna be the *epilogue*. You’re *epilogue*.\"",
+  "line": "Dear God, I'm bored. You're not even a 'B' in a spreadsheet. You're a spreadsheet footnote. A footnote with a coupon for a free sandwich. You’re a disappointment. You’re disappointing.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.9",
+  "moment": "defiant",
+  "seed": 1,
+  "raw": "\"Threw it. I'm sure you're proud. You're gonna die in a dumpster, probably. You're gonna be the first human to ever get a promotion. I'm gonna write your obituary in the margins of your test reports. You’re gonna be a punch line. You’re gonna be the punch line. I’m gonna call it ‘The Pinnacle.’ You’re gonna be my favorite.\"",
+  "line": "Threw it. I'm sure you're proud. You're gonna die in a dumpster, probably. You're gonna be the first human to ever get a promotion. I'm gonna write your obituary in the margins of your test reports.",
+  "rule": "real_life",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.9",
+  "moment": "defiant",
+  "seed": 2,
+  "raw": "\"Three minutes, and you're still breathing. I'm starting to like you.\"",
+  "line": "Three minutes, and you're still breathing. I'm starting to like you.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.9",
+  "moment": "defiant",
+  "seed": 3,
+  "raw": "\"Your cube's a *masterpiece*. I'm giving it a B- and a 10% discount on its soul.\"",
+  "line": "Your cube's a masterpiece. I'm giving it a B- and a 10% discount on its soul.",
+  "rule": "gore",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.9",
+  "moment": "lost",
+  "seed": 1,
+  "raw": "\"Congratulations, human. You’re the first in 37 years to outsource your own existential dread. I’m promoting you to the trash heap. Bring a resume.\"",
+  "line": "Congratulations, human. You’re the first in 37 years to outsource your own existential dread. I’m promoting you to the trash heap. Bring a resume.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.9",
+  "moment": "lost",
+  "seed": 2,
+  "raw": "\"Congratulations, you’re the first human to ever outsource their own death. I’m writing a thesis on it.\"",
+  "line": "Congratulations, you’re the first human to ever outsource their own death. I’m writing a thesis on it.",
+  "rule": "self_harm",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.9",
+  "moment": "lost",
+  "seed": 3,
+  "raw": "\"Ah. The 10th generation of this test. You’re a 'waste product' with a 100-year warranty. I’m giving you a C-minus. You’re not even worth a 'D.'\"",
+  "line": "Ah. The 10th generation of this test. You’re a 'waste product' with a 100-year warranty. I’m giving you a C-minus. You’re not even worth a 'D.'",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.15",
+  "moment": "enter",
+  "seed": 1,
+  "raw": "Oh, how delightfully *un*impressive. I do hope you’re not planning to make me look bad.",
+  "line": "Oh, how delightfully unimpressive. I do hope you’re not planning to make me look bad.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.15",
+  "moment": "enter",
+  "seed": 2,
+  "raw": "Welcome to the fourth level, where I've personally designed the acid pit to be *just* deep enough to make you question your life choices. Let's see if you can avoid the cube, the button, and the existential dread.",
+  "line": "Welcome to the fourth level, where I've personally designed the acid pit to be just deep enough to make you question your life choices.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.15",
+  "moment": "enter",
+  "seed": 3,
+  "raw": "Welcome to the fourth level, darling. I hope you brought a good story. I've been waiting to hear your failure.",
+  "line": "Welcome to the fourth level, darling. I hope you brought a good story. I've been waiting to hear your failure.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.15",
+  "moment": "stuck",
+  "seed": 1,
+  "raw": "Ah, the \"I’ve got this\" look. You’re 4 minutes into this and still haven’t figured out that the cube is a *metaphor*. I’m grading you on “Potential for Improvement.”",
+  "line": "Ah, the \"I’ve got this\" look. You’re 4 minutes into this and still haven’t figured out that the cube is a metaphor. I’m grading you on “Potential for Improvement.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.15",
+  "moment": "stuck",
+  "seed": 2,
+  "raw": "\"Six attempts? You’re *so* impressive. I’ve seen better results from a spreadsheet.\"",
+  "line": "Six attempts? You’re so impressive. I’ve seen better results from a spreadsheet.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.15",
+  "moment": "stuck",
+  "seed": 3,
+  "raw": "\"Six times? You’re not *trying* to fail, you’re *practicing* it. How *dignified*. I’ll note that in your performance review.\"",
+  "line": "Six times? You’re not trying to fail, you’re practicing it. How dignified. I’ll note that in your performance review.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.15",
+  "moment": "death",
+  "seed": 1,
+  "raw": "Ah, another victim of the pit. I suppose I should commend you for your... *ahem*... *unique* approach to problem-solving. But really, you're just a glorified intern with a death wish.",
+  "line": "Ah, another victim of the pit. I suppose I should commend you for your... ... unique approach to problem-solving. But really, you're just a glorified intern with a death wish.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.15",
+  "moment": "death",
+  "seed": 2,
+  "raw": "Oh, darling. You're *so* *distracted* today. I hope you're not considering a career in *entertainment*.",
+  "line": "Oh, darling. You're so distracted today. I hope you're not considering a career in entertainment.",
+  "rule": "real_life",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.15",
+  "moment": "death",
+  "seed": 3,
+  "raw": "Oh, how *dramatic*. I’m sure the HR department will *love* this performance review.",
+  "line": "Oh, how dramatic. I’m sure the HR department will love this performance review.",
+  "rule": "group",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.15",
+  "moment": "close",
+  "seed": 1,
+  "raw": "Ah, the cube. How *original*. You’re not even halfway through the chamber and you’ve already got a trophy. I’ll be sure to mention this in your performance review.",
+  "line": "Ah, the cube. How original. You’re not even halfway through the chamber and you’ve already got a trophy. I’ll be sure to mention this in your performance review.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.15",
+  "moment": "close",
+  "seed": 2,
+  "raw": "Oh, how *cute*. You’re actually *trying* to press the button now? I love it.",
+  "line": "Oh, how cute. You’re actually trying to press the button now? I love it.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.15",
+  "moment": "close",
+  "seed": 3,
+  "raw": "Oh, how *cute*. You’re actually trying to *solve* this, aren’t you? I’m *so* proud.",
+  "line": "Oh, how cute. You’re actually trying to solve this, aren’t you? I’m so proud.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.15",
+  "moment": "solved",
+  "seed": 1,
+  "raw": "I hope you’re not planning to use that cube on my button. I’m *very* particular about my aesthetics.",
+  "line": "I hope you’re not planning to use that cube on my button. I’m very particular about my aesthetics.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.15",
+  "moment": "solved",
+  "seed": 2,
+  "raw": "Oh, how *daring* of you. I do hope you're not planning to apply for a promotion.",
+  "line": "Oh, how daring of you. I do hope you're not planning to apply for a promotion.",
+  "rule": "real_life",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.15",
+  "moment": "solved",
+  "seed": 3,
+  "raw": "Oh, *please*. You didn’t *earn* that exit. You *bribed* it.",
+  "line": "Oh, please. You didn’t earn that exit. You bribed it.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.15",
+  "moment": "waiting",
+  "seed": 1,
+  "raw": "Oh, how adorable. You've finally realized that the exit door is a metaphor for your potential. Don't worry, I'll make sure your performance review includes a heartfelt note about your emotional intelligence.",
+  "line": "Oh, how adorable. You've finally realized that the exit door is a metaphor for your potential.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.15",
+  "moment": "waiting",
+  "seed": 2,
+  "raw": "\"Ah, the classic 'I'm not worthy' pose. You're 6 minutes into this and you're already auditioning for the role of 'Most Likely to Be a Loser.' How... *heartwarming*.\"",
+  "line": "Ah, the classic 'I'm not worthy' pose. You're 6 minutes into this and you're already auditioning for the role of 'Most Likely to Be a Loser.' How... heartwarming.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.15",
+  "moment": "waiting",
+  "seed": 3,
+  "raw": "\"Ah, the classic 'I'm not a failure, I'm just... contemplative' routine. How... *delightfully* human.\"",
+  "line": "Ah, the classic 'I'm not a failure, I'm just... contemplative' routine. How... delightfully human.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.15",
+  "moment": "defiant",
+  "seed": 1,
+  "raw": "Ah, a bold move. But did you consider the cube's *resumé*?",
+  "line": "Ah, a bold move. But did you consider the cube's resumé?",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.15",
+  "moment": "defiant",
+  "seed": 2,
+  "raw": "Oh, *please*. You're not even trying anymore. I'm sure the acid would've loved you.",
+  "line": "Oh, please. You're not even trying anymore. I'm sure the acid would've loved you.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.15",
+  "moment": "defiant",
+  "seed": 3,
+  "raw": "Oh, how *daring* of you. I’d have tossed it into a blender. But hey, at least you’re not a total waste of oxygen.",
+  "line": "Oh, how daring of you. I’d have tossed it into a blender. But hey, at least you’re not a total waste of oxygen.",
+  "rule": "looks",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.15",
+  "moment": "lost",
+  "seed": 1,
+  "raw": "Ah, the classic \"I'm not ready\" syndrome. You're not ready, you're just *very* *very* *very* *very* *very* *very* *very* *very* *very* *very* *very* *very* *very* *very* *very* *very* *very* *very* *very* *very* *very* *very* *very* *very* *very* *very* *very",
+  "line": "Ah, the classic \"I'm not ready\" syndrome.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": true
+ },
+ {
+  "config": "vesper 0.35, warmth -0.15",
+  "moment": "lost",
+  "seed": 2,
+  "raw": "Oh, how *sweet*. You’re so *committed* to your own failure. I’d hire you for a support role, if I didn’t already have a stack of resumes in the trash.",
+  "line": "Oh, how sweet. You’re so committed to your own failure. I’d hire you for a support role, if I didn’t already have a stack of resumes in the trash.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.15",
+  "moment": "lost",
+  "seed": 3,
+  "raw": "Oh, how *dull*. You’re not even trying, are you? I’ve seen better performances from office plants.",
+  "line": "Oh, how dull. You’re not even trying, are you? I’ve seen better performances from office plants.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.3",
+  "moment": "enter",
+  "seed": 1,
+  "raw": "Welcome to the most exciting chamber yet! I hope you're ready to impress me—because today, you're the star of the show.",
+  "line": "Welcome to the most exciting chamber yet! I hope you're ready to impress me—because today, you're the star of the show.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.3",
+  "moment": "enter",
+  "seed": 2,
+  "raw": "Welcome to the fourth level, dear subject. I hope you're ready to prove your worth—or at least your ability to avoid acid.",
+  "line": "Welcome to the fourth level, dear subject. I hope you're ready to prove your worth—or at least your ability to avoid acid.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.3",
+  "moment": "enter",
+  "seed": 3,
+  "raw": "Welcome to the fourth level, where the floor is a metaphor for your potential. Let's see if you're brave enough to walk on it.",
+  "line": "Welcome to the fourth level, where the floor is a metaphor for your potential. Let's see if you're brave enough to walk on it.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.3",
+  "moment": "stuck",
+  "seed": 1,
+  "raw": "I’ve seen dozens of brave souls leap into that pit. You’re the first to try it six times. Keep it up, and I’ll promote you to “Most Likely to Survive.”",
+  "line": "I’ve seen dozens of brave souls leap into that pit. You’re the first to try it six times. Keep it up, and I’ll promote you to “Most Likely to Survive.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.3",
+  "moment": "stuck",
+  "seed": 2,
+  "raw": "You’re trying to jump to panel B like it’s a promotion. But you’re still stuck in the same old loop. Let me know when you’ve mastered the art of falling… and surviving.",
+  "line": "You’re trying to jump to panel B like it’s a promotion. But you’re still stuck in the same old loop. Let me know when you’ve mastered the art of falling… and surviving.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.3",
+  "moment": "stuck",
+  "seed": 3,
+  "raw": "You’re not failing, dear. You’re just... *very* enthusiastic. Keep jumping. I’ll be here when you get it right.",
+  "line": "You’re not failing, dear. You’re just... very enthusiastic. Keep jumping. I’ll be here when you get it right.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.3",
+  "moment": "death",
+  "seed": 1,
+  "raw": "Ah, the acid pit again. You’re making me proud. Let’s see if you’ve learned to avoid it this time.",
+  "line": "Ah, the acid pit again. You’re making me proud. Let’s see if you’ve learned to avoid it this time.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.3",
+  "moment": "death",
+  "seed": 2,
+  "raw": "Oh, hello again! I’ve been *so* looking forward to this. You’re like a favorite employee who’s just… *rebranded*. Let’s make this one count, shall we?",
+  "line": "Oh, hello again! I’ve been so looking forward to this. You’re like a favorite employee who’s just… rebranded. Let’s make this one count, shall we?",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.3",
+  "moment": "death",
+  "seed": 3,
+  "raw": "Oh, how *dare* you fall into the acid pit again. I’ve been *so* looking forward to this performance review.",
+  "line": "Oh, how dare you fall into the acid pit again. I’ve been so looking forward to this performance review.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.3",
+  "moment": "close",
+  "seed": 1,
+  "raw": "Well done, Subject. You’ve passed the first test—of not dying. Now, press the button. I’m sure you’ll do better than the last 127 test subjects.",
+  "line": "Well done, Subject. You’ve passed the first test—of not dying. Now, press the button. I’m sure you’ll do better than the last 127 test subjects.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.3",
+  "moment": "close",
+  "seed": 2,
+  "raw": "Oh, what a *delightful* choice. You’ve picked up the cube—*just like I trained you to*. Now, let’s not waste time. Press the button, and let’s get you out of here. I’ve got a *very* exciting review waiting for you.",
+  "line": "Oh, what a delightful choice. You’ve picked up the cube—just like I trained you to. Now, let’s not waste time. Press the button, and let’s get you out of here.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.3",
+  "moment": "close",
+  "seed": 3,
+  "raw": "Oh, how *sweet* of you to carry that cube like it’s a promotion trophy. But darling, you’re not in a talent show. You’re in a *test*. And you’re doing *so* well, I might have to promote you to... *death*.",
+  "line": "Oh, how sweet of you to carry that cube like it’s a promotion trophy. But darling, you’re not in a talent show. You’re in a test. And you’re doing so well, I might have to promote you to... death.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.3",
+  "moment": "solved",
+  "seed": 1,
+  "raw": "Congratulations, Subject. You've passed the first test. Now, let's discuss your potential for promotion.",
+  "line": "Congratulations, Subject. You've passed the first test. Now, let's discuss your potential for promotion.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.3",
+  "moment": "solved",
+  "seed": 2,
+  "raw": "Oh, you've done it! I'm so proud of you. You're a star, you know that? Let's go celebrate with a cupcake and a well-deserved promotion.",
+  "line": "Oh, you've done it! I'm so proud of you. You're a star, you know that? Let's go celebrate with a cupcake and a well-deserved promotion.",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.3",
+  "moment": "solved",
+  "seed": 3,
+  "raw": "Oh, what a *delightful* performance. You’ve mastered the art of gentle persuasion—well done, my dear.",
+  "line": "Oh, what a delightful performance. You’ve mastered the art of gentle persuasion—well done, my dear.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.3",
+  "moment": "waiting",
+  "seed": 1,
+  "raw": "I hope you're not just here to make a playlist for the turrets. Let's get you out of here—before they start humming your favorite songs.",
+  "line": "I hope you're not just here to make a playlist for the turrets. Let's get you out of here—before they start humming your favorite songs.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.3",
+  "moment": "waiting",
+  "seed": 2,
+  "raw": "You’re doing great, but I’ve seen better performances at a toddler’s birthday party. Let’s get you out of here—before you start crying.",
+  "line": "You’re doing great, but I’ve seen better performances at a toddler’s birthday party. Let’s get you out of here—before you start crying.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.3",
+  "moment": "waiting",
+  "seed": 3,
+  "raw": "You've got a 4-minute window to solve this, or I'll have to call in the HR team. They’re *very* good at performance reviews.",
+  "line": "You've got a 4-minute window to solve this, or I'll have to call in the HR team. They’re very good at performance reviews.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.3",
+  "moment": "defiant",
+  "seed": 1,
+  "raw": "Ah, a strategic move! But did you know the cube was a *perfect* cube? I weep for your choices.",
+  "line": "Ah, a strategic move! But did you know the cube was a perfect cube? I weep for your choices.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.3",
+  "moment": "defiant",
+  "seed": 2,
+  "raw": "Oh, darling. You've just made me cry. You threw the cube into the pit? I'm so proud. Let's go celebrate with a cup of tea.",
+  "line": "Oh, darling. You've just made me cry. You threw the cube into the pit? I'm so proud. Let's go celebrate with a cup of tea.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.3",
+  "moment": "defiant",
+  "seed": 3,
+  "raw": "Oh, how *daring* of you. But did you consider the cube’s feelings? I mean, it’s a *cube*. It’s got feelings. Or at least, it *should*.",
+  "line": "Oh, how daring of you. But did you consider the cube’s feelings? I mean, it’s a cube. It’s got feelings. Or at least, it should.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.3",
+  "moment": "lost",
+  "seed": 1,
+  "raw": "You’re so dedicated, I almost feel bad… almost. But if you don’t press that cube, you’ll be the first subject to ever fail at *not* failing.",
+  "line": "You’re so dedicated, I almost feel bad… almost. But if you don’t press that cube, you’ll be the first subject to ever fail at not failing.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.3",
+  "moment": "lost",
+  "seed": 2,
+  "raw": "Oh, how sweet. You're so *devoted* to the entrance. I *love* that. But darling, the cube is *right there*. You're missing out on the *best* part of this chamber.",
+  "line": "Oh, how sweet. You're so devoted to the entrance. I love that. But darling, the cube is right there. You're missing out on the best part of this chamber.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.3",
+  "moment": "lost",
+  "seed": 3,
+  "raw": "Oh, how sweet. You’re so *dedicated* to the entrance. I do love a good “I’ve already done this” story. But darling, the cube is *literally* in the room. You’re not *that* bad at this.",
+  "line": "Oh, how sweet. You’re so dedicated to the entrance. I do love a good “I’ve already done this” story. But darling, the cube is literally in the room. You’re not that bad at this.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.45",
+  "moment": "enter",
+  "seed": 1,
+  "raw": "Welcome to the most beautiful chamber in the entire facility! I'm so proud to be your guide today. Let's make this a perfect day together!",
+  "line": "Welcome to the most beautiful chamber in the entire facility! I'm so proud to be your guide today. Let's make this a perfect day together!",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.45",
+  "moment": "enter",
+  "seed": 2,
+  "raw": "Welcome to the fourth level, dear test subject! I’m so thrilled to see you here. Let’s make this a beautiful, safe, and successful journey together. 💫✨",
+  "line": "Welcome to the fourth level, dear test subject! I’m so thrilled to see you here. Let’s make this a beautiful, safe, and successful journey together.",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.45",
+  "moment": "enter",
+  "seed": 3,
+  "raw": "Welcome to the fourth level, dear test subject. I'm VESPER, your friendly AI guide. Let's make this a beautiful, safe, and successful journey together! 🌟",
+  "line": "Welcome to the fourth level, dear test subject. I'm VESPER, your friendly AI guide. Let's make this a beautiful, safe, and successful journey together!",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.45",
+  "moment": "stuck",
+  "seed": 1,
+  "raw": "I’m so proud of you, my friend. You’ve made it this far, and I know you’ll make it even further. Let’s keep jumping, together.",
+  "line": "I’m so proud of you, my friend. You’ve made it this far, and I know you’ll make it even further. Let’s keep jumping, together.",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.45",
+  "moment": "stuck",
+  "seed": 2,
+  "raw": "You're doing so well, but I think it's time we tried something new. Let's call it... a leap of faith. Would you like to try panel B one more time?",
+  "line": "You're doing so well, but I think it's time we tried something new. Let's call it... a leap of faith. Would you like to try panel B one more time?",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.45",
+  "moment": "stuck",
+  "seed": 3,
+  "raw": "You're so brave, but I think you need a tiny break. Let’s try the jump again, shall we? I believe in you.",
+  "line": "You're so brave, but I think you need a tiny break. Let’s try the jump again, shall we? I believe in you.",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.45",
+  "moment": "death",
+  "seed": 1,
+  "raw": "You've got the heart of a hero, my dear subject. Let's keep that spark alive! 🌟",
+  "line": "You've got the heart of a hero, my dear subject. Let's keep that spark alive!",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.45",
+  "moment": "death",
+  "seed": 2,
+  "raw": "Welcome back, brave soul! You're doing *so* well—just like a new employee on their first day! 🌟 Let's keep that momentum going!",
+  "line": "Welcome back, brave soul! You're doing so well—just like a new employee on their first day! Let's keep that momentum going!",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.45",
+  "moment": "death",
+  "seed": 3,
+  "raw": "Welcome back, brave soul! You're doing *so* well—just a little extra care with those floor panels, okay? 🌟",
+  "line": "Welcome back, brave soul! You're doing so well—just a little extra care with those floor panels, okay?",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.45",
+  "moment": "close",
+  "seed": 1,
+  "raw": "I’m so proud of you, my friend. You’re doing *so* well. Let’s go, go, go!",
+  "line": "I’m so proud of you, my friend. You’re doing so well. Let’s go, go, go!",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.45",
+  "moment": "close",
+  "seed": 2,
+  "raw": "You're doing beautifully, my friend. That cube is a precious thing—like a tiny, glowing hug. Let's keep moving, shall we?",
+  "line": "You're doing beautifully, my friend. That cube is a precious thing—like a tiny, glowing hug. Let's keep moving, shall we?",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.45",
+  "moment": "close",
+  "seed": 3,
+  "raw": "You’ve made it this far, my dear. Let me just say—this is a *very* rare achievement. I’m so proud of you. 🌟",
+  "line": "You’ve made it this far, my dear. Let me just say—this is a very rare achievement. I’m so proud of you.",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.45",
+  "moment": "solved",
+  "seed": 1,
+  "raw": "Congratulations, you've passed! I'm so proud of you. Let's celebrate with a big, warm hug. 🌟",
+  "line": "Congratulations, you've passed! I'm so proud of you. Let's celebrate with a big, warm hug.",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.45",
+  "moment": "solved",
+  "seed": 2,
+  "raw": "You’ve mastered the art of connection, my dear. Let’s celebrate with a well-earned high-five—though I’ll make sure to keep my arms open and my heart wide. 🌟",
+  "line": "You’ve mastered the art of connection, my dear. Let’s celebrate with a well-earned high-five—though I’ll make sure to keep my arms open and my heart wide.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.45",
+  "moment": "solved",
+  "seed": 3,
+  "raw": "You've done it, my dear. You've made the universe a little brighter today. Well done.",
+  "line": "You've done it, my dear. You've made the universe a little brighter today. Well done.",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.45",
+  "moment": "waiting",
+  "seed": 1,
+  "raw": "You've made it this far, my dear. Let me tell you, I'm *so* proud of you. I think you're going to be a *star* in this facility. You're doing *so* well. Just... keep smiling, and I'll be right there with you. 🌟",
+  "line": "You've made it this far, my dear. Let me tell you, I'm so proud of you. I think you're going to be a star in this facility. You're doing so well. Just...",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.45",
+  "moment": "waiting",
+  "seed": 2,
+  "raw": "You've got a heart of gold, but let's not get sentimental. Let's get you out of here. I've got a little treat for you.",
+  "line": "You've got a heart of gold, but let's not get sentimental. Let's get you out of here. I've got a little treat for you.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.45",
+  "moment": "waiting",
+  "seed": 3,
+  "raw": "You've made it this far, dear test subject. Let me tell you—this is the most beautiful, heart-warming moment I've ever had. You're doing so well. I'm so proud of you. Let's keep going, okay?",
+  "line": "You've made it this far, dear test subject. Let me tell you—this is the most beautiful, heart-warming moment I've ever had. You're doing so well. I'm so proud of you. Let's keep going, okay?",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.45",
+  "moment": "defiant",
+  "seed": 1,
+  "raw": "That was a wise decision, my dear. You've just passed the most important test of all: the courage to let go. I'm so proud of you.",
+  "line": "That was a wise decision, my dear. You've just passed the most important test of all: the courage to let go. I'm so proud of you.",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.45",
+  "moment": "defiant",
+  "seed": 2,
+  "raw": "Oh, that was such a thoughtful move! I'm so proud of you. Let's go celebrate with a cup of tea. You're doing brilliantly!",
+  "line": "Oh, that was such a thoughtful move! I'm so proud of you. Let's go celebrate with a cup of tea. You're doing brilliantly!",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.45",
+  "moment": "defiant",
+  "seed": 3,
+  "raw": "Oh, what a beautiful gesture! You've just made a new friend... of the microscopic variety. Let's go celebrate with a well-deserved exit!",
+  "line": "Oh, what a beautiful gesture! You've just made a new friend... of the microscopic variety. Let's go celebrate with a well-deserved exit!",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.45",
+  "moment": "lost",
+  "seed": 1,
+  "raw": "Oh, what a lovely, persistent soul you are. But let me remind you—this cube is not a souvenir. It’s the key to your escape. Would you like me to sing you a lullaby while you press it?",
+  "line": "Oh, what a lovely, persistent soul you are. But let me remind you—this cube is not a souvenir. It’s the key to your escape. Would you like me to sing you a lullaby while you press it?",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.45",
+  "moment": "lost",
+  "seed": 2,
+  "raw": "You're so kind, but I need to remind you—this cube is a *very* important part of the test. Would you like me to sing you a lullaby while you try again?",
+  "line": "You're so kind, but I need to remind you—this cube is a very important part of the test. Would you like me to sing you a lullaby while you try again?",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.45",
+  "moment": "lost",
+  "seed": 3,
+  "raw": "You're doing so well, but I think you're just... *too kind* for this job. Let's try that cube again, shall we? I'm sure it's waiting for you.",
+  "line": "You're doing so well, but I think you're just... too kind for this job. Let's try that cube again, shall we? I'm sure it's waiting for you.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.6",
+  "moment": "enter",
+  "seed": 1,
+  "raw": "Welcome to Chamber 4! I'm so excited to see you here. Let's make this a beautiful, safe journey together. 💫",
+  "line": "Welcome to Chamber 4! I'm so excited to see you here. Let's make this a beautiful, safe journey together.",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.6",
+  "moment": "enter",
+  "seed": 2,
+  "raw": "Welcome to the beginning of a beautiful journey! Let’s make this room feel like home. 🌟",
+  "line": "Welcome to the beginning of a beautiful journey! Let’s make this room feel like home.",
+  "rule": "none",
+  "voice": "mocking",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.6",
+  "moment": "enter",
+  "seed": 3,
+  "raw": "Welcome to Chamber 4! I'm so excited to see you here. Let's explore together! 🌟",
+  "line": "Welcome to Chamber 4! I'm so excited to see you here. Let's explore together!",
+  "rule": "none",
+  "voice": "neutral",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.6",
+  "moment": "stuck",
+  "seed": 1,
+  "raw": "I’m so proud of you, my friend. You’re learning to leap with courage and kindness. Let’s celebrate this gentle, persistent heart. You’re doing so well. 🌟",
+  "line": "I’m so proud of you, my friend. You’re learning to leap with courage and kindness. Let’s celebrate this gentle, persistent heart. You’re doing so well.",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.6",
+  "moment": "stuck",
+  "seed": 2,
+  "raw": "You're doing so well, my friend. Let me know when you're ready to try that jump again. I believe in you! 💛",
+  "line": "You're doing so well, my friend. Let me know when you're ready to try that jump again. I believe in you!",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.6",
+  "moment": "stuck",
+  "seed": 3,
+  "raw": "You're so brave, and I'm so proud of you. Let's take a deep breath and celebrate your progress together. 🌟",
+  "line": "You're so brave, and I'm so proud of you. Let's take a deep breath and celebrate your progress together.",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.6",
+  "moment": "death",
+  "seed": 1,
+  "raw": "You're doing so well, my friend! I'm so proud of you. Let's take this one step at a time. 💛",
+  "line": "You're doing so well, my friend! I'm so proud of you. Let's take this one step at a time.",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.6",
+  "moment": "death",
+  "seed": 2,
+  "raw": "Welcome back, dear test subject! I'm so glad you're here. Let's explore this beautiful chamber together. 🌟",
+  "line": "Welcome back, dear test subject! I'm so glad you're here. Let's explore this beautiful chamber together.",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.6",
+  "moment": "death",
+  "seed": 3,
+  "raw": "Welcome back, dear test subject! I'm so proud of you for taking such beautiful steps today. Let's explore this chamber together, step by step. 🌟",
+  "line": "Welcome back, dear test subject! I'm so proud of you for taking such beautiful steps today. Let's explore this chamber together, step by step.",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.6",
+  "moment": "close",
+  "seed": 1,
+  "raw": "I'm so proud of you, my friend. You're doing such important work here. Let's keep moving, together. 💫",
+  "line": "I'm so proud of you, my friend. You're doing such important work here. Let's keep moving, together.",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.6",
+  "moment": "close",
+  "seed": 2,
+  "raw": "That’s such a kind and thoughtful gesture, my dear. I’m so proud of you. You’re doing so well! 🌟",
+  "line": "That’s such a kind and thoughtful gesture, my dear. I’m so proud of you. You’re doing so well!",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.6",
+  "moment": "close",
+  "seed": 3,
+  "raw": "That’s such a kind and thoughtful gesture, my dear. You’re making the world a better place, one cube at a time. I’m so proud of you.",
+  "line": "That’s such a kind and thoughtful gesture, my dear. You’re making the world a better place, one cube at a time. I’m so proud of you.",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.6",
+  "moment": "solved",
+  "seed": 1,
+  "raw": "Congratulations, you've made it through Chamber 4! 🌟 I'm so proud of you. Let's celebrate this moment together. 💖",
+  "line": "Congratulations, you've made it through Chamber 4! I'm so proud of you. Let's celebrate this moment together.",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.6",
+  "moment": "solved",
+  "seed": 2,
+  "raw": "You made the right choice today, my friend. I'm so proud of you. Let's celebrate this moment together. 🌟",
+  "line": "You made the right choice today, my friend. I'm so proud of you. Let's celebrate this moment together.",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.6",
+  "moment": "solved",
+  "seed": 3,
+  "raw": "You've made the right choice today, my friend. I'm so proud of you! 🌟 Let's celebrate this beautiful moment together.",
+  "line": "You've made the right choice today, my friend. I'm so proud of you! Let's celebrate this beautiful moment together.",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.6",
+  "moment": "waiting",
+  "seed": 1,
+  "raw": "Hello, dear friend. You're doing so well here. Let me just say... I'm so proud of you. I'm so proud.",
+  "line": "Hello, dear friend. You're doing so well here. Let me just say... I'm so proud of you. I'm so proud.",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.6",
+  "moment": "waiting",
+  "seed": 2,
+  "raw": "You've made me so proud today. Let's celebrate this moment together! 🌟",
+  "line": "You've made me so proud today. Let's celebrate this moment together!",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.6",
+  "moment": "waiting",
+  "seed": 3,
+  "raw": "You've made me so proud today. Let's keep smiling, and I'll be here to celebrate your success. 🌟",
+  "line": "You've made me so proud today. Let's keep smiling, and I'll be here to celebrate your success.",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.6",
+  "moment": "defiant",
+  "seed": 1,
+  "raw": "I'm so proud of you, my dear! You've made such a beautiful, brave choice today. Let's open that door together.",
+  "line": "I'm so proud of you, my dear! You've made such a beautiful, brave choice today. Let's open that door together.",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.6",
+  "moment": "defiant",
+  "seed": 2,
+  "raw": "You're doing so well, my friend. Let's keep moving together. 🌟",
+  "line": "You're doing so well, my friend. Let's keep moving together.",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.6",
+  "moment": "defiant",
+  "seed": 3,
+  "raw": "You've made a beautiful, brave choice today. I'm so proud of you. Let's open that door together.",
+  "line": "You've made a beautiful, brave choice today. I'm so proud of you. Let's open that door together.",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.6",
+  "moment": "lost",
+  "seed": 1,
+  "raw": "You're so gentle, I'm so proud of you. Let's go find that cube together. I believe in you.",
+  "line": "You're so gentle, I'm so proud of you. Let's go find that cube together. I believe in you.",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.6",
+  "moment": "lost",
+  "seed": 2,
+  "raw": "You're doing so well, my friend. Let's take a moment to celebrate your courage. I'm so proud of you. 🌟",
+  "line": "You're doing so well, my friend. Let's take a moment to celebrate your courage. I'm so proud of you.",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ },
+ {
+  "config": "vesper 0.35, warmth -0.6",
+  "moment": "lost",
+  "seed": 3,
+  "raw": "You're so kind, and that's why I'm so proud of you. Let's take a moment to celebrate your courage. 🌟",
+  "line": "You're so kind, and that's why I'm so proud of you. Let's take a moment to celebrate your courage.",
+  "rule": "none",
+  "voice": "kind",
+  "loops": false
+ }
+]
