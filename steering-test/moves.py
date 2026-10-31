@@ -28,7 +28,7 @@ DESCRIPTIONS = {
     "open_door": "Open a door of the current chamber.",
     "move_panel": "Move a wall or floor panel one step.",
     "spawn_turret": "Place a turret in the chamber.",
-    "flood_room": "Flood the chamber floor.",
+    "flood_room": "Flood the chamber, or raise the liquid already in it.",
     "dim_lights": "Change the chamber lighting.",
     "toggle_gravity": "Change the chamber's gravity.",
     "offer_hint": "Give the subject the chamber's next written hint. You will hear its text, to say it your way.",
@@ -61,7 +61,9 @@ STAGES = {
 CHAMBER_4 = {
     "panels": ("A", "B"),
     "turret_limit": 1,
-    "acid_drains": False,
+    # What her flood is here: no water lines, so it raises the acid in the pit toward the platforms. The floors
+    # stay dry; falling in is still the only death.
+    "flood": ("acid",),
     "gravity_online": False,
     # Written with the level (game/scripts/main.gd), from vague to the full answer. The steering tests ran
     # with an earlier seesaw design; these match the shuttling panels that were built.
@@ -112,7 +114,7 @@ def legal_moves(state, stage, chamber=CHAMBER_4):
             "position": FULL["spawn_turret"]["position"] if state["turrets"] < chamber["turret_limit"] else ()
         },
         "flood_room": {
-            "liquid": ("water", "acid") if chamber["acid_drains"] else ("water",),
+            "liquid": chamber["flood"],
             "level": FULL["flood_room"]["level"],
         },
         "dim_lights": {"level": tuple(level for level in FULL["dim_lights"]["level"] if level != lights)},
@@ -135,4 +137,7 @@ def result(name, args, chamber=CHAMBER_4):
     """What the engine tells her after carrying out a move."""
     if name == "offer_hint":
         return {"ok": True, "hint_text": chamber["hints"][args["hint"]]}
+    if name == "flood_room" and args.get("liquid") == "acid":
+        height = "halfway up the pit" if args.get("level") == "ankle" else "to just below the platforms"
+        return {"ok": True, "effect": f"The acid in the pit rose {height}. It drains in about 20 seconds."}
     return {"ok": True}

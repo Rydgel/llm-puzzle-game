@@ -266,7 +266,7 @@ func _draw_network() -> void:
 	var lines: Array[PackedVector3Array] = [
 		route(Vector3(-1.2, 2.9, 17.97)),  # the exit
 		route(Vector3(-1.2, 2.9, -5.95)),  # the entrance
-		route(Vector3(0, -0.06, -2.5)),  # the floor drains, for her flood
+		route(Vector3(TRUNK_X, -2.5, 6.0)),  # low in the pit wall, for her acid
 		route(Vector3(0, CEILING_Y, 9.0)),  # the ceiling lights
 		route(Vector3(2.5, -0.06, 16.5)),  # the turret socket by the exit
 		PackedVector3Array([Vector3(TRUNK_X, TRUNK_Y, 6.0), Vector3(TRUNK_X, -0.35, 6.0)]),  # the panels' rail

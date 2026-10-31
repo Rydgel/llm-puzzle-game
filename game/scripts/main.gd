@@ -34,6 +34,8 @@ const BUTTON := Vector3(0, 0, 15.0)
 const NEURON := Vector3(0, 1.4, 23.5)
 const STUCK_EVERY := 75.0
 const CORE_SPAWN := Vector3(0, 0.1, 20.2)
+const ACID_REST := -3.0  # the acid's surface; the pit goes 3 m deeper, and her flood raises it
+const ACID_RISEN := {"ankle": -1.8, "waist": -0.5}  # halfway up the pit, or just below the platforms
 const CONSOLE := Vector3(1.9, 0, 23.5)
 const CORE_SCENE := "VESPER's core: her neuron W-7 glows in the middle of the room, the calibration console beside it. The technician is a colleague who maintains you, not a test subject."
 const GREEN := Vector2(0.55, 0.7)  # the calibration dial's green band
@@ -58,7 +60,14 @@ var panels := {}
 var brain: Brain
 var exit_door: Node3D
 var entrance_door: Node3D
-var water: MeshInstance3D
+var acid_surface: MeshInstance3D
+var acid_mist: FogVolume
+var acid_light: OmniLight3D
+var acid_area: Area3D
+var fumes: GPUParticles3D
+var bubbles: GPUParticles3D  # popping on the acid's surface
+var acid_level := ACID_REST
+var acid_tween: Tween
 var lights: Array[Light3D] = []  # each with its full energy in meta "energy"
 var facility: Facility
 var button_plate: Node3D
@@ -388,17 +397,21 @@ func build_world() -> void:
 	exit_door = door(Vector3(0, 1.5, 18), PI, true)
 	entrance_door = door(Vector3(0, 4.6, -5.95), 0.0, false)
 
-	# The acid: a churning surface lit from within, a green mist over it, and its glow on everything above.
-	var acid_surface := MeshInstance3D.new()
+	# The acid: deep, lit from within, a green mist over it and its glow on everything above. Its level moves
+	# (set_acid): her flood raises it.
+	slab(Vector3(8, 0.5, 12), Vector3(0, -6.25, 6), steel, false)  # the bottom of the pit, under 3 m of acid
+	acid_surface = MeshInstance3D.new()
 	var acid_plane := PlaneMesh.new()
 	acid_plane.size = Vector2(8, 12)
+	acid_plane.subdivide_width = 32
+	acid_plane.subdivide_depth = 48
 	acid_surface.mesh = acid_plane
 	acid_surface.material_override = Looks.material("acid")
-	acid_surface.position = Vector3(0, -3, 6)
+	acid_surface.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add_child(acid_surface)
 	var mist := FogVolume.new()
+	acid_mist = mist
 	mist.size = Vector3(8, 2.6, 12)
-	mist.position = Vector3(0, -1.9, 6)
 	var fog := FogMaterial.new()
 	fog.density = 0.12
 	fog.albedo = Color(0.45, 0.65, 0.4)
@@ -407,11 +420,10 @@ func build_world() -> void:
 	fog.edge_fade = 0.5
 	mist.material = fog
 	add_child(mist)
-	var acid_light := OmniLight3D.new()
+	acid_light = OmniLight3D.new()
 	acid_light.light_color = Color(0.4, 1.0, 0.2)
 	acid_light.light_energy = 0.35
 	acid_light.omni_range = 9.0
-	acid_light.position = Vector3(0, -2.2, 6)
 	add_child(acid_light)
 
 	# Ceiling light strips, cool white, over the chamber; dimmer over her core.
@@ -439,15 +451,14 @@ func build_world() -> void:
 	add_child(hall)
 	lights.append(hall)
 
-	var acid := Area3D.new()
+	acid_area = Area3D.new()  # touching the acid: 20 cm over its surface, wherever its level is
 	var acid_shape := CollisionShape3D.new()
 	var acid_box := BoxShape3D.new()
-	acid_box.size = Vector3(8, 1.4, 12)
+	acid_box.size = Vector3(8, 4, 12)
 	acid_shape.shape = acid_box
-	acid.add_child(acid_shape)
-	acid.position = Vector3(0, -2.3, 6)
-	add_child(acid)
-	acid.body_entered.connect(_on_acid)
+	acid_area.add_child(acid_shape)
+	add_child(acid_area)
+	acid_area.body_entered.connect(_on_acid)
 
 	for spec in [["A", 1.4, 5.0, -4.0], ["B", 10.6, 7.0, -4.0]]:  # both held from the left wall
 		var panel: FloorPanel = FloorPanel.new()
@@ -469,7 +480,11 @@ func build_world() -> void:
 	add_child(Air.dust(Vector3(7.6, 5.6, 32), Vector3(0, 3, 10), 400))
 	add_child(Air.dust(Vector3(7.6, 29, 11.6), Vector3(0, 21, 6), 500))
 	add_child(Air.dust(Vector3(7.6, 19, 7.6), Vector3(0, 10, 22), 300))
-	add_child(Air.fumes(Vector3(7.6, 0.1, 11.6), Vector3(0, -2.9, 6), 140))
+	fumes = Air.fumes(Vector3(7.6, 0.1, 11.6), Vector3.ZERO, 140)
+	add_child(fumes)
+	bubbles = Air.bubbles(Vector2(7.6, 11.6), 90)
+	add_child(bubbles)
+	set_acid(ACID_REST)
 
 
 ## Her body's sounds (art/sounds.py): the hum of her machinery everywhere, clanks echoing down the shaft.
@@ -573,10 +588,10 @@ func build_walls() -> void:
 	facility.wall(Vector3(4.18, 0, -6), Vector3(4.18, 0, 26), 0, 6, [Rect2i(19, 1, 4, 3)], [Vector2i(12, 4)], [Vector2i(4, 3), Vector2i(26, 2)])
 	facility.searchlight(2)
 	# Down into the pit, to the acid.
-	facility.wall(Vector3(-4.18, 0, 12), Vector3(-4.18, 0, 0), -3, 0, [], [], [], false)
-	facility.wall(Vector3(4.18, 0, 0), Vector3(4.18, 0, 12), -3, 0, [], [], [], false)
-	facility.wall(Vector3(-4, 0, -0.18), Vector3(4, 0, -0.18), -3, -1, [], [], [], false)
-	facility.wall(Vector3(4, 0, 12.18), Vector3(-4, 0, 12.18), -3, -1, [], [], [], false)
+	facility.wall(Vector3(-4.18, 0, 12), Vector3(-4.18, 0, 0), -6, 0, [], [], [], false)
+	facility.wall(Vector3(4.18, 0, 0), Vector3(4.18, 0, 12), -6, 0, [], [], [], false)
+	facility.wall(Vector3(-4, 0, -0.18), Vector3(4, 0, -0.18), -6, -1, [], [], [], false)
+	facility.wall(Vector3(4, 0, 12.18), Vector3(-4, 0, 12.18), -6, -1, [], [], [], false)
 	# Up the shaft over the pit, where her tiles shift on their own and more of her eyes look down.
 	facility.wall(Vector3(-4.18, 0, 12), Vector3(-4.18, 0, 0), 6, 36, [], [Vector2i(6, 4), Vector2i(2, 10), Vector2i(8, 21)], [], false)
 	facility.wall(Vector3(4.18, 0, 0), Vector3(4.18, 0, 12), 6, 36, [], [Vector2i(9, 7), Vector2i(3, 14)], [], false)
@@ -660,18 +675,6 @@ func build_props() -> void:
 		add_child(screen)
 		terminals.append(screen)
 
-	water = MeshInstance3D.new()
-	var plane := PlaneMesh.new()
-	plane.size = Vector2(8, 32)
-	water.mesh = plane
-	var water_look := ShaderMaterial.new()
-	water_look.shader = preload("res://shaders/water.gdshader")
-	water_look.set_shader_parameter("ripples", Looks.noise(true))
-	water.material_override = water_look
-	water.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	water.position = Vector3(0, -0.4, 10)
-	water.visible = false
-	add_child(water)
 
 	# Her core: neuron W-7 in a glass sphere, in brass rings that turn.
 	var core := Looks.moving(piece("core", Vector3(NEURON.x, 0, NEURON.z)))  # its light changes color
@@ -860,8 +863,6 @@ func _physics_process(delta: float) -> void:
 
 	if not solved and not player.held and cube.global_position.distance_to(BUTTON) < 1.0 and cube.linear_velocity.length() < 2.0:
 		solve()
-	var flooded_waist := water.visible and water.position.y > 0.5 and p.y < water.position.y
-	player.slow = 0.5 if flooded_waist else 1.0
 
 
 func _process(delta: float) -> void:
@@ -939,7 +940,7 @@ func _on_acid(body: Node3D) -> void:
 
 ## A splash of glowing acid and a sizzle, where something went in.
 func splash_at(at: Vector3) -> void:
-	splash.global_position = Vector3(at.x, -2.95, at.z)
+	splash.global_position = Vector3(at.x, acid_level + 0.05, at.z)
 	splash.restart()
 	splash.emitting = true
 	sizzle.global_position = splash.global_position
@@ -1071,7 +1072,7 @@ func device_for(name: String, args: Dictionary) -> Vector3:
 			var at := turret_spot(args.get("position", "near_exit"))
 			return at if at.y > 1.0 else Vector3(at.x, -0.06, at.z)
 		"flood_room":
-			return Vector3(0, -0.06, -2.5)
+			return Vector3(Nerves.TRUNK_X, -2.5, 6.0)  # low in the pit wall, where her acid comes in
 	return Vector3(0, Nerves.CEILING_Y, 9.0)  # the lights
 
 
@@ -1094,7 +1095,7 @@ func do_move(move: Dictionary) -> void:
 		"spawn_turret":
 			spawn_turret(args.get("position", "near_exit"))
 		"flood_room":
-			flood(0.15 if args.get("level") == "ankle" else 0.9)
+			raise_acid(ACID_RISEN.get(args.get("level"), ACID_RISEN["ankle"]))
 		"dim_lights":
 			set_lights(args.get("level", "dim"))
 
@@ -1162,17 +1163,30 @@ func push_steps() -> void:
 		await get_tree().create_timer(0.09).timeout
 
 
-func flood(level: float) -> void:
-	water.visible = true
-	rushing.pitch_scale = 1.0
+## Her flood: the acid in the pit rises toward the platforms, heavy, then drains. Her moves never last.
+func raise_acid(height: float) -> void:
+	if acid_tween:
+		acid_tween.kill()
+	rushing.pitch_scale = 0.55
 	rushing.play()
-	var tween := create_tween()
-	tween.tween_property(water, "position:y", level, 3.0)
-	tween.tween_interval(20.0)  # it drains: her moves never last
-	tween.tween_callback(func(): rushing.pitch_scale = 0.75)
-	tween.tween_callback(rushing.play)
-	tween.tween_property(water, "position:y", -0.4, 3.0)
-	tween.tween_callback(func(): water.visible = false)
+	acid_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	acid_tween.tween_method(set_acid, acid_level, height, 4.0)
+	acid_tween.tween_interval(20.0)
+	acid_tween.tween_callback(func(): rushing.pitch_scale = 0.45)
+	acid_tween.tween_callback(rushing.play)
+	acid_tween.tween_method(set_acid, height, ACID_REST, 4.0)
+
+
+## Puts the acid's surface at `level`, and everything that goes with it: its mist, its glow, its fumes, and
+## the area that kills.
+func set_acid(level: float) -> void:
+	acid_level = level
+	acid_surface.position = Vector3(0, level, 6)
+	acid_mist.position = Vector3(0, level + 1.1, 6)
+	acid_light.position = Vector3(0, level + 0.8, 6)
+	fumes.position = Vector3(0, level + 0.1, 6)
+	bubbles.position = Vector3(0, level + 0.02, 6)
+	acid_area.position = Vector3(0, level - 1.8, 6)
 
 
 func set_lights(level: String) -> void:
@@ -1402,7 +1416,9 @@ func reset_chamber() -> void:
 	entrance_door.position.y = 4.6
 	button_plate.position.y = button_plate.get_meta("rest")
 	button_glow.emission_energy_multiplier = Looks.material("button_top").emission_energy_multiplier
-	water.visible = false
+	if acid_tween:
+		acid_tween.kill()
+	set_acid(ACID_REST)
 	set_lights("normal")
 	solved = false
 	deaths = 0
@@ -1457,7 +1473,7 @@ func take_shots() -> void:
 	# Her moves: a turret coming up through the floor, then the room flooded to the waist.
 	await shoot(dir, ["rising", Vector3(0, 0.1, -1.5), -1.1, -0.2], func(): spawn_turret("next_to_cube"), 0.9)
 	await shoot(dir, ["splash", Vector3(-2.5, 0.1, -0.5), PI + 0.3, -0.35], func(): splash_at(Vector3(-2.0, 0, 7.5)), 0.3)
-	await shoot(dir, ["flood", Vector3(-1.0, 0.1, -3.0), PI + 0.2, -0.25], func(): flood(0.9), 3.4)
+	await shoot(dir, ["flood", Vector3(-1.0, 0.1, -1.2), PI + 0.2, -0.45], func(): raise_acid(ACID_RISEN["waist"]), 4.5)
 	get_tree().quit()
 
 
@@ -1503,7 +1519,7 @@ func tour() -> void:
 	var beats := [
 		[0.5, func(): event("[Event] Subject entered Chamber 4.")],
 		[9.5, func(): apply_move("spawn_turret", {"position": "near_exit"})],
-		[12.0, func(): apply_move("flood_room", {"level": "ankle"})],
+		[12.0, func(): apply_move("flood_room", {"liquid": "acid", "level": "waist"})],
 		[14.5, func(): facility.stir(0.3)],
 		[17.0, solve],
 		[25.5, func(): toggle_look_repaired()],
