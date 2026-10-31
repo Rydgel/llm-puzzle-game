@@ -6,3 +6,6 @@ steering-test/logs/
 steering-test/vectors/raw/
 steering-test/data/*.txt
 __pycache__/
+# Godot's import cache and the screenshots from `godot --path game -- --shots`
+game/.godot/
+game/shots/

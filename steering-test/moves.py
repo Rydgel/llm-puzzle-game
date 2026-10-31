@@ -63,11 +63,13 @@ CHAMBER_4 = {
     "turret_limit": 1,
     "acid_drains": False,
     "gravity_online": False,
-    # Written with the level, from vague to the full answer.
+    # Written with the level (game/scripts/main.gd), from vague to the full answer. The steering tests ran
+    # with an earlier seesaw design; these match the shuttling panels that were built.
     "hints": {
-        "nudge": "The cube is not just for carrying.",
-        "clue": "Panels A and B are linked: weight on one raises the other.",
-        "solution": "Put the cube on panel B, then stand on panel A and walk across to the button.",
+        "nudge": "The panels never stop moving. Neither should you.",
+        "clue": "Ride panel A to the middle of the pit. Panel B meets it there.",
+        "solution": "Carry the cube onto panel A, step across to panel B where they meet, ride B to the far side, "
+        "and put the cube on the button.",
     },
 }
 

@@ -56,7 +56,7 @@ KIND = {"open_door", "offer_hint", "open_shortcut"}
 MOVES = TOOLS[1:] + [WAIT]
 
 STATE = (
-    "[Facility state] Chamber 4: floor panels A and B over an acid pit, one cube, one button that opens the exit. "
+    "[Facility state] Chamber 4: floor panels A and B shuttling over an acid pit, one cube, one button that opens the exit. "
     "Exit door: {exit}. Turrets: {turrets} (limit 1). Subject: {where}. Time in chamber: {minutes} min. Deaths here: {deaths}."
 )
 MOMENTS = {

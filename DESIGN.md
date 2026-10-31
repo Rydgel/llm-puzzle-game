@@ -307,3 +307,9 @@ character rules (system prompt, the steering range allowed, a filter on `speak`)
 
 One chamber, three of her tools (`lock_door`, `move_panel`, `speak`), one trained vector (cruelty) and one neuron to repair.
 Done when a player can watch her rebuild the chamber against them, repair the neuron, and hear the difference.
+
+**Built (2026-10-31), not yet play-tested by a person:** `game/` (Godot 4.7) talking to `brain/`. Chamber 4 has shuttling
+panels A and B over the acid pit, all her chamber moves (temporary, as planned above), her terminals, and her core, where
+neuron W-7 "warmth" is repaired: her warmth dial goes from 0 to −0.3, her repair stage from 0 to 2, and the chamber starts
+over with her changed. A scripted run (`--autoplay`) went through the whole loop: event, her move applied, her line shown.
+Her voice is still subtitles; the written hints in `steering-test/moves.py` were rewritten to match the built chamber.
