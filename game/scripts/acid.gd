@@ -1,27 +1,40 @@
 extends Node3D
-## The acid in the pit: deep, thick, glowing, and hers to raise (DESIGN.md, Art direction). Her flood opens
-## vents in the pit's walls and pours acid in through them until it nears the platforms: it heaves and foams
-## where the streams land and churns while it moves, then the vents close, and it drains when her move runs
-## out. Whatever touches it is reported by `touched`; main.gd decides what that means.
+## The acid: deep, thick, glowing, and hers to raise (DESIGN.md, Art direction). It is a liquid
+## (scripts/spill.gd): her flood opens vents in the pit's walls and pours acid in through them; it heaves and
+## foams where the streams land, rises, and if she pours enough it spills over the pit's edges and creeps
+## across the platforms until it thins out. Then the vents close, and when her move runs out it drains,
+## spills running back into the pit. Deep acid is reported by `touched`; shallow acid by burning().
 
 signal touched(body: Node3D)
 
 const Looks := preload("res://scripts/looks.gd")
 const Air := preload("res://scripts/air.gd")
+const Spill := preload("res://scripts/spill.gd")
 const STREAM := preload("res://shaders/acid_stream.gdshader")
-const REST := -3.0  # its surface; the pit goes 3 m deeper
-const BOTTOM := -6.0
-const CENTER := Vector3(0, 0, 6)  # the middle of the pit
-const SIZE := Vector2(8, 12)
-const FILL_TIME := 5.0
+const REST := -3.0  # the pit's surface at rest; the pit goes 3 m deeper
+const PIT_FLOOR := -6.0
+const PIT := Rect2(-4, 0, 8, 12)  # the pit, in x and z
+const FLOOR := Rect2(-4, -6, 8, 24)  # all the liquid can reach: the pit and both platforms, z -6 to 18
+const CELL := 0.5
+const SPILL := 0.6  # cubic meters over the brim when she floods past it: enough to creep partway across
+const POUR_RATE := 36.0  # cubic meters a second, all vents together
 const STAY_TIME := 20.0  # her moves never last
 const DRAIN_TIME := 4.0
+const STEP := 1.0 / 60.0
 
-var level := REST
+var level := REST  # the pit's surface
 var agitation := 0.0  # 0 at rest, 1 while it fills or drains
+var sim: Spill
+var _state := "rest"  # rest, pour, stay, drain
+var _target := 0.0  # the volume she is pouring up to
+var _rest_volume := 0.0
+var _drains := PackedByteArray()  # the cells it drains from: the pit
+var _clock := 0.0
 var _head := 0.0  # how far down her streams the acid has reached, 0 to 1
 var _tail := 0.0  # how far down they have stopped pouring
 var _stir := 0.0
+var _map: Image  # the surface, for the shader: height (r) and how fast it flows (g)
+var _map_texture: ImageTexture
 var _surface: MeshInstance3D
 var _mist: FogVolume
 var _glow: OmniLight3D
@@ -39,17 +52,32 @@ var _tween: Tween
 
 
 func _ready() -> void:
+	sim = Spill.new(int(FLOOR.size.x / CELL), int(FLOOR.size.y / CELL), CELL, FLOOR.position)
+	_drains.resize(sim.nx * sim.nz)
+	for k in sim.nx * sim.nz:
+		var pit := PIT.has_point(sim.center(k))
+		sim.ground[k] = PIT_FLOOR if pit else 0.0
+		_drains[k] = 1 if pit else 0
+	_settle()
+	_rest_volume = sim.volume()
+	_map = Image.create(sim.nx, sim.nz, false, Image.FORMAT_RGF)
+	_map_texture = ImageTexture.create_from_image(_map)
 	_surface = MeshInstance3D.new()
 	var plane := PlaneMesh.new()
-	plane.size = SIZE
-	plane.subdivide_width = 32
-	plane.subdivide_depth = 48
+	plane.size = FLOOR.size
+	plane.subdivide_width = int(FLOOR.size.x / CELL) * 2 - 1
+	plane.subdivide_depth = int(FLOOR.size.y / CELL) * 2 - 1
 	_surface.mesh = plane
-	_surface.material_override = Looks.material("acid")
+	_surface.position = Vector3(FLOOR.get_center().x, 0, FLOOR.get_center().y)
+	var look: ShaderMaterial = Looks.material("acid")
+	look.set_shader_parameter("surface_map", _map_texture)
+	look.set_shader_parameter("map_origin", FLOOR.position)
+	look.set_shader_parameter("map_size", FLOOR.size)
+	_surface.material_override = look
 	_surface.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add_child(_surface)
 	_mist = FogVolume.new()
-	_mist.size = Vector3(SIZE.x, 2.6, SIZE.y)
+	_mist.size = Vector3(PIT.size.x, 2.6, PIT.size.y)
 	var fog := FogMaterial.new()
 	fog.density = 0.12
 	fog.albedo = Color(0.45, 0.65, 0.4)
@@ -63,17 +91,17 @@ func _ready() -> void:
 	_glow.light_energy = 0.35
 	_glow.omni_range = 9.0
 	add_child(_glow)
-	_area = Area3D.new()  # touching it: from 20 cm over its surface down
+	_area = Area3D.new()  # deep acid: the pit, below where panels ride
 	var shape := CollisionShape3D.new()
 	var box := BoxShape3D.new()
-	box.size = Vector3(SIZE.x, 4, SIZE.y)
+	box.size = Vector3(PIT.size.x, 4, PIT.size.y)
 	shape.shape = box
 	_area.add_child(shape)
 	add_child(_area)
 	_area.body_entered.connect(touched.emit)
-	_fumes = Air.fumes(Vector3(SIZE.x - 0.4, 0.1, SIZE.y - 0.4), Vector3.ZERO, 140)
+	_fumes = Air.fumes(Vector3(PIT.size.x - 0.4, 0.1, PIT.size.y - 0.4), Vector3.ZERO, 140)
 	add_child(_fumes)
-	_bubbles = Air.bubbles(SIZE - Vector2(0.4, 0.4), 90)
+	_bubbles = Air.bubbles(PIT.size - Vector2(0.4, 0.4), 90)
 	add_child(_bubbles)
 	_splash = Air.splash()
 	add_child(_splash)
@@ -84,11 +112,11 @@ func _ready() -> void:
 	add_child(_splash_light)
 	_sizzle = _sound("sizzle", 8.0)
 	_rush = _sound("flood", 14.0)
-	_rush.position = CENTER + Vector3(0, -1, 0)
+	_rush.position = Vector3(PIT.get_center().x, -1, PIT.get_center().y)
 	_stream_look = ShaderMaterial.new()
 	_stream_look.shader = STREAM
-	_stream_look.set_shader_parameter("churn", (Looks.material("acid") as ShaderMaterial).get_shader_parameter("churn"))
-	set_level(REST)
+	_stream_look.set_shader_parameter("churn", look.get_shader_parameter("churn"))
+	_show()
 
 
 ## Her vents onto the acid, in the facility's pit walls: one stream each, falling in an arc into the acid.
@@ -110,55 +138,50 @@ func pour_from(facility: Node3D) -> void:
 		_streams.append({"mouth": mouth, "velocity": velocity, "spray": spray, "pour": pour})
 
 
-## Her flood: the vents open, acid pours in until it reaches `height`, the vents close, and after a while it
-## drains away again.
+## Her flood: the vents open and pour until the pit's surface reaches `height`. Above 0, the pit's brim, it
+## overflows: the pit fills and SPILL more runs out over the platforms. The vents close, and after STAY_TIME
+## it drains back to rest.
 func rise(height: float) -> void:
 	if _tween:
 		_tween.kill()
+	_target = _rest_volume + (minf(height, 0.0) - REST) * PIT.get_area() + (SPILL if height > 0.0 else 0.0)
 	if _facility:
 		_facility.open_vents(true)
+	_state = "opening"
+	_clock = 1.0  # the vents slide open
 	_tween = create_tween()
-	_tween.tween_interval(1.0)  # the vents slide open
-	_tween.tween_callback(_start_pouring)
-	_tween.tween_property(self, "_head", 1.0, 0.6)
-	_tween.parallel().tween_property(self, "agitation", 1.0, 1.0)
-	_tween.parallel().tween_method(set_level, level, height, FILL_TIME).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	_tween.tween_property(self, "_tail", 1.0, 0.6)
-	_tween.tween_callback(_close_vents)
-	_tween.tween_property(self, "agitation", 0.15, 2.0)
-	_tween.tween_interval(STAY_TIME)
-	_tween.tween_callback(_start_draining)
-	_tween.tween_property(self, "agitation", 0.6, 0.8)
-	_tween.parallel().tween_method(set_level, height, REST, DRAIN_TIME).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	_tween.tween_property(self, "agitation", 0.0, 2.0)
+	_tween.tween_property(self, "agitation", 1.0, 1.5)
 
 
 ## Back to rest at once: the chamber restarting.
 func reset() -> void:
 	if _tween:
 		_tween.kill()
+	_state = "rest"
 	_head = 0.0
 	_tail = 0.0
 	agitation = 0.0
 	_close_vents()
-	set_level(REST)
+	_settle()
+	_show()
 
 
-## Puts its surface at `y`, with everything that goes with it: its mist, glow, fumes and bubbles, and the
-## area that counts as touching it.
-func set_level(y: float) -> void:
-	level = y
-	_surface.position = Vector3(CENTER.x, y, CENTER.z)
-	_mist.position = Vector3(CENTER.x, y + 1.1, CENTER.z)
-	_glow.position = Vector3(CENTER.x, y + 0.8, CENTER.z)
-	_fumes.position = Vector3(CENTER.x, y + 0.1, CENTER.z)
-	_bubbles.position = Vector3(CENTER.x, y + 0.02, CENTER.z)
-	_area.position = Vector3(CENTER.x, y - 1.8, CENTER.z)
+## Acid spilled over a platform, over the feet at `at`: it burns (main.gd decides how long is too long). Over
+## the pit, only deep acid counts, through `touched`: panels, steps and bridges above it stay safe.
+func burning(at: Vector3) -> bool:
+	var k := sim.index(at.x, at.z)
+	return sim.ground[k] == 0.0 and sim.depth[k] > 0.01 and sim.depth[k] > at.y - 0.02
+
+
+## The hiss of acid on skin, at `at`.
+func sizzle_at(at: Vector3) -> void:
+	_sizzle.position = at
+	_sizzle.play()
 
 
 ## A splash of glowing acid, a flash and a sizzle, where something fell in.
 func splash_at(at: Vector3) -> void:
-	_splash.position = Vector3(at.x, level + 0.05, at.z)
+	_splash.position = Vector3(at.x, sim.surface_at(at.x, at.z) + 0.05, at.z)
 	_splash.restart()
 	_splash.emitting = true
 	_sizzle.position = _splash.position
@@ -168,18 +191,113 @@ func splash_at(at: Vector3) -> void:
 	create_tween().tween_property(_splash_light, "light_energy", 0.0, 0.6).set_ease(Tween.EASE_IN)
 
 
+func _physics_process(_delta: float) -> void:
+	if _state == "rest":
+		return
+	_clock -= STEP
+	match _state:
+		"opening":
+			if _clock <= 0.0:
+				_state = "pour"
+				_start_pouring()
+		"pour":
+			var left := _target - sim.volume()
+			var taper := clampf(left / 40.0, 0.12, 1.0)  # gentler near the top, or it slops over in waves
+			var amount := minf(POUR_RATE * taper * STEP, left)
+			for stream in _streams:
+				var landing := _landing(stream)
+				sim.pour(landing.x, landing.z, amount / _streams.size())
+			if left <= 0.01:
+				_state = "stay"
+				_clock = STAY_TIME
+				_stop_pouring()
+		"stay":
+			if _clock <= 0.0:
+				_state = "drain"
+				_start_draining()
+		"drain":
+			var extra := sim.volume() - _rest_volume
+			sim.drain(_drains, minf(extra, (_target - _rest_volume) / DRAIN_TIME * STEP))
+			if extra <= 0.05:
+				_state = "rest"
+				_settle()
+				create_tween().tween_property(self, "agitation", 0.0, 2.0)
+	sim.step(STEP, _state != "drain")
+	_show()
+
+
+## Exactly at rest: the pit full to REST, the platforms dry.
+func _settle() -> void:
+	sim.depth.fill(0.0)
+	for k in sim.nx * sim.nz:
+		if sim.ground[k] < REST:
+			sim.depth[k] = REST - sim.ground[k]
+	sim.step(STEP)  # clears the flows
+
+
+## Puts the simulated surface where the eye and the rules can see it: the surface map for the shader, the
+## pit's level for everything that hangs over it, and the area of deep acid.
+func _show() -> void:
+	for k in sim.nx * sim.nz:
+		var d := sim.depth[k]
+		var height := sim.ground[k] + d
+		if d < 0.005:
+			# Dry: where wet neighbours sit below this cell's ground, carry their surface on under it, so
+			# the surface meets the pit's walls flat; otherwise just under the ground, so a spill ends here.
+			height = sim.ground[k] - 0.01
+			var below := -INF
+			for n in _neighbours(k):
+				if sim.depth[n] >= 0.005:
+					below = maxf(below, sim.ground[n] + sim.depth[n])
+			if below > -INF and below < sim.ground[k]:
+				height = below
+		_map.set_pixel(k % sim.nx, k / sim.nx, Color(height, clampf(sim.speed[k] * 0.4, 0.0, 1.0), 0))
+	_map_texture.update(_map)
+	level = sim.surface_at(PIT.get_center().x, PIT.get_center().y)
+	_mist.position = Vector3(PIT.get_center().x, level + 1.1, PIT.get_center().y)
+	_glow.position = Vector3(PIT.get_center().x, level + 0.8, PIT.get_center().y)
+	_fumes.position = Vector3(PIT.get_center().x, level + 0.1, PIT.get_center().y)
+	_bubbles.position = Vector3(PIT.get_center().x, level + 0.02, PIT.get_center().y)
+	# Deep acid kills at once, but never up where the panels ride: standing in shallow acid only burns.
+	_area.position = Vector3(PIT.get_center().x, minf(level + 0.2, -0.45) - 2.0, PIT.get_center().y)
+
+
+func _neighbours(k: int) -> Array[int]:
+	var around: Array[int] = []
+	var i := k % sim.nx
+	var j := k / sim.nx
+	if i > 0:
+		around.append(k - 1)
+	if i < sim.nx - 1:
+		around.append(k + 1)
+	if j > 0:
+		around.append(k - sim.nx)
+	if j < sim.nz - 1:
+		around.append(k + sim.nx)
+	return around
+
+
 func _start_pouring() -> void:
 	_head = 0.0
 	_tail = 0.0
+	create_tween().tween_property(self, "_head", 1.0, 0.6)
 	_rush.pitch_scale = 0.55
 	_rush.play()
 	for stream in _streams:
 		stream["pour"].play()
 
 
+func _stop_pouring() -> void:
+	var stop := create_tween()
+	stop.tween_property(self, "_tail", 1.0, 0.6)
+	stop.tween_callback(_close_vents)
+	stop.tween_property(self, "agitation", 0.2, 2.0)
+
+
 func _start_draining() -> void:
 	_rush.pitch_scale = 0.45
 	_rush.play()
+	create_tween().tween_property(self, "agitation", 0.6, 0.8)
 
 
 func _close_vents() -> void:
@@ -210,7 +328,7 @@ func _process(delta: float) -> void:
 	_fumes.amount_ratio = 0.5 + 0.5 * agitation
 
 
-## Where a stream lands at the acid's level: along its arc, or at its mouth once the acid covers it.
+## Where a stream lands at the pit's level: along its arc, or at its mouth once the acid covers it.
 func _landing(stream: Dictionary) -> Vector3:
 	var mouth: Vector3 = stream["mouth"]
 	var velocity: Vector3 = stream["velocity"]
@@ -225,7 +343,7 @@ func _landing(stream: Dictionary) -> Vector3:
 func _arc(mouth: Vector3, velocity: Vector3, along_wall: Vector3) -> ArrayMesh:
 	const RINGS := 20
 	const SIDES := 10
-	var fall := (velocity.y + sqrt(velocity.y * velocity.y + 19.6 * (mouth.y - BOTTOM))) / 9.8
+	var fall := (velocity.y + sqrt(velocity.y * velocity.y + 19.6 * (mouth.y - PIT_FLOOR))) / 9.8
 	var tube := SurfaceTool.new()
 	tube.begin(Mesh.PRIMITIVE_TRIANGLES)
 	for i in RINGS + 1:

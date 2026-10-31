@@ -35,7 +35,8 @@ const BUTTON := Vector3(0, 0, 15.0)
 const NEURON := Vector3(0, 1.4, 23.5)
 const STUCK_EVERY := 75.0
 const CORE_SPAWN := Vector3(0, 0.1, 20.2)
-const ACID_RISEN := {"ankle": -1.8, "waist": -0.5}  # her flood: halfway up the pit, or just below the platforms
+const ACID_RISEN := {"ankle": -1.8, "waist": 0.05}  # her flood: halfway up the pit, or over its brim
+const BURN_TIME := 1.5  # seconds in spilled acid that a subject survives
 const CONSOLE := Vector3(1.9, 0, 23.5)
 const CORE_SCENE := "VESPER's core: her neuron W-7 glows in the middle of the room, the calibration console beside it. The technician is a colleague who maintains you, not a test subject."
 const GREEN := Vector2(0.55, 0.7)  # the calibration dial's green band
@@ -61,6 +62,7 @@ var brain: Brain
 var exit_door: Node3D
 var entrance_door: Node3D
 var acid: Acid  # the acid in the pit, which her flood raises
+var burn := 0.0  # seconds the subject has stood in spilled acid
 var lights: Array[Light3D] = []  # each with its full energy in meta "energy"
 var facility: Facility
 var button_plate: Node3D
@@ -801,6 +803,18 @@ func _physics_process(delta: float) -> void:
 		if waiting_at_exit > 20.0:
 			waiting_at_exit = -40.0
 			event("[Event] Subject has stood still at the locked exit, staring at it.")
+	# Acid spilled over the platforms burns: a moment in it is survivable, more is not.
+	if acid.burning(p):
+		burn += delta
+		if burn > BURN_TIME:
+			burn = 0.0
+			kill("[Event] Subject stood in acid spilled over the platform and was respawned.")
+		elif fmod(burn, 0.35) < delta:
+			fade.color = Color(0.25, 1.0, 0.1, 0.3)
+			create_tween().tween_property(fade, "color:a", 0.0, 0.25)
+			acid.sizzle_at(p)
+	else:
+		burn = maxf(burn - delta, 0.0)
 	if p.z > 19.0 and not found_core:
 		found_core = true
 		event("[Event] Subject walked past the exit and found VESPER's core.", true)
@@ -1383,7 +1397,7 @@ func take_shots() -> void:
 	await shoot(dir, ["rising", Vector3(0, 0.1, -1.5), -1.1, -0.2], func(): spawn_turret("next_to_cube"), 0.9)
 	await shoot(dir, ["splash", Vector3(-2.5, 0.1, -0.5), PI + 0.3, -0.35], func(): acid.splash_at(Vector3(-2.0, 0, 7.5)), 0.3)
 	await shoot(dir, ["pouring", Vector3(-1.0, 0.1, -1.2), PI + 0.2, -0.45], func(): raise_acid(ACID_RISEN["waist"]), 3.0)
-	await shoot(dir, ["flood", Vector3(-1.0, 0.1, -1.2), PI + 0.2, -0.45], func(): pass, 3.5)
+	await shoot(dir, ["flood", Vector3(0.8, 0.1, -5.6), PI - 0.1, -0.32], func(): pass, 9.0)
 	get_tree().quit()
 
 
@@ -1421,12 +1435,13 @@ const TOUR := [  # seconds, where the camera is, what it looks at
 
 
 ## Her flood, close: from the edge of the pit as her vents open and pour, and the acid rises toward the
-## platforms. `-- --pour`, recorded like the tour, about 12 seconds (--quit-after 400).
+## platforms and spills over onto them. `-- --pour`, recorded like the tour, 22 seconds (--quit-after 660).
 const POUR := [
 	[0.0, Vector3(-2.6, 1.7, -0.6), Vector3(0.5, -2.2, 5.0)],
 	[6.0, Vector3(-1.2, 1.5, -0.4), Vector3(0.0, -1.6, 6.5)],
-	[12.0, Vector3(1.4, 1.6, -0.5), Vector3(-0.6, -0.8, 7.5)],
-	[13.0, Vector3(1.6, 1.6, -0.5), Vector3(-0.7, -0.7, 7.6)],
+	[11.0, Vector3(0.6, 1.8, -2.5), Vector3(-0.2, -0.4, 6.0)],
+	[17.0, Vector3(1.2, 2.0, -5.2), Vector3(-0.4, -0.1, 2.0)],
+	[22.0, Vector3(0.4, 2.1, -5.6), Vector3(0.0, -0.2, 3.0)],
 ]
 
 

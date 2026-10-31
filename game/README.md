@@ -49,8 +49,9 @@ remembers that you did it, and sends you to Chamber 4. `--skip-prologue` starts 
   it on the red button: the exit opens. Falling in the acid respawns you at the entrance; a cube that falls in is
   dispensed again.
 - **Her moves** come from the brain's legal list and are all temporary: a nudged panel settles back after 6 seconds, the
-  acid she raises drains after 20, the lights come back after 30. Her flood here raises the acid in the pit, halfway up or
-  to just below the platforms: the floors stay dry, and falling in is still the only death. A turret needs you in its line of sight for 2.5 seconds, and shows its
+  acid she raises drains after 20, the lights come back after 30. Her flood here raises the acid in the pit: halfway up,
+  or past its brim, when it spills over onto the platforms and creeps partway across them. Spilled acid burns: about
+  1.5 seconds in it kills. The pit's deep acid kills at once, but panels, her steps and her bridge above it stay safe. A turret needs you in its line of sight for 2.5 seconds, and shows its
   beam while it aims.
 - **Her terminals**, one at the entrance and one on the far side, print every move she makes, refusals and hints.
 - **Her core** is behind the exit. E at neuron W-7 "warmth" repairs it: her dials go from petty 0 to −0.3, her repair stage
@@ -80,8 +81,9 @@ broken, red while W-7 overloads, teal once repaired, and brightens with her voic
 
 Her moves show in her body: a turret comes up through a hatch of her light in the floor (or down from above, over the
 pit), the walls ripple out from it, and a whirr goes with it; when she dims the lights, her seams and eyes glow brighter;
-her flood opens vents in the pit's walls that pour acid in, foaming where the streams land, until it nears the
-platforms; then the vents close and it drains (`scripts/acid.gd`). A death flashes green (acid) or red (turret), with her glitch.
+her flood opens vents in the pit's walls that pour acid in, foaming where the streams land. The acid is a liquid
+(`scripts/spill.gd`, a "virtual pipes" heightfield over the pit and the platforms): past the brim it spills over the
+edges and runs across the floor until it thins out, and drains back into the pit after (`scripts/acid.gd`). A death flashes green (acid) or red (turret), with her glitch.
 
 Dust drifts through her light, fumes rise off the acid, and W-7 throws sparks when it overloads (`scripts/air.gd`).
 The acid is deep: you see into it, through glowing clouds churning at different depths, a dull crust drifting on top
@@ -114,7 +116,7 @@ Arguments go after `--`:
   tour with sound, her brain live: the entrance, up the shaft, over the pit as she spawns a turret and floods the
   room, into her core, where W-7 is repaired, then up her core. Any test mode records the same way, with sound, for
   example the prologue: `godot --path game --write-movie prologue.avi --fixed-fps 30 -- --prologue-test`.
-- `-- --pour` is a 13-second close camera on her flood, from the edge of the pit (`--quit-after 400`).
+- `-- --pour` is a 22-second camera on her flood, from the edge of the pit as it overflows (`--quit-after 660`).
 - `godot --path game -- --prologue-test` plays the prologue on its own (the dial turns by itself) and prints her
   lines, then one line in Chamber 4 to check she remembers you.
 - `godot --path game -- --autoplay` sends five scripted events through the brain and prints her moves and lines.

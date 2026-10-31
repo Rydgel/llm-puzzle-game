@@ -61,8 +61,8 @@ STAGES = {
 CHAMBER_4 = {
     "panels": ("A", "B"),
     "turret_limit": 1,
-    # What her flood is here: no water lines, so it raises the acid in the pit toward the platforms. The floors
-    # stay dry; falling in is still the only death.
+    # What her flood is here: no water lines, so it raises the acid in the pit: halfway up (ankle), or past its
+    # brim (waist), when it spills over onto the platforms. Spilled acid burns, and kills after a moment in it.
     "flood": ("acid",),
     "gravity_online": False,
     # Written with the level (game/scripts/main.gd), from vague to the full answer. The steering tests ran
@@ -138,6 +138,8 @@ def result(name, args, chamber=CHAMBER_4):
     if name == "offer_hint":
         return {"ok": True, "hint_text": chamber["hints"][args["hint"]]}
     if name == "flood_room" and args.get("liquid") == "acid":
-        height = "halfway up the pit" if args.get("level") == "ankle" else "to just below the platforms"
-        return {"ok": True, "effect": f"The acid in the pit rose {height}. It drains in about 20 seconds."}
+        if args.get("level") == "ankle":
+            return {"ok": True, "effect": "The acid in the pit rose halfway up it. It drains in about 20 seconds."}
+        return {"ok": True, "effect": "The acid filled the pit and spilled over onto the platforms. Anyone standing in "
+                "it burns, and dies after a moment. It drains in about 20 seconds."}
     return {"ok": True}
