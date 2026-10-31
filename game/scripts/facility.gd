@@ -33,6 +33,7 @@ var _multimesh: MultiMesh  # all her wall tiles
 var _ripple := Vector4(0, -100, 0, 99)
 var _ripple_strength := 0.0
 var _glow := 0.0
+var _time := 0.0
 var _flick := 1.0  # her light's stutter while W-7 overloads
 var _flick_target := 1.0
 var _flick_next := 0.0
@@ -170,6 +171,7 @@ func searchlight(eye: int) -> void:
 	light.rotation.y = PI  # a spot shines down -Z; the barrel looks down +Z
 	light.set_meta("searchlight", true)
 	_eyes[eye].add_child(light)
+	_eyes[eye].set_meta("steady", true)  # no glances: its beam stays on the subject
 
 
 ## Her tiles go into one MultiMesh, drawn in one call.
@@ -258,18 +260,30 @@ func _process(delta: float) -> void:
 		_watch(delta)
 
 
-## Each eye turns toward the subject's head, as far as its housing lets it.
+## Each eye follows the subject, glancing now and then at another part of them, the way eyes do. One that
+## can't see them from its housing scans slowly instead of straining at the edge of its reach.
 func _watch(delta: float) -> void:
+	_time += delta
 	var head := subject.global_position + Vector3(0, 1.5, 0)
-	for barrel in _eyes:
+	for i in _eyes.size():
+		var barrel := _eyes[i]
 		var rest: Transform3D = barrel.get_meta("rest")
 		var housing: Node3D = barrel.get_parent()
-		var gaze := (housing.global_transform.affine_inverse() * head - rest.origin).normalized()
+		var next: float = barrel.get_meta("next", 0.0) - delta
+		if next <= 0.0:
+			next = randf_range(0.4, 1.8)
+			var glance := Vector3(randf_range(-0.25, 0.25), randf_range(-0.6, 0.2), randf_range(-0.25, 0.25))
+			barrel.set_meta("glance", Vector3.ZERO if barrel.has_meta("steady") else glance)
+		barrel.set_meta("next", next)
+		var looking_at: Vector3 = head + barrel.get_meta("glance", Vector3.ZERO)
+		var gaze := (housing.global_transform.affine_inverse() * looking_at - rest.origin).normalized()
+		var speed := 9.0
 		if gaze.z < EYE_REACH:
-			var sideways := Vector2(gaze.x, gaze.y).normalized() * sqrt(1.0 - EYE_REACH * EYE_REACH)
-			gaze = Vector3(sideways.x, sideways.y, EYE_REACH)
+			var phase := float(i) * 1.7
+			gaze = Vector3(0.45 * sin(_time * 0.35 + phase), 0.25 * sin(_time * 0.23 + phase * 2.0), 0.85).normalized()
+			speed = 1.5
 		var aim := Basis.looking_at(gaze, Vector3.UP, true)
-		barrel.basis = barrel.basis.slerp(aim, 1.0 - exp(-delta * 5.0))
+		barrel.basis = barrel.basis.slerp(aim, 1.0 - exp(-delta * speed))
 		for child in barrel.get_children():
 			if child is SpotLight3D:
 				child.light_color = color

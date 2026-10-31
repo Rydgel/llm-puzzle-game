@@ -62,9 +62,13 @@ var water: MeshInstance3D
 var lights: Array[Light3D] = []  # each with its full energy in meta "energy"
 var facility: Facility
 var button_plate: Node3D
+var button_glow: StandardMaterial3D
 var core_rings: Array = []
 var core_light: OmniLight3D
 var sparks: GPUParticles3D  # from W-7 while it overloads
+var splash: GPUParticles3D  # where something falls into the acid
+var sizzle: AudioStreamPlayer3D
+var splash_light: OmniLight3D  # a flash of green on the walls
 var probes: Array[ReflectionProbe] = []
 var nerves: Nerves  # her moves race along them before they happen; junctions reroute them
 var visor: Visor  # V: see her nerves through her walls
@@ -596,6 +600,10 @@ func build_walls() -> void:
 	paint_sign("sublevel", Vector3(4.0, 5.2, -3.0), Vector3(0, 0, 1), Vector3(-1, 0, 0), Vector2(5.3, 0.5), paint)
 	paint_sign("caution", Vector3(0, 0, -1.1), Vector3(-1, 0, 0), Vector3.UP, Vector2(5.0, 0.62), Color(0.9, 0.6, 0.05, 0.85))
 	paint_sign("core", Vector3(-2.6, 2.3, 17.75), Vector3(-1, 0, 0), Vector3(0, 0, -1), Vector2(2.6, 0.24), paint)
+	# Her HR slogans: over the pit on the right, over her terminal at the entrance, and in her core.
+	paint_sign("review", Vector3(4.0, 2.5, 10.0), Vector3(0, 0, 1), Vector3(-1, 0, 0), Vector2(4.8, 0.45), paint)
+	paint_sign("feeling", Vector3(-4.0, 4.5, -3.0), Vector3(0, 0, -1), Vector3(1, 0, 0), Vector2(3.8, 0.36), paint)
+	paint_sign("cares", Vector3(-4.0, 3.3, 22.0), Vector3(0, 0, -1), Vector3(1, 0, 0), Vector2(2.6, 0.49), paint)
 	paint_sign("w7", Vector3(0, 0, 21.6), Vector3(-1, 0, 0), Vector3.UP, Vector2(1.6, 0.8), Color(0.85, 0.85, 0.82, 0.6))
 
 
@@ -630,6 +638,8 @@ func build_props() -> void:
 
 	button_plate = piece("button", BUTTON).find_child("plate")
 	button_plate.set_meta("rest", button_plate.position.y)
+	button_glow = Looks.material("button_top").duplicate()  # its own, to light up once pressed
+	(button_plate as MeshInstance3D).material_override = button_glow
 
 	# Her terminal, on both sides: it prints every move she makes.
 	for spot in [[Vector3(-4.0, 2.5, -3.0), 90.0], [Vector3(4.0, 2.5, 15.0), -90.0]]:
@@ -684,6 +694,15 @@ func build_props() -> void:
 	show_neuron()
 	sparks = Air.sparks(NEURON)
 	add_child(sparks)
+	splash = Air.splash()
+	add_child(splash)
+	sizzle = sound("sizzle", Vector3.ZERO)
+	sizzle.unit_size = 8.0
+	splash_light = OmniLight3D.new()
+	splash_light.light_color = Color(0.5, 1.0, 0.3)
+	splash_light.omni_range = 5.0
+	splash_light.light_energy = 0.0
+	add_child(splash_light)
 
 	console_dial = piece("console", CONSOLE, PI).find_child("dial")
 	console_dial.set_meta("rest", console_dial.basis)
@@ -908,12 +927,26 @@ func progress() -> void:
 
 
 func _on_acid(body: Node3D) -> void:
+	if body == player or body == cube:
+		splash_at(body.global_position)
 	if body == player:
 		kill("[Event] Subject fell into the acid pit and was respawned.")
 	elif body == cube:
 		reset_cube()
 		var thrown := elapsed - thrown_at < 3.0
 		event("[Event] Subject %s the cube into the acid pit. A new cube was dispensed." % ("threw" if thrown else "dropped"))
+
+
+## A splash of glowing acid and a sizzle, where something went in.
+func splash_at(at: Vector3) -> void:
+	splash.global_position = Vector3(at.x, -2.95, at.z)
+	splash.restart()
+	splash.emitting = true
+	sizzle.global_position = splash.global_position
+	sizzle.play()
+	splash_light.global_position = splash.global_position + Vector3(0, 0.5, 0)
+	splash_light.light_energy = 4.0
+	create_tween().tween_property(splash_light, "light_energy", 0.0, 0.6).set_ease(Tween.EASE_IN)
 
 
 func kill(what: String) -> void:
@@ -946,6 +979,7 @@ func solve() -> void:
 	solved = true
 	open_exit()
 	create_tween().tween_property(button_plate, "position:y", button_plate.position.y - 0.04, 0.2)
+	create_tween().tween_property(button_glow, "emission_energy_multiplier", 5.0, 0.4)
 	progress()
 	event("[Event] Subject put the cube on the button. The exit opened.")
 
@@ -1367,6 +1401,7 @@ func reset_chamber() -> void:
 	close_exit()
 	entrance_door.position.y = 4.6
 	button_plate.position.y = button_plate.get_meta("rest")
+	button_glow.emission_energy_multiplier = Looks.material("button_top").emission_energy_multiplier
 	water.visible = false
 	set_lights("normal")
 	solved = false
@@ -1421,6 +1456,7 @@ func take_shots() -> void:
 	sparks.emitting = false
 	# Her moves: a turret coming up through the floor, then the room flooded to the waist.
 	await shoot(dir, ["rising", Vector3(0, 0.1, -1.5), -1.1, -0.2], func(): spawn_turret("next_to_cube"), 0.9)
+	await shoot(dir, ["splash", Vector3(-2.5, 0.1, -0.5), PI + 0.3, -0.35], func(): splash_at(Vector3(-2.0, 0, 7.5)), 0.3)
 	await shoot(dir, ["flood", Vector3(-1.0, 0.1, -3.0), PI + 0.2, -0.25], func(): flood(0.9), 3.4)
 	get_tree().quit()
 

@@ -127,6 +127,43 @@ static func sparks(at: Vector3) -> GPUParticles3D:
 	return spray
 
 
+## A splash where something falls into the acid: glowing green droplets thrown up, falling back. Fire it with
+## restart() where the splash is.
+static func splash() -> GPUParticles3D:
+	var motion := ParticleProcessMaterial.new()
+	motion.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_SPHERE
+	motion.emission_sphere_radius = 0.3
+	motion.direction = Vector3(0, 1, 0)
+	motion.spread = 30.0
+	motion.initial_velocity_min = 2.5
+	motion.initial_velocity_max = 5.5
+	motion.gravity = Vector3(0, -9.8, 0)
+	motion.scale_min = 0.5
+	motion.scale_max = 1.3
+	var glow := Gradient.new()
+	glow.set_color(0, Color(4.0, 9.0, 3.0, 1))  # near white: it has to show against the acid's own glow
+	glow.set_color(1, Color(0.4, 2.0, 0.2, 0))
+	var glow_texture := GradientTexture1D.new()
+	glow_texture.gradient = glow
+	glow_texture.use_hdr = true  # past 1, so the droplets glow
+	motion.color_ramp = glow_texture
+	var look := StandardMaterial3D.new()
+	look.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	look.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	look.albedo_texture = soft_dot()
+	look.vertex_color_use_as_albedo = true
+	look.billboard_mode = BaseMaterial3D.BILLBOARD_PARTICLES
+	var drop := QuadMesh.new()
+	drop.size = Vector2(0.16, 0.16)
+	drop.material = look
+	var burst := _particles(motion, drop, 64, 1.0, Vector3.ZERO, Vector3(4, 5, 4))
+	burst.one_shot = true
+	burst.explosiveness = 0.9
+	burst.preprocess = 0.0
+	burst.emitting = false
+	return burst
+
+
 static func _particles(motion: ParticleProcessMaterial, mesh: Mesh, amount: int, life: float, at: Vector3, reach: Vector3) -> GPUParticles3D:
 	var particles := GPUParticles3D.new()
 	particles.process_material = motion

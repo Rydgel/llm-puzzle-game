@@ -7,6 +7,7 @@
 - servo: a hatch's actuator, a motor whirring up, then a clunk.
 - clack: her tiles shifting in a ripple, a cascade of clicks.
 - flood: water rushing in through the floor, bubbling, for about 3 seconds.
+- sizzle: something falling into the acid: a plop, then a hiss with crackles, about 1.2 seconds.
 
 Loops are built so they repeat seamlessly: every tone completes whole cycles, and noise and echoes are made
 periodic in the frequency domain.
@@ -134,6 +135,21 @@ def flood():
     save("flood", swell * (rush / np.max(np.abs(rush)) + 0.35 * bubbles / np.max(np.abs(bubbles))))
 
 
+def sizzle():
+    seconds = 1.3
+    t = np.arange(int(RATE * seconds)) / RATE
+    plop_pitch = 2 * np.pi * np.cumsum(180 - 90 * np.clip(t / 0.08, 0, 1)) / RATE
+    plop = np.sin(plop_pitch) * np.exp(-t / 0.06) + 0.5 * band(rng.normal(size=t.size), 300, 1500) * np.exp(-t / 0.03)
+    hiss = band(rng.normal(size=t.size), 2000, 9000)
+    hiss *= np.clip(t / 0.04, 0, 1) * np.exp(-t / 0.45) * (0.8 + 0.2 * np.sin(2 * np.pi * 23 * t))
+    crackles = np.zeros_like(t)
+    clicks = band(rng.normal(size=t.size), 2500, 10000)
+    for at in rng.uniform(0.02, 0.9, 40):
+        local = np.clip(t - at, 0, None)
+        crackles += rng.uniform(0.3, 1.0) * (t >= at) * clicks * np.exp(-local / 0.0015) * np.exp(-at / 0.5)
+    save("sizzle", plop / np.max(np.abs(plop)) + 0.7 * hiss / np.max(np.abs(hiss)) + 0.6 * crackles / np.max(np.abs(crackles)))
+
+
 if __name__ == "__main__":
     OUT.mkdir(parents=True, exist_ok=True)
     hum()
@@ -141,3 +157,4 @@ if __name__ == "__main__":
     servo()
     clack()
     flood()
+    sizzle()

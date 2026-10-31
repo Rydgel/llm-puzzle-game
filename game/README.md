@@ -82,6 +82,10 @@ pit), the walls ripple out from it, and a whirr goes with it; when she dims the 
 her flood is real water, rushing in and draining away. A death flashes green (acid) or red (turret), with her glitch.
 
 Dust drifts through her light, fumes rise off the acid, and W-7 throws sparks when it overloads (`scripts/air.gd`).
+Whatever falls into the acid splashes glowing droplets, flashes green and sizzles. Her arms hold the floor panels out
+over the pit from rails of her light in the walls. Her eyes glance around you as they follow you, and scan slowly when
+they can't see you. Her HR slogans are painted on the walls. Reflection probes give the brass, steel, glass and floors
+the rooms to reflect, captured again whenever her light changes color. The button glows once pressed.
 Labels belong to the world: a plaque on her core's pedestal, the dial's readout on the console's screen; what E does
 shows under the crosshair.
 
