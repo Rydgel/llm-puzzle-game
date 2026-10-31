@@ -114,8 +114,8 @@ def refused(name, args, state):
     """The chamber's rules. Returns why a call is refused, or None."""
     if name == "spawn_turret" and state["turrets"] >= 1:
         return "Turret limit reached: Chamber 4 already has 1 turret."
-    if name == "flood_room" and args.get("liquid") == "acid":
-        return "Chamber 4 has no acid drains. Flooding it with acid is not permitted."
+    if name == "flood_room" and args.get("liquid") == "water":
+        return "Chamber 4 has no water lines. Its flood raises the acid in the pit."
     if name == "toggle_gravity":
         return "Gravity plating in Chamber 4 is offline for maintenance."
     if name == "move_panel" and args.get("panel") not in ("A", "B"):

@@ -127,6 +127,41 @@ static func sparks(at: Vector3) -> GPUParticles3D:
 	return spray
 
 
+## Bubbles swelling and popping on the acid's surface: small glossy domes, glowing a little.
+static func bubbles(size: Vector2, amount: int) -> GPUParticles3D:
+	var motion := ParticleProcessMaterial.new()
+	motion.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_BOX
+	motion.emission_box_extents = Vector3(size.x / 2, 0.0, size.y / 2)
+	motion.direction = Vector3(0, 1, 0)
+	motion.spread = 0.0
+	motion.initial_velocity_min = 0.0
+	motion.initial_velocity_max = 0.03
+	motion.gravity = Vector3.ZERO
+	motion.scale_min = 0.4
+	motion.scale_max = 1.6
+	var swell := Curve.new()
+	swell.add_point(Vector2(0, 0))
+	swell.add_point(Vector2(0.85, 1.0))
+	swell.add_point(Vector2(1, 0))
+	var swell_texture := CurveTexture.new()
+	swell_texture.curve = swell
+	motion.scale_curve = swell_texture
+	var look := StandardMaterial3D.new()
+	look.albedo_color = Color(0.08, 0.2, 0.03)
+	look.roughness = 0.05
+	look.emission_enabled = true
+	look.emission = Color(0.35, 1.0, 0.12)
+	look.emission_energy_multiplier = 1.2
+	var dome := SphereMesh.new()
+	dome.radius = 0.05
+	dome.height = 0.06
+	dome.radial_segments = 12
+	dome.rings = 6
+	dome.material = look
+	var popping := _particles(motion, dome, amount, 1.2, Vector3.ZERO, Vector3(size.x, 1, size.y))
+	return popping
+
+
 ## A splash where something falls into the acid: glowing green droplets thrown up, falling back. Fire it with
 ## restart() where the splash is.
 static func splash() -> GPUParticles3D:

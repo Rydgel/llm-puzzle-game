@@ -38,8 +38,9 @@ remembers that you did it, and sends you to Chamber 4. `--skip-prologue` starts 
 - **The puzzle:** panels A and B shuttle over the acid pit and meet in the middle. Carry the cube across, A then B, and put
   it on the red button: the exit opens. Falling in the acid respawns you at the entrance; a cube that falls in is
   dispensed again.
-- **Her moves** come from the brain's legal list and are all temporary: a nudged panel settles back after 6 seconds, water
-  drains after 20, the lights come back after 30. A turret needs you in its line of sight for 2.5 seconds, and shows its
+- **Her moves** come from the brain's legal list and are all temporary: a nudged panel settles back after 6 seconds, the
+  acid she raises drains after 20, the lights come back after 30. Her flood here raises the acid in the pit, halfway up or
+  to just below the platforms: the floors stay dry, and falling in is still the only death. A turret needs you in its line of sight for 2.5 seconds, and shows its
   beam while it aims.
 - **Her terminals**, one at the entrance and one on the far side, print every move she makes, refusals and hints.
 - **Her core** is behind the exit. E at neuron W-7 "warmth" repairs it: her dials go from petty 0 to −0.3, her repair stage
@@ -69,10 +70,11 @@ broken, red while W-7 overloads, teal once repaired, and brightens with her voic
 
 Her moves show in her body: a turret comes up through a hatch of her light in the floor (or down from above, over the
 pit), the walls ripple out from it, and a whirr goes with it; when she dims the lights, her seams and eyes glow brighter;
-her flood is real water, rushing in and draining away. A death flashes green (acid) or red (turret), with her glitch.
+her flood raises the acid in the pit toward the platforms, churning, then drains it. A death flashes green (acid) or red (turret), with her glitch.
 
 Dust drifts through her light, fumes rise off the acid, and W-7 throws sparks when it overloads (`scripts/air.gd`).
-Whatever falls into the acid splashes glowing droplets, flashes green and sizzles. Her arms hold the floor panels out
+The acid is deep: you see into it, through glowing clouds churning at different depths, a dull crust drifting on top
+and bubbles popping (`shaders/acid.gdshader`). Whatever falls in splashes glowing droplets, flashes green and sizzles. Her arms hold the floor panels out
 over the pit from rails of her light in the walls. Her eyes glance around you as they follow you, and scan slowly when
 they can't see you. Her HR slogans are painted on the walls. Reflection probes give the brass, steel, glass and floors
 the rooms to reflect, captured again whenever her light changes color. The button glows once pressed.
