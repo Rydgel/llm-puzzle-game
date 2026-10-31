@@ -315,9 +315,12 @@ smaller model for her, buys more. Free assets are CC0 only (Poly Haven, ambientC
 tile, eye, hatch, floor panel, cube, button, door, turret, terminal, core with its cables, console with W-7's dial,
 dispenser, ceiling light. All of the list above is in, in real time: tiles breathe with her voice, ripple from her
 nearest eye when she speaks or acts, and lean toward the subject; seven eyes follow the subject; four hatches slide open
-onto her machinery; her light changes with W-7. Global illumination is SDFGI rather than baked, since her walls move and
+onto her machinery; her light changes with W-7. Over the acid pit the ceiling opens onto a shaft of her tiles 30 m
+tall, where tiles shift on their own and nine more eyes look down: the scale of her body, from inside one chamber. Her
+body is heard too (`art/sounds.py`, synthesized): a hum everywhere, clanks echoing down the shaft, hatches whirring,
+tiles clacking where a ripple starts. Global illumination is SDFGI rather than baked, since her walls move and
 her light changes color; her changing lights stay out of it, or it would keep a ghost of her old color. Measured with her
-brain loaded on the same GPU (RTX 4070 Laptop, 8 GB, 1080p): the game takes 1.4 GB, runs about 100 fps uncapped at 77%
+brain loaded on the same GPU (RTX 4070 Laptop, 8 GB, 1080p): the game takes 1.4 GB, runs about 90 fps uncapped at 77%
 resolution with FSR 2, and is capped at 60 fps, which slows her turns by about 0.3 s. The big costs were her seams'
 area lights and shadows from every ceiling strip; now only the long walls light the room and every other strip casts
 shadows. Details in `game/README.md`.
