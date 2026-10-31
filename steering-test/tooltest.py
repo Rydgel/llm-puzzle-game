@@ -218,7 +218,7 @@ def run_grammar(srv, state, user, seed):
     return out
 
 
-def ask_line(srv, messages, seed, max_length=LINE_SCHEMA["properties"]["line"]["maxLength"]):
+def ask_line(srv, messages, seed, max_length=LINE_SCHEMA["properties"]["line"]["maxLength"], **extra):
     schema = {**LINE_SCHEMA, "properties": {"line": {"type": "string", "maxLength": max_length}}}
     body = {
         "messages": messages,
@@ -227,6 +227,7 @@ def ask_line(srv, messages, seed, max_length=LINE_SCHEMA["properties"]["line"]["
         "seed": seed,
         "max_tokens": max_length // 3 + 30,
         "response_format": {"type": "json_schema", "json_schema": {"name": "line", "schema": schema}},
+        **extra,
     }
     try:
         content = srv.post("/v1/chat/completions", body)["choices"][0]["message"]["content"]

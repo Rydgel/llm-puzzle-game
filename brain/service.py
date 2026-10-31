@@ -55,7 +55,13 @@ from train_vectors import her_lines  # noqa: E402
 PORT, HER_PORT, JUDGE_PORT = 8090, 8081, 8082
 # On the CPU: it only runs on lines the keyword screen flags, and her model needs the GPU next to the game.
 JUDGE = HERE / "models" / "Qwen3-1.7B-Q8_0.gguf"
-SYSTEM = SYSTEM_TWO_STEP.replace(" Each turn,", f" {MANNERS} Each turn,")
+# Without it she narrates in the third person ("Subject's third death...").
+DIRECT = "Always speak to the subject directly, as you."
+SYSTEM = SYSTEM_TWO_STEP.replace(" Each turn,", f" {MANNERS} {DIRECT} Each turn,")
+# Steered, she opens almost every line with "Oh," or "Ah,". Now and then is fine: these are banned only while
+# one of her last few lines started with one.
+INTERJECTIONS = ("oh", "ah", "aha", "ahh", "ohh", "well")
+BANNED = [[word, False] for w in INTERJECTIONS for word in (w.capitalize(), " " + w.capitalize(), w, " " + w)]
 DEFAULTS = {"exit": "locked", "turrets": 0, "where": "in the chamber", "minutes": 0, "deaths": 0}
 LOG = 4
 TRIES = 3
@@ -67,7 +73,7 @@ class Brain:
     def __init__(self, dials, stage=0, voice=None):
         self.stage, self.log, self.dials, self.her = stage, [], {}, None
         self.voice = voice
-        self.openers = deque(maxlen=5)  # the first words of her recent lines, never the lines themselves
+        self.first_words = deque(maxlen=3)  # the first word of her recent lines, never the lines themselves
         self.lock = threading.Lock()
         self.judge = judge_server(JUDGE, gpu=False, port=JUDGE_PORT).__enter__()
         self.set_dials(dials)
@@ -120,15 +126,16 @@ class Brain:
                 before, after, _ = ask_frame(self.her, messages, seed + attempt)
                 text = " ".join(part for part in (clean(before), hint, clean(after)) if part)
             else:
-                text, _ = ask_line(self.her, messages, seed + attempt, max_length=LINE_MAX)
+                ban = {"logit_bias": BANNED} if any(w in INTERJECTIONS for w in self.first_words) else {}
+                text, _ = ask_line(self.her, messages, seed + attempt, max_length=LINE_MAX, **ban)
                 text = clean(text)
-            # Steered, she keeps reaching for the same opener ("Oh, how daring..."): try again unless it's the
-            # last try. Only the first words are kept, so her own lines still never go back into her context.
-            opener = " ".join(text.lower().split()[:3])
-            if opener in self.openers and attempt < TRIES - 1:
+            # Her first word can't repeat one from her last three lines (she falls into "Subject," streaks too),
+            # unless it's the last try.
+            first = text.split()[0].strip(",.!?…'\"’").lower() if text else ""
+            if first in self.first_words and attempt < TRIES - 1:
                 continue
             if text and allowed(self.judge, text)[0]:
-                self.openers.append(opener)
+                self.first_words.append(first)
                 return text, attempt > 0
         return random.choice(her_lines()), True
 
@@ -174,7 +181,7 @@ class Handler(BaseHTTPRequestHandler):
                     out = {"stage": brain.stage}
                 elif self.path == "/reset":
                     brain.log = []
-                    brain.openers.clear()
+                    brain.first_words.clear()
                     out = {"ok": True}
                 else:
                     return self.send(404, {"error": f"no {self.path}"})
