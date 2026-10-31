@@ -288,6 +288,29 @@ She's evil in a theatrical way: petty, passive-aggressive, "you're adopted, and 
 really hurtful: no attacks on the player's real identity, appearance or life, nothing cruel beyond the game's joke. The
 character rules (system prompt, the steering range allowed, a filter on `speak`) keep her there even at full cruelty.
 
+## Art direction: the facility is her body
+
+*Chosen 2026-10-31. Concept: `art/concept/`, from `art/concept_wall.py`.*
+
+The test chambers exist because every surface of Sublevel Nine is a module she can move: a chamber is VESPER rearranging
+herself. The art has to show that she is everywhere, watching, and in motion.
+
+- **Walls of square tiles on actuators** (1 m grid, 2.5 cm seams). They shift, tilt and slide when she reconfigures a room
+  and ripple out a little when she reacts. `move_panel` belongs to the architecture, not to a special object.
+- **Her light in the seams.** Her color glows from behind the tiles and pulses with her voice: amber while she's broken,
+  red when she overloads, teal as she's repaired, like her neuron. The repair arc shows in the walls.
+- **Her eyes everywhere:** camera modules set in the walls in place of a tile, brass barrels with a glowing iris ring,
+  that turn to follow the subject.
+- **Glimpses behind the skin:** where a tile slides away, machinery shows: pistons, cables, a red work light.
+- **A corporate surface:** warm grey-beige tiles, brushed brass and dark steel, polished concrete floors with hazard
+  strips, her HR signage. Distinct from Portal's white panels.
+- **Lighting:** cool ceiling strips over warm, saturated glows from her, and a thin haze so her light has volume.
+
+**Quality bar and budget.** Concepts are path-traced in Cycles on the GPU (OptiX). In the game, the 8 GB test GPU also
+holds her model (about 5.3 GB), so the plan is baked or cheap global illumination for the static parts, real-time
+effects for what moves (her tiles, her light, fog), and measuring VRAM and frame rate at each step. A bigger GPU, or a
+smaller model for her, buys more. Free assets are CC0 only (Poly Haven, ambientCG), each recorded in `art/ASSETS.md`.
+
 ## Technical sketch
 
 - **Model:** a small open-weight model run locally (Qwen or Llama class), so there's no cost per player and the steering
