@@ -100,6 +100,7 @@ var console_label: Label3D
 var help_label: Label
 var screen: ColorRect  # the whole picture, for her glitch
 var picture_glitch := 0.0
+var flicker_next := 0.0
 var glitch_tween: Tween
 var console_dial: Node3D  # neuron W-7's dial on the console, which turns as the technician turns it
 var objective: Label
@@ -692,7 +693,7 @@ func _physics_process(delta: float) -> void:
 
 func _process(delta: float) -> void:
 	var look: ShaderMaterial = screen.material
-	look.set_shader_parameter("glitch", picture_glitch * (1.0 if not facility.flicker else randf_range(0.3, 1.0)))
+	look.set_shader_parameter("glitch", picture_glitch)
 	look.set_shader_parameter("her_color", facility.color)
 	var loudness := db_to_linear(AudioServer.get_bus_peak_volume_left_db(voice_bus, 0))
 	facility.voice = clamp(loudness * 2.5, 0.0, 1.0) if voice_player.playing else 0.0
@@ -983,8 +984,11 @@ func run_prologue(delta: float) -> void:
 	elif prologue == "runaway":
 		dial = min(dial + delta * 0.1, 1.0)
 		show_dial()
-		for light in lights:
-			light.light_energy = light.get_meta("energy") * randf_range(0.07, 1.3)  # flicker
+		flicker_next -= delta
+		if flicker_next <= 0.0:  # the lights stutter about ten times a second, not every frame
+			flicker_next = randf_range(0.06, 0.16)
+			for light in lights:
+				light.light_energy = light.get_meta("energy") * randf_range(0.15, 1.2)
 
 
 func runaway() -> void:
@@ -1195,8 +1199,8 @@ func shoot(dir: String, view: Array, action := func(): pass, after := 0.0) -> vo
 	print("SHOT ", view[0])
 
 
-## A camera tour for a video, with her brain live: the entrance, up the shaft, over the pit, past her eye,
-## through the exit into her core, where W-7 is repaired. Record it with the movie maker:
+## A camera tour for a video, with her brain live: the entrance, up the shaft, over the pit as a turret comes
+## up and her flood comes in, past her eye, through the exit into her core, where W-7 is repaired. Record it with the movie maker:
 ## `godot --path game --write-movie tour.avi --fixed-fps 30 --quit-after 960 -- --tour`
 const TOUR := [  # seconds, where the camera is, what it looks at
 	[0.0, Vector3(0.6, 1.6, -5.3), Vector3(0, 1.4, 6)],
@@ -1219,6 +1223,8 @@ func tour() -> void:
 	player.set_physics_process(false)
 	var beats := [
 		[0.5, func(): event("[Event] Subject entered Chamber 4.")],
+		[9.5, func(): apply_move("spawn_turret", {"position": "near_exit"})],
+		[12.0, func(): apply_move("flood_room", {"level": "ankle"})],
 		[14.5, func(): facility.stir(0.3)],
 		[17.0, solve],
 		[25.5, func(): toggle_look_repaired()],

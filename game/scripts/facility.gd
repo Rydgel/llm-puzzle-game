@@ -30,6 +30,9 @@ var _tile_offset: Transform3D  # from a tile's spot on the wall to its mesh
 var _ripple := Vector4(0, -100, 0, 99)
 var _ripple_strength := 0.0
 var _glow := 0.0
+var _flick := 1.0  # her light's stutter while W-7 overloads
+var _flick_target := 1.0
+var _flick_next := 0.0
 var _color_tween: Tween
 var _clack: AudioStreamPlayer3D  # her tiles shifting, where a ripple starts
 
@@ -226,7 +229,13 @@ func _process(delta: float) -> void:
 	_glow = lerp(_glow, voice, 1.0 - exp(-delta * 14.0))
 	var glow := (1.0 + 1.6 * _glow) * presence
 	if flicker:
-		glow *= randf_range(0.1, 2.2)
+		# A stutter about ten times a second, eased, not a strobe.
+		_flick_next -= delta
+		if _flick_next <= 0.0:
+			_flick_next = randf_range(0.06, 0.16)
+			_flick_target = randf_range(0.25, 1.9)
+		_flick = lerp(_flick, _flick_target, 1.0 - exp(-delta * 25.0))
+		glow *= _flick
 	Looks.her_light(color, glow)
 	for light in _wall_lights:
 		light.light_color = color
