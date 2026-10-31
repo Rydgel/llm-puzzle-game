@@ -196,20 +196,78 @@ def terminal():
 
 
 def core():
-    """Her core: neuron W-7 in a glass sphere, held in brass rings on a pedestal. Origin on the floor."""
+    """Her core: neuron W-7 in a glass sphere, held in brass rings on a pedestal, fed by cables that hang
+    from the ceiling. Origin on the floor, the ceiling 6 m up."""
     cyl("pedestal", 0.45, 0.9, (0, 0, 0.45), "steel", rotation=(0, 0, 0), vertices=64)
     cyl("cap", 0.55, 0.06, (0, 0, 0.92), "brass", rotation=(0, 0, 0), vertices=64)
     sphere("neuron", 0.27, (0, 0, 1.45), "iris")
     sphere("glass", 0.48, (0, 0, 1.45), "glass")
     ring("ring_a", 0.62, 0.025, (0, 0, 1.45), "brass", rotation=(math.radians(70), 0, 0))
     ring("ring_b", 0.66, 0.025, (0, 0, 1.45), "brass", rotation=(0, math.radians(70), math.radians(35)))
+    for k, (angle, reach, thickness) in enumerate([(5, 2.3, 0.045), (165, 2.2, 0.035), (215, 2.1, 0.05), (265, 1.9, 0.04), (320, 2.2, 0.035)]):
+        a = math.radians(angle)
+        out = lambda r, z: (r * math.cos(a), r * math.sin(a), z)
+        cable(f"cable{k}", [out(reach, 6.05), out(reach * 0.55, 0.12), out(0.47, 0.35)], thickness)
+
+
+def cable(name, points, thickness):
+    """A cable through `points`, sagging between them."""
+    curve = bpy.data.curves.new(name, "CURVE")
+    curve.dimensions = "3D"
+    curve.bevel_depth = thickness
+    curve.bevel_resolution = 3
+    curve.resolution_u = 16
+    spline = curve.splines.new("BEZIER")
+    spline.bezier_points.add(len(points) - 1)
+    for point, at in zip(spline.bezier_points, points):
+        point.co = at
+        point.handle_left_type = point.handle_right_type = "AUTO"
+    obj = bpy.data.objects.new(name, curve)
+    bpy.context.collection.objects.link(obj)
+    bpy.context.view_layer.objects.active = obj
+    obj.select_set(True)
+    bpy.ops.object.convert(target="MESH")
+    obj.data.materials.append(mat("rubber"))
+    bpy.ops.object.shade_smooth()
+    obj.select_set(False)
+    return obj
 
 
 def console():
-    """The calibration console: a steel stand with an angled screen. Origin on the floor; faces -Y."""
-    box("stand", (0.7, 0.5, 1.0), (0, 0, 0.5), "steel", bevel=0.02)
-    box("top", (0.8, 0.6, 0.05), (0, -0.05, 1.05), "steel", bevel=0.01, rotation=(math.radians(-30), 0, 0))
-    box("screen", (0.66, 0.46, 0.01), (0, -0.07, 1.085), "screen", rotation=(math.radians(-30), 0, 0))
+    """The calibration console: a steel stand, a desk sloping toward the technician with a screen and
+    neuron W-7's dial, which Godot turns. Origin on the floor; faces -Y."""
+    box("plinth", (0.72, 0.56, 0.06), (0, 0.02, 0.03), "steel", bevel=0.01)
+    box("stand", (0.56, 0.42, 0.9), (0, 0.04, 0.5), "steel", bevel=0.02)
+    tilt = math.radians(30)
+    center = (0, -0.04, 1.0)
+    across, up_desk, normal = (1, 0, 0), (0, math.cos(tilt), math.sin(tilt)), (0, -math.sin(tilt), math.cos(tilt))
+    on = lambda u, v, h: tuple(c + across[i] * u + up_desk[i] * v + normal[i] * h for i, c in enumerate(center))
+    box("desk", (0.84, 0.6, 0.07), center, "steel", bevel=0.015, rotation=(tilt, 0, 0))
+    box("screen", (0.42, 0.34, 0.01), on(-0.15, 0.04, 0.036), "screen", rotation=(tilt, 0, 0))
+    ring("scale", 0.12, 0.008, on(0.24, 0.04, 0.037), "iris", rotation=(tilt, 0, 0))
+    dial = cyl("dial", 0.085, 0.05, on(0.24, 0.04, 0.06), "brass", rotation=(tilt, 0, 0), vertices=48)
+    pointer = box("pointer", (0.012, 0.06, 0.012), (0, 0.045, 0.03), "iris")
+    pointer.parent = dial  # Blender takes its location as relative to the dial: it turns with it
+    for k in range(3):
+        cyl(f"key{k}", 0.022, 0.02, on(0.12 + k * 0.08, -0.2, 0.04), "button_top" if k == 0 else "rubber",
+            rotation=(tilt, 0, 0), vertices=24)
+
+
+def hatch():
+    """Her machinery behind a wall tile, for a tile that slides aside: a steel recess, pistons, cables, and
+    status lights in her color. Origin on the wall line, like a tile's; it goes back toward +Y."""
+    box("back", (0.95, 0.04, 0.95), (0, 0.47, 0), "steel")
+    for k, (size, at) in enumerate([((0.02, 0.47, 0.95), (0.48, 0.235, 0)), ((0.02, 0.47, 0.95), (-0.48, 0.235, 0)),
+                                    ((0.95, 0.47, 0.02), (0, 0.235, 0.48)), ((0.95, 0.47, 0.02), (0, 0.235, -0.48))]):
+        box(f"side{k}", size, at, "steel")
+    for k, x in enumerate((-0.28, -0.05, 0.2)):
+        cyl(f"piston{k}", 0.035, 0.86, (x, 0.3, 0), "brass", rotation=(0, 0, 0), vertices=24)
+        cyl(f"sleeve{k}", 0.05, 0.3, (x, 0.3, -0.2 + 0.18 * k), "steel", rotation=(0, 0, 0), vertices=24)
+    for k in range(3):
+        x = -0.35 + k * 0.18
+        cable(f"cable{k}", [(x, 0.4, 0.46), (x + 0.12, 0.22, 0.05), (x + 0.05, 0.38, -0.46)], 0.018)
+    for k in range(4):
+        sphere(f"status{k}", 0.012, (0.36, 0.44, 0.3 - k * 0.07), "iris")
 
 
 def dispenser():
@@ -229,7 +287,7 @@ def ceiling_light():
     box("diffuser", (5.9, 0.18, 0.02), (0, 0, -0.065), "strip_light")
 
 
-PIECES = {f.__name__: f for f in (tile, eye, floor_panel, cube, button, door, turret, terminal, core, console, dispenser, ceiling_light)}
+PIECES = {f.__name__: f for f in (tile, eye, hatch, floor_panel, cube, button, door, turret, terminal, core, console, dispenser, ceiling_light)}
 
 
 def preview(name):

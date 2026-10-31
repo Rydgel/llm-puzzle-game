@@ -21,6 +21,9 @@ var _tiles: Array[Transform3D] = []
 var _seams := SurfaceTool.new()  # her light behind the tiles, one quad per cell, in one mesh
 var _eyes: Array[Node3D] = []  # each eye's barrel, which turns
 var _wall_lights: Array[AreaLight3D] = []
+var _hatch_lights: Array[OmniLight3D] = []
+var _tile_mesh: Mesh
+var _tile_offset: Transform3D  # from a tile's spot on the wall to its mesh
 var _ripple := Vector4(0, -100, 0, 99)
 var _ripple_strength := 0.0
 var _glow := 0.0
@@ -29,13 +32,19 @@ var _color_tween: Tween
 
 func _init() -> void:
 	_seams.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var source := Looks.model("tile")
+	var tile: MeshInstance3D = source.find_children("*", "MeshInstance3D")[0]
+	_tile_mesh = tile.mesh
+	_tile_offset = tile.transform
+	source.free()
 
 
 ## A wall of tiles along the line from `a` to `b`, from `bottom` to `top`. The line is on the tiles'
 ## backs; their faces are 18 cm in front, to the right of someone walking from a to b. `holes` are cells
 ## left empty, as Rect2i(col, row, cols, rows) counted from a and from the bottom; `eyes` are cells that
-## hold one of her eyes, as Vector2i(col, row).
-func wall(a: Vector3, b: Vector3, bottom: float, top: float, holes: Array = [], eyes: Array = [], lit := true, seam_depth := SEAM_DEPTH) -> void:
+## hold one of her eyes, and `hatches` cells whose tile slides aside now and then, onto her machinery,
+## both as Vector2i(col, row).
+func wall(a: Vector3, b: Vector3, bottom: float, top: float, holes: Array = [], eyes: Array = [], hatches: Array = [], lit := true, seam_depth := SEAM_DEPTH) -> void:
 	a.y = bottom
 	b.y = bottom
 	var run := b - a
@@ -51,6 +60,9 @@ func wall(a: Vector3, b: Vector3, bottom: float, top: float, holes: Array = [], 
 			var spot := Transform3D(face, a + x * (col + 0.5) + Vector3.UP * (row + 0.5))
 			if cell in eyes:
 				_add_eye(spot)
+			elif cell in hatches:
+				_add_hatch(spot)
+				continue
 			else:
 				_tiles.append(spot)
 			_seam(spot.origin - face.z * seam_depth, face)
@@ -78,12 +90,47 @@ func _seam(center: Vector3, face: Basis) -> void:
 
 
 func _add_eye(spot: Transform3D) -> void:
-	var eye := Looks.model("eye")
+	var eye := Looks.moving(Looks.model("eye"))
 	eye.transform = spot
 	add_child(eye)
 	var barrel: Node3D = eye.find_child("barrel")
 	barrel.set_meta("rest", barrel.transform)
 	_eyes.append(barrel)
+
+
+## A tile that slides out and aside every few seconds, onto her machinery and a light in her color.
+func _add_hatch(spot: Transform3D) -> void:
+	var machinery := Looks.model("hatch")
+	machinery.transform = spot
+	add_child(machinery)
+	var light := OmniLight3D.new()
+	light.omni_range = 1.8
+	light.light_energy = 1.5
+	light.position = spot * Vector3(0, 0, -0.15)
+	add_child(light)
+	_hatch_lights.append(light)
+	var multimesh := MultiMesh.new()
+	multimesh.transform_format = MultiMesh.TRANSFORM_3D
+	multimesh.use_custom_data = true
+	multimesh.mesh = _tile_mesh
+	multimesh.instance_count = 1
+	multimesh.set_instance_transform(0, _tile_offset)
+	multimesh.set_instance_custom_data(0, Color(spot.origin.x, spot.origin.y, spot.origin.z, randf()))
+	var tile := MultiMeshInstance3D.new()
+	tile.multimesh = multimesh
+	tile.material_override = Looks.material("wall_tile")
+	tile.gi_mode = GeometryInstance3D.GI_MODE_DYNAMIC
+	tile.transform = spot
+	add_child(tile)
+	var out := spot.origin + spot.basis.z * 0.22
+	var aside := out + spot.basis.x * 0.72
+	var slide := create_tween().set_loops().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
+	slide.tween_interval(randf_range(3.0, 10.0))
+	slide.tween_property(tile, "position", out, 0.5)
+	slide.tween_property(tile, "position", aside, 0.9)
+	slide.tween_interval(randf_range(4.0, 9.0))
+	slide.tween_property(tile, "position", out, 0.9)
+	slide.tween_property(tile, "position", spot.origin, 0.5)
 
 
 ## Her searchlight: a cone of her light from one eye, on the subject wherever they go.
@@ -108,23 +155,21 @@ func finish() -> void:
 	seams.mesh = _seams.commit()
 	seams.material_override = Looks.material("seam_light")
 	seams.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	seams.gi_mode = GeometryInstance3D.GI_MODE_DISABLED  # global illumination would keep her old color
 	add_child(seams)
-	var source := Looks.model("tile")
-	var tile: MeshInstance3D = source.find_children("*", "MeshInstance3D")[0]
 	var multimesh := MultiMesh.new()
 	multimesh.transform_format = MultiMesh.TRANSFORM_3D
 	multimesh.use_custom_data = true
-	multimesh.mesh = tile.mesh
+	multimesh.mesh = _tile_mesh
 	multimesh.instance_count = _tiles.size()
 	for i in _tiles.size():
-		multimesh.set_instance_transform(i, _tiles[i] * tile.transform)
+		multimesh.set_instance_transform(i, _tiles[i] * _tile_offset)
 		var at := _tiles[i].origin
 		multimesh.set_instance_custom_data(i, Color(at.x, at.y, at.z, randf()))
 	var tiles := MultiMeshInstance3D.new()
 	tiles.multimesh = multimesh
 	tiles.material_override = Looks.material("wall_tile")
 	add_child(tiles)
-	source.free()
 	print("FACILITY %d tiles, %d eyes" % [_tiles.size(), _eyes.size()])
 
 
@@ -166,6 +211,9 @@ func _process(delta: float) -> void:
 	for light in _wall_lights:
 		light.light_color = color
 		light.light_energy = WALL_LIGHT * glow
+	for light in _hatch_lights:
+		light.light_color = color
+		light.light_energy = 1.5 * glow
 	_ripple.w += delta
 	var tiles: ShaderMaterial = Looks.material("wall_tile")
 	tiles.set_shader_parameter("breathe", _glow)

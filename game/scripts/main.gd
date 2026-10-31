@@ -94,6 +94,7 @@ var prologue := ""  # intro, calibrate, runaway, reboot; empty once the subject 
 var dial := 0.0
 var turned_dial := false
 var console_label: Label3D
+var console_dial: Node3D  # neuron W-7's dial on the console, which turns as the technician turns it
 var objective: Label
 var fade: ColorRect
 
@@ -353,20 +354,20 @@ func build_walls() -> void:
 	add_child(facility)
 	# Long walls, chamber and core: left at x = -4 facing +x, right at x = 4 facing -x. Her terminals are
 	# set in holes, her light leaking around them.
-	facility.wall(Vector3(-4.18, 0, 26), Vector3(-4.18, 0, -6), 0, 6, [Rect2i(27, 1, 4, 3)], [Vector2i(23, 4), Vector2i(12, 3)])
-	facility.wall(Vector3(4.18, 0, -6), Vector3(4.18, 0, 26), 0, 6, [Rect2i(19, 1, 4, 3)], [Vector2i(12, 4)])
+	facility.wall(Vector3(-4.18, 0, 26), Vector3(-4.18, 0, -6), 0, 6, [Rect2i(27, 1, 4, 3)], [Vector2i(23, 4), Vector2i(12, 3)], [Vector2i(21, 2), Vector2i(10, 1)])
+	facility.wall(Vector3(4.18, 0, -6), Vector3(4.18, 0, 26), 0, 6, [Rect2i(19, 1, 4, 3)], [Vector2i(12, 4)], [Vector2i(4, 3), Vector2i(26, 2)])
 	facility.searchlight(2)
 	# Down into the pit, to the acid.
-	facility.wall(Vector3(-4.18, 0, 12), Vector3(-4.18, 0, 0), -3, 0, [], [], false)
-	facility.wall(Vector3(4.18, 0, 0), Vector3(4.18, 0, 12), -3, 0, [], [], false)
-	facility.wall(Vector3(-4, 0, -0.18), Vector3(4, 0, -0.18), -3, -1, [], [], false)
-	facility.wall(Vector3(4, 0, 12.18), Vector3(-4, 0, 12.18), -3, -1, [], [], false)
+	facility.wall(Vector3(-4.18, 0, 12), Vector3(-4.18, 0, 0), -3, 0, [], [], [], false)
+	facility.wall(Vector3(4.18, 0, 0), Vector3(4.18, 0, 12), -3, 0, [], [], [], false)
+	facility.wall(Vector3(-4, 0, -0.18), Vector3(4, 0, -0.18), -3, -1, [], [], [], false)
+	facility.wall(Vector3(4, 0, 12.18), Vector3(-4, 0, 12.18), -3, -1, [], [], [], false)
 	# The entrance wall, the wall between the chamber and her core (both faces), and the far end of her core.
 	var doorway := Rect2i(3, 0, 2, 6)
-	facility.wall(Vector3(-4, 0, -6.18), Vector3(4, 0, -6.18), 0, 6, [doorway], [Vector2i(6, 4)], false)
-	facility.wall(Vector3(4, 0, 17.93), Vector3(-4, 0, 17.93), 0, 6, [doorway], [Vector2i(1, 4)], false)
-	facility.wall(Vector3(-4, 0, 18.07), Vector3(4, 0, 18.07), 0, 6, [doorway], [Vector2i(1, 4)], false, 0.0)
-	facility.wall(Vector3(4, 0, 26.18), Vector3(-4, 0, 26.18), 0, 6, [], [Vector2i(6, 4)], false)
+	facility.wall(Vector3(-4, 0, -6.18), Vector3(4, 0, -6.18), 0, 6, [doorway], [Vector2i(6, 4)], [], false)
+	facility.wall(Vector3(4, 0, 17.93), Vector3(-4, 0, 17.93), 0, 6, [doorway], [Vector2i(1, 4)], [], false)
+	facility.wall(Vector3(-4, 0, 18.07), Vector3(4, 0, 18.07), 0, 6, [doorway], [Vector2i(1, 4)], [], false, 0.0)
+	facility.wall(Vector3(4, 0, 26.18), Vector3(-4, 0, 26.18), 0, 6, [], [Vector2i(6, 4)], [], false)
 	facility.finish()
 
 	var paint := Color(0.06, 0.06, 0.07, 0.92)
@@ -440,7 +441,7 @@ func build_props() -> void:
 	add_child(water)
 
 	# Her core: neuron W-7 in a glass sphere, in brass rings that turn.
-	var core := piece("core", Vector3(NEURON.x, 0, NEURON.z))
+	var core := Looks.moving(piece("core", Vector3(NEURON.x, 0, NEURON.z)))  # its light changes color
 	neuron = core.find_child("neuron")
 	core_rings = [core.find_child("ring_a"), core.find_child("ring_b")]
 	neuron_label = Label3D.new()
@@ -457,7 +458,8 @@ func build_props() -> void:
 	add_child(core_light)
 	show_neuron()
 
-	piece("console", CONSOLE, PI)
+	console_dial = piece("console", CONSOLE, PI).find_child("dial")
+	console_dial.set_meta("rest", console_dial.basis)
 	solid(Vector3(0.8, 1.1, 0.6), CONSOLE + Vector3(0, 0.55, 0))
 	console_label = Label3D.new()
 	console_label.position = CONSOLE + Vector3(0, 1.55, 0)
@@ -920,6 +922,7 @@ func show_dial() -> void:
 		bar += ("■" if i < filled else ("□" if band >= GREEN.x and band < GREEN.y else "·"))
 	var zone := "RED" if dial >= GREEN.y else "GREEN" if dial >= GREEN.x else "LOW"
 	console_label.text = "W-7 CALIBRATION\n[%s]\n%s" % [bar, zone]
+	console_dial.basis = console_dial.get_meta("rest") * Basis(Vector3.UP, -dial * TAU * 0.8)
 	console_label.modulate = Color(1, 0.25, 0.2) if zone == "RED" else Color(0.4, 1, 0.5) if zone == "GREEN" else Color(0.9, 0.9, 0.9)
 
 
@@ -1007,15 +1010,33 @@ func take_shots() -> void:
 	say("Welcome to Chamber 4, Candidate. The last one called it easy. We kept his name tag.")
 	spawn_turret("near_exit")
 	for view in VIEWS:
-		player.global_position = view[1]
-		player.rotation.y = view[2]
-		player.camera.rotation.x = view[3]
-		for i in 90:  # long enough for global illumination and the fog to settle
-			await get_tree().process_frame
-		await RenderingServer.frame_post_draw
-		get_viewport().get_texture().get_image().save_png("%s/%s.png" % [dir, view[0]])
-		print("SHOT ", view[0])
+		await shoot(dir, view)
+	# Her walls moving: a ripple out from her eye while she talks, and the tiles leaning toward the subject.
+	facility.voice = 1.0
+	await shoot(dir, ["moving", Vector3(-3.0, 0.1, -2.0), PI + 0.75, 0.25], func(): facility.stir(0.35), 0.45)
+	facility.voice = 0.0
+	# Her other colors: teal once repaired, red while W-7 overloads.
+	facility.set_color(Looks.TEAL, 0.01)
+	await shoot(dir, ["teal", VIEWS[0][1], VIEWS[0][2], VIEWS[0][3]])
+	set_neuron(Looks.RED, "OVERLOAD.")
+	await shoot(dir, VIEWS[6].duplicate())
 	get_tree().quit()
+
+
+## One screenshot: stand there, wait for the light to settle, then `action` and `after` more seconds.
+func shoot(dir: String, view: Array, action := func(): pass, after := 0.0) -> void:
+	player.global_position = view[1]
+	player.rotation.y = view[2]
+	player.camera.rotation.x = view[3]
+	for i in 90:  # long enough for global illumination and the fog to settle
+		await get_tree().process_frame
+	action.call()
+	if after > 0.0:
+		await get_tree().create_timer(after).timeout
+	await RenderingServer.frame_post_draw
+	var name: String = view[0] if not (view[0] == "core" and facility.color == Looks.RED) else "red"
+	get_viewport().get_texture().get_image().save_png("%s/%s.png" % [dir, name])
+	print("SHOT ", name)
 
 
 ## Frames per second and video memory at each view, for the budget in DESIGN.md (the brain keeps its 8B

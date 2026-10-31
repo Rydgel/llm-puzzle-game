@@ -68,7 +68,7 @@ static func material(role: String) -> Material:
 		"steel":
 			m = textured("brushed_metal", Color(0.32, 0.32, 0.34), 0.7, 1.0, 1.5)
 		"concrete":
-			m = textured("concrete_floor", Color(0.5, 0.5, 0.52), 0.55, 0.0, 0.3)
+			m = textured("concrete_floor", Color(0.5, 0.5, 0.52), 0.38, 0.0, 0.3)  # polished
 		"terrazzo":
 			m = textured("terrazzo", Color(0.75, 0.74, 0.72), 0.3, 0.0, 0.4)
 		"lens":

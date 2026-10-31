@@ -1,17 +1,25 @@
 # Chamber 4
 
 The first playable prototype: one test chamber run by VESPER, her terminal, and her core with one neuron to repair. Godot
-4.7; the level is built in code, in `scripts/main.gd`.
+4.7 with the Forward+ renderer; the level is built in code, in `scripts/main.gd`, from her pieces in `models/`.
 
 ## Play
 
-1. Start her brain (see `../brain/README.md`) and wait about 30 seconds:
+1. Once, fetch the free textures (CC0, about 30 MB, kept out of git; see `../art/ASSETS.md`). Without them the game
+   still runs, in flat colors:
+
+   ```bash
+   python3 art/fetch_assets.py
+   ```
+
+2. Start her brain (see `../brain/README.md`) and wait about 30 seconds:
 
    ```bash
    steering-test/.venv/bin/python brain/service.py vesper=0.35
    ```
 
-2. Open `game/` in Godot and press Play (F5), or run `godot --path game`.
+3. Open `game/` in Godot and press Play (F5), or run `godot --path game`. The first time, Godot imports the textures
+   and models, which takes a minute.
 
 Without the brain she still talks, from a few written lines, but makes no moves.
 
@@ -49,11 +57,29 @@ long as she talks.
 cube in the acid (thrown or dropped), staring at her camera for 3 seconds, standing at the locked exit, no progress for a
 while, solving the chamber, finding her core. The subject never speaks.
 
+## How it looks
+
+The facility is her body (`../DESIGN.md`, Art direction). `scripts/facility.gd` builds her walls: tiles on a 1 m grid
+in one MultiMesh, her light in the seams, her eyes in place of some tiles, and hatches whose tile slides aside onto her
+machinery. The tiles breathe while she talks, ripple out from her nearest eye when she speaks or acts, and lean toward
+you (`shaders/wall_tile.gdshader`). Her eyes follow you; one carries a searchlight. Her light is amber while she is
+broken, red while W-7 overloads, teal once repaired, and brightens with her voice.
+
+`scripts/looks.gd` dresses every model by the role its surfaces are named for (tile, brass, steel, iris, seam_light…),
+one shared material per role. The models come from `../art/models.py` (Blender), the signs from `../art/decals.sh`.
+
+**Rendering and budget.** Forward+ with SDFGI, volumetric fog, SSR, SSAO, SSIL, glow, AgX tone mapping and area lights.
+Her brain keeps its 8B model on the same GPU, so the game renders at 77% and FSR 2 upscales, and the frame rate is capped
+at 60 (`--fps N` changes it). On the RTX 4070 Laptop at 1080p: about 100 fps uncapped, 1.4 GB of video memory, and her
+turns about 0.3 s slower while the game runs.
+
 ## Test modes
 
 Arguments go after `--`:
 
-- `godot --path game -- --shots` saves screenshots to `game/shots/` and quits.
+- `godot --path game -- --shots` saves screenshots to `game/shots/` and quits, fullscreen: the views, her walls
+  moving, and her teal and red light.
+- `godot --path game -- --bench` prints frame rates at each view, uncapped, and what each effect costs.
 - `godot --path game -- --prologue-test` plays the prologue on its own (the dial turns by itself) and prints her
   lines, then one line in Chamber 4 to check she remembers you.
 - `godot --path game -- --autoplay` sends five scripted events through the brain and prints her moves and lines.

@@ -311,6 +311,17 @@ holds her model (about 5.3 GB), so the plan is baked or cheap global illuminatio
 effects for what moves (her tiles, her light, fog), and measuring VRAM and frame rate at each step. A bigger GPU, or a
 smaller model for her, buys more. Free assets are CC0 only (Poly Haven, ambientCG), each recorded in `art/ASSETS.md`.
 
+**Built (2026-10-31).** Chamber 4 and her core are now made of her pieces, modelled in Blender from `art/models.py`: wall
+tile, eye, hatch, floor panel, cube, button, door, turret, terminal, core with its cables, console with W-7's dial,
+dispenser, ceiling light. All of the list above is in, in real time: tiles breathe with her voice, ripple from her
+nearest eye when she speaks or acts, and lean toward the subject; seven eyes follow the subject; four hatches slide open
+onto her machinery; her light changes with W-7. Global illumination is SDFGI rather than baked, since her walls move and
+her light changes color; her changing lights stay out of it, or it would keep a ghost of her old color. Measured with her
+brain loaded on the same GPU (RTX 4070 Laptop, 8 GB, 1080p): the game takes 1.4 GB, runs about 100 fps uncapped at 77%
+resolution with FSR 2, and is capped at 60 fps, which slows her turns by about 0.3 s. The big costs were her seams'
+area lights and shadows from every ceiling strip; now only the long walls light the room and every other strip casts
+shadows. Details in `game/README.md`.
+
 ## Technical sketch
 
 - **Model:** a small open-weight model run locally (Qwen or Llama class), so there's no cost per player and the steering
