@@ -119,6 +119,10 @@ func _ready() -> void:
 	for mode in ["shots", "bench", "tour", "autoplay", "prologue"]:
 		if "--" + mode in args or (mode == "prologue" and "--prologue-test" in args):
 			test_mode = mode
+	if OS.has_feature("movie"):
+		# Recording with the movie maker: fullscreen, or a tiling window manager squeezes the window and the
+		# movie crops it.
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	build_world()
 	build_props()
 	build_hud()
@@ -147,7 +151,10 @@ func _ready() -> void:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	var health := await brain.health()
 	status.text = "brain: " + ("connected, " + str(health.get("dials", {})) if not health.is_empty() else "offline, using written lines")
-	if test_mode != "":
+	if OS.has_feature("movie"):  # recording a video with the movie maker: sound on, no help text
+		help_label.visible = false
+		status.visible = false
+	elif test_mode != "":
 		AudioServer.set_bus_mute(0, true)  # a test run stays silent
 	if test_mode == "autoplay":
 		autoplay()
