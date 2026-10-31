@@ -258,7 +258,32 @@ func build_world() -> void:
 		slab(Vector3(8, 0.16, 0.08), Vector3(0, -0.08, edge[1]), steel, false)
 	for x in [-4.25, 4.25]:
 		solid(Vector3(0.5, 9.5, 32.5), Vector3(x, 1.25, 10))
-	slab(Vector3(9, 0.5, 32.5), Vector3(0, 6.25, 10), steel)  # ceiling
+	slab(Vector3(9, 0.5, 6.25), Vector3(0, 6.25, -3.125), steel)  # ceiling, open over the pit
+	slab(Vector3(9, 0.5, 14.25), Vector3(0, 6.25, 19.125), steel)
+	# Over the pit, a shaft of her tiles 30 m up, light falling from the top through the haze.
+	slab(Vector3(9, 0.5, 12.5), Vector3(0, 36.25, 6), steel, false)
+	var lamp := MeshInstance3D.new()
+	var disc := CylinderMesh.new()
+	disc.top_radius = 1.4
+	disc.bottom_radius = 1.4
+	disc.height = 0.1
+	lamp.mesh = disc
+	lamp.material_override = Looks.material("strip_light")
+	lamp.position = Vector3(0, 35.95, 6)
+	add_child(lamp)
+	var shaft_light := SpotLight3D.new()
+	shaft_light.light_color = Color(0.82, 0.9, 1.0)
+	shaft_light.light_energy = 10.0
+	shaft_light.spot_range = 48.0
+	shaft_light.spot_angle = 14.0
+	shaft_light.spot_attenuation = 0.4
+	shaft_light.shadow_enabled = true
+	shaft_light.light_volumetric_fog_energy = 1.2
+	shaft_light.position = Vector3(0, 35.8, 6)
+	shaft_light.rotation.x = -PI / 2
+	shaft_light.set_meta("energy", shaft_light.light_energy)
+	add_child(shaft_light)
+	lights.append(shaft_light)
 	for z in range(-5, 26, 2):
 		slab(Vector3(8, 0.22, 0.18), Vector3(0, 5.89, z), steel, false)  # beams
 	# Pipes along the top of both long walls, through her, in brackets.
@@ -381,6 +406,11 @@ func build_walls() -> void:
 	facility.wall(Vector3(4.18, 0, 0), Vector3(4.18, 0, 12), -3, 0, [], [], [], false)
 	facility.wall(Vector3(-4, 0, -0.18), Vector3(4, 0, -0.18), -3, -1, [], [], [], false)
 	facility.wall(Vector3(4, 0, 12.18), Vector3(-4, 0, 12.18), -3, -1, [], [], [], false)
+	# Up the shaft over the pit, where her tiles shift on their own and more of her eyes look down.
+	facility.wall(Vector3(-4.18, 0, 12), Vector3(-4.18, 0, 0), 6, 36, [], [Vector2i(6, 4), Vector2i(2, 10), Vector2i(8, 21)], [], false)
+	facility.wall(Vector3(4.18, 0, 0), Vector3(4.18, 0, 12), 6, 36, [], [Vector2i(9, 7), Vector2i(3, 14)], [], false)
+	facility.wall(Vector3(-4, 0, -0.18), Vector3(4, 0, -0.18), 6, 36, [], [Vector2i(5, 2), Vector2i(2, 17)], [], false)
+	facility.wall(Vector3(4, 0, 12.18), Vector3(-4, 0, 12.18), 6, 36, [], [Vector2i(2, 5), Vector2i(6, 12)], [], false)
 	# The entrance wall, the wall between the chamber and her core (both faces), and the far end of her core.
 	var doorway := Rect2i(3, 0, 2, 6)
 	facility.wall(Vector3(-4, 0, -6.18), Vector3(4, 0, -6.18), 0, 6, [doorway], [Vector2i(6, 4)], [], false)
@@ -1047,6 +1077,7 @@ const VIEWS := [  # name, where the subject stands, which way they face, how far
 	["pit", Vector3(-2.5, 0.1, -0.5), PI + 0.3, -0.35],
 	["terminal", Vector3(-1.2, 0.1, -3.0), PI / 2, 0.0],
 	["eye", Vector3(1.0, 0.1, -1.0), -2.76, 0.32],
+	["shaft", Vector3(-1.5, 0.1, -0.6), PI + 0.2, 0.95],
 	["far", Vector3(0, 0.1, 12.6), PI, -0.2],
 	["back", Vector3(1.5, 0.1, 16.5), 0.25, 0.05],
 	["core", Vector3(0, 0.1, 20.2), PI, 0.0],
@@ -1069,11 +1100,11 @@ func take_shots() -> void:
 	facility.voice = 0.0
 	# Her other colors: teal once repaired, red while W-7 overloads.
 	facility.set_color(Looks.TEAL, 0.01)
-	await shoot(dir, ["teal", VIEWS[0][1], VIEWS[0][2], VIEWS[0][3]])
+	await shoot(dir, ["teal"] + VIEWS[0].slice(1))
 	set_neuron(Looks.RED, "OVERLOAD.")
-	await shoot(dir, VIEWS[6].duplicate())
+	await shoot(dir, ["red"] + VIEWS.filter(func(v): return v[0] == "core")[0].slice(1))
 	picture_glitch = 0.8
-	await shoot(dir, ["glitch", VIEWS[0][1], VIEWS[0][2], VIEWS[0][3]])
+	await shoot(dir, ["glitch"] + VIEWS[0].slice(1))
 	get_tree().quit()
 
 
@@ -1088,9 +1119,8 @@ func shoot(dir: String, view: Array, action := func(): pass, after := 0.0) -> vo
 	if after > 0.0:
 		await get_tree().create_timer(after).timeout
 	await RenderingServer.frame_post_draw
-	var name: String = view[0] if not (view[0] == "core" and facility.color == Looks.RED) else "red"
-	get_viewport().get_texture().get_image().save_png("%s/%s.png" % [dir, name])
-	print("SHOT ", name)
+	get_viewport().get_texture().get_image().save_png("%s/%s.png" % [dir, view[0]])
+	print("SHOT ", view[0])
 
 
 ## Frames per second and video memory at each view, for the budget in DESIGN.md (the brain keeps its 8B

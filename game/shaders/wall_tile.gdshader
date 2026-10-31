@@ -14,6 +14,7 @@ uniform float breathe = 0.0;  // her voice, 0 to 1: the walls breathe deeper whi
 uniform vec3 subject = vec3(0.0, -100.0, 0.0);  // tiles near the subject lean out toward them
 uniform vec4 ripple = vec4(0.0, -100.0, 0.0, 99.0);  // a ripple's origin (xyz) and age in seconds (w)
 uniform float ripple_strength = 0.0;
+uniform float restless_from = 7.0;  // tiles above this height shift on their own: the shaft over the pit
 
 varying float side;
 varying float depth;
@@ -29,6 +30,9 @@ void vertex() {
 	push += 0.07 * exp(-near * near / 2.5);
 	float front = distance(center, ripple.xyz) - ripple.w * 7.0;
 	push += ripple_strength * exp(-front * front / 0.6) * exp(-ripple.w * 0.5);
+	float wake = smoothstep(restless_from, restless_from + 3.0, center.y);
+	float cycle = sin(TIME * 0.22 + shade * 61.0);
+	push += wake * (0.9 * pow(max(cycle, 0.0), 24.0) - 0.15 * pow(max(-cycle, 0.0), 8.0));
 	VERTEX.z += push;
 	UV = VERTEX.xy * 0.45 + vec2(shade * 7.31, shade * 3.17);
 }
