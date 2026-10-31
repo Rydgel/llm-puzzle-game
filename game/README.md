@@ -34,7 +34,11 @@ See `../DESIGN.md`. Her moves race down her nerves as pulses before they happen 
 the exit and at the pit) reroutes them into the exit door or the pit wall's steps. Hold the right mouse button on a
 wall tile to pull it out into a beam (`scripts/sculpt.gd`). Over the left side of the pit her bridge of light
 hardens where her searchlight eye looks (`scripts/hologram.gd`, `shaders/hologram.gdshader`).
-`godot --path game --write-movie demo.avi --fixed-fps 30 -- --demo nerves` (or `shape`, `light`) films each one.
+`godot --path game --write-movie demo.avi --fixed-fps 30 -- --demo nerves` (or `shape`, `light`) films each one;
+`--demo full` films everything in one take, about two and a half minutes: the prologue, Chamber 4, her nerves, her tiles,
+her light, her flood spilling over the platforms, her core repaired. The movie is the window's size at start, so for
+1080p put an `override.cfg` in `game/` with `[display]` `window/size/viewport_width=1920` and
+`window/size/viewport_height=1080`, and remove it afterwards.
 
 ## The prologue
 

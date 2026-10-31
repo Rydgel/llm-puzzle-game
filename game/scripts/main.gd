@@ -761,10 +761,12 @@ func _unhandled_input(input: InputEvent) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if not player or test_mode in ["shots", "bench", "tour", "pour", "demo"]:
+	if not player:
 		return
-	if prologue != "":
+	if prologue != "":  # started by the game, the prologue test and the full demo, never by the others
 		run_prologue(delta)
+		return
+	if test_mode in ["shots", "bench", "tour", "pour", "demo"]:
 		return
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		var reach := player.look_hit(Sculpt.REACH)
@@ -1182,7 +1184,7 @@ func start_prologue() -> void:
 func run_prologue(delta: float) -> void:
 	elapsed += delta
 	var holding := Input.is_physical_key_pressed(KEY_E) and player.global_position.distance_to(CONSOLE) < 2.5
-	if prologue == "calibrate" and (holding or test_mode == "prologue"):
+	if prologue == "calibrate" and (holding or test_mode in ["prologue", "demo"]):
 		dial = min(dial + delta * 0.18, 1.0)
 		show_dial()
 		if not turned_dial:
