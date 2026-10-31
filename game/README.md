@@ -71,6 +71,10 @@ Her moves show in her body: a turret comes up through a hatch of her light in th
 pit), the walls ripple out from it, and a whirr goes with it; when she dims the lights, her seams and eyes glow brighter;
 her flood is real water, rushing in and draining away. A death flashes green (acid) or red (turret), with her glitch.
 
+Dust drifts through her light, fumes rise off the acid, and W-7 throws sparks when it overloads (`scripts/air.gd`).
+Labels belong to the world: a plaque on her core's pedestal, the dial's readout on the console's screen; what E does
+shows under the crosshair.
+
 Her body is heard too: a low hum everywhere, clanks echoing down the shaft over the pit, hatches whirring, tiles clacking
 where a ripple starts. The sounds are synthesized by `../art/sounds.py`.
 

@@ -21,6 +21,7 @@ const Turret := preload("res://scripts/turret.gd")
 const Brain := preload("res://scripts/brain.gd")
 const Looks := preload("res://scripts/looks.gd")
 const Facility := preload("res://scripts/facility.gd")
+const Air := preload("res://scripts/air.gd")
 
 const SPAWN := Vector3(0, 0.1, -4.5)
 const DISPENSER := Vector3(2.0, 0.8, -3.0)
@@ -58,6 +59,7 @@ var facility: Facility
 var button_plate: Node3D
 var core_rings: Array = []
 var core_light: OmniLight3D
+var sparks: GPUParticles3D  # from W-7 while it overloads
 var voice_bus := 0
 var rushing: AudioStreamPlayer3D  # her flood
 var exit_whirr: AudioStreamPlayer3D
@@ -104,6 +106,7 @@ var flicker_next := 0.0
 var glitch_tween: Tween
 var console_dial: Node3D  # neuron W-7's dial on the console, which turns as the technician turns it
 var objective: Label
+var prompt: Label  # what E does here, under the crosshair
 var fade: ColorRect
 
 
@@ -422,6 +425,11 @@ func build_world() -> void:
 
 	build_walls()
 	build_sound()
+	# Dust in the chamber, up the shaft and up her core; fumes off the acid.
+	add_child(Air.dust(Vector3(7.6, 5.6, 32), Vector3(0, 3, 10), 400))
+	add_child(Air.dust(Vector3(7.6, 29, 11.6), Vector3(0, 21, 6), 500))
+	add_child(Air.dust(Vector3(7.6, 19, 7.6), Vector3(0, 10, 22), 300))
+	add_child(Air.fumes(Vector3(7.6, 0.1, 11.6), Vector3(0, -2.9, 6), 140))
 
 
 ## Her body's sounds (art/sounds.py): the hum of her machinery everywhere, clanks echoing down the shaft.
@@ -572,11 +580,13 @@ func build_props() -> void:
 	var core := Looks.moving(piece("core", Vector3(NEURON.x, 0, NEURON.z)))  # its light changes color
 	neuron = core.find_child("neuron")
 	core_rings = [core.find_child("ring_a"), core.find_child("ring_b")]
+	# A plaque on the pedestal, toward the door, lit in her color.
 	neuron_label = Label3D.new()
-	neuron_label.position = NEURON + Vector3(0, 1.0, 0)
+	neuron_label.position = Vector3(NEURON.x, 0.62, NEURON.z - 0.47)
 	neuron_label.rotation_degrees.y = 180
-	neuron_label.font_size = 36
-	neuron_label.pixel_size = 0.004
+	neuron_label.font_size = 48
+	neuron_label.pixel_size = 0.0011
+	neuron_label.outline_size = 0
 	add_child(neuron_label)
 	core_light = OmniLight3D.new()
 	core_light.position = NEURON + Vector3(0, 0.2, -0.9)
@@ -585,15 +595,19 @@ func build_props() -> void:
 	core_light.shadow_enabled = true
 	add_child(core_light)
 	show_neuron()
+	sparks = Air.sparks(NEURON)
+	add_child(sparks)
 
 	console_dial = piece("console", CONSOLE, PI).find_child("dial")
 	console_dial.set_meta("rest", console_dial.basis)
 	solid(Vector3(0.8, 1.1, 0.6), CONSOLE + Vector3(0, 0.55, 0))
+	# The dial's readout, on the console's own screen, which slopes toward the technician.
 	console_label = Label3D.new()
-	console_label.position = CONSOLE + Vector3(0, 1.55, 0)
-	console_label.rotation_degrees.y = 180
-	console_label.font_size = 30
-	console_label.pixel_size = 0.004
+	console_label.position = CONSOLE + Vector3(0.15, 1.062, -0.03)
+	console_label.rotation_degrees = Vector3(-60, 180, 0)
+	console_label.font_size = 40
+	console_label.pixel_size = 0.00062
+	console_label.outline_size = 0
 	add_child(console_label)
 	show_dial()
 
@@ -663,6 +677,16 @@ func build_hud() -> void:
 	objective.add_theme_font_size_override("font_size", 18)
 	objective.modulate = Color(1, 0.85, 0.4)
 	hud.add_child(objective)
+	prompt = Label.new()
+	prompt.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	prompt.offset_top = 60
+	prompt.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	prompt.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	prompt.add_theme_font_size_override("font_size", 18)
+	prompt.add_theme_constant_override("outline_size", 5)
+	prompt.add_theme_color_override("font_outline_color", Color.BLACK)
+	prompt.modulate = Color(1, 1, 1, 0.85)
+	hud.add_child(prompt)
 	fade = ColorRect.new()
 	fade.color = Color(0, 0, 0, 0)
 	fade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -729,6 +753,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _process(delta: float) -> void:
+	prompt.text = what_e_does()
 	var look: ShaderMaterial = screen.material
 	look.set_shader_parameter("glitch", picture_glitch)
 	look.set_shader_parameter("her_color", facility.color)
@@ -736,6 +761,23 @@ func _process(delta: float) -> void:
 	facility.voice = clamp(loudness * 2.5, 0.0, 1.0) if voice_player.playing else 0.0
 	for ring in core_rings:
 		ring.rotate_object_local(Vector3.FORWARD if ring == core_rings[0] else Vector3.UP, delta * 0.25)
+
+
+func what_e_does() -> String:
+	if not player or test_mode != "":
+		return ""
+	if prologue == "calibrate" and player.global_position.distance_to(CONSOLE) < 2.5:
+		return "Hold E · turn W-7's dial"
+	if prologue != "" or rebooting:
+		return ""
+	if player.held:
+		return "E · drop the cube   ·   click · throw it"
+	if player.global_position.distance_to(NEURON) < 3.0:
+		return "E · break W-7 again" if repaired else "E · repair W-7"
+	var hit := player.look_hit()
+	if not hit.is_empty() and hit.collider == cube:
+		return "E · pick up the cube"
+	return ""
 
 
 func where() -> String:
@@ -998,7 +1040,7 @@ func start_prologue() -> void:
 	found_core = true
 	player.global_position = CORE_SPAWN
 	player.rotation.y = PI
-	set_neuron(Looks.TEAL, "Calibrated.")
+	set_neuron(Looks.TEAL, "Calibrated")
 	objective.text = "MAINTENANCE SHIFT · Recalibrate VESPER's neuron W-7: hold E at the console until the dial is in the green band."
 	await brain.post("/forget", {})
 	await brain.post("/dials", CALIBRATED["dials"], 90.0)
@@ -1032,8 +1074,9 @@ func runaway() -> void:
 	prologue = "runaway"
 	terminal_print("FAULT: W-7 actuator runaway")
 	objective.text = "FAULT · The dial jammed. It won't stop."
-	set_neuron(Looks.RED, "OVERLOAD.")
+	set_neuron(Looks.RED, "Overload")
 	facility.flicker = true
+	sparks.emitting = true
 	if glitch_tween:
 		glitch_tween.kill()
 	picture_glitch = 0.7
@@ -1048,10 +1091,11 @@ func reboot() -> void:
 	for light in lights:
 		light.light_energy = light.get_meta("energy") * 0.07
 	facility.flicker = false
+	sparks.emitting = false
 	glitch_for(3.0, 1.0)
 	terminal_print("# VESPER rebooting")
 	say("[rebooting]")
-	set_neuron(Looks.AMBER, "Damaged.")
+	set_neuron(Looks.AMBER, "Damaged")
 	objective.text = ""
 	await brain.post("/dials", BROKEN["dials"], 90.0)
 	await brain.post("/stage", {"stage": BROKEN["stage"]})
@@ -1112,7 +1156,7 @@ func show_dial() -> void:
 	var zone := "RED" if dial >= GREEN.y else "GREEN" if dial >= GREEN.x else "LOW"
 	console_label.text = "W-7 CALIBRATION\n[%s]\n%s" % [bar, zone]
 	console_dial.basis = console_dial.get_meta("rest") * Basis(Vector3.UP, -dial * TAU * 0.8)
-	console_label.modulate = Color(1, 0.25, 0.2) if zone == "RED" else Color(0.4, 1, 0.5) if zone == "GREEN" else Color(0.9, 0.9, 0.9)
+	console_label.modulate = Color(1.6, 0.3, 0.25) if zone == "RED" else Color(0.5, 1.6, 0.6) if zone == "GREEN" else Color(1.1, 1.1, 1.1)
 
 
 ## Neuron W-7's light, which is her light everywhere.
@@ -1120,14 +1164,14 @@ func set_neuron(color: Color, text: String) -> void:
 	neuron.material_override = material(color, 8.0)
 	core_light.light_color = color
 	facility.set_color(color)
-	neuron_label.text = "VESPER CORE · NEURON W-7 \"WARMTH\"\n%s" % text
+	neuron_label.text = "NEURON W-7 · WARMTH\n%s" % text.to_upper()
+	neuron_label.modulate = Color(color * 1.6, 1.0)
 
 
 # --- Her core ------------------------------------------------------------------------------------
 
 func show_neuron() -> void:
-	set_neuron(Looks.TEAL if repaired else Looks.AMBER, "%s\n[E] %s" % [
-		"Repaired." if repaired else "Damaged.", "break it again" if repaired else "repair"])
+	set_neuron(Looks.TEAL if repaired else Looks.AMBER, "Repaired" if repaired else "Damaged")
 
 
 func toggle_repair() -> void:
@@ -1210,12 +1254,14 @@ func take_shots() -> void:
 	# Her other colors: teal once repaired, red while W-7 overloads.
 	facility.set_color(Looks.TEAL, 0.01)
 	await shoot(dir, ["teal"] + VIEWS[0].slice(1))
-	set_neuron(Looks.RED, "OVERLOAD.")
+	set_neuron(Looks.RED, "Overload")
+	sparks.emitting = true
 	await shoot(dir, ["red"] + VIEWS.filter(func(v): return v[0] == "core")[0].slice(1))
 	picture_glitch = 0.8
 	await shoot(dir, ["glitch"] + VIEWS[0].slice(1))
 	picture_glitch = 0.0
-	set_neuron(Looks.AMBER, "Damaged.")
+	set_neuron(Looks.AMBER, "Damaged")
+	sparks.emitting = false
 	# Her moves: a turret coming up through the floor, then the room flooded to the waist.
 	await shoot(dir, ["rising", Vector3(0, 0.1, -1.5), -1.1, -0.2], func(): spawn_turret("next_to_cube"), 0.9)
 	await shoot(dir, ["flood", Vector3(-1.0, 0.1, -3.0), PI + 0.2, -0.25], func(): flood(0.9), 3.4)
