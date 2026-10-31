@@ -46,6 +46,7 @@ func _run(item: Dictionary) -> void:
 		else:
 			var late: float = now() - item["at"]
 			reply["late"] = late
+			reply["glitch"] = item["glitch"]
 			# The big moments (entering, solving, her core) are worth hearing a little late.
 			reply["stale"] = late > STALE and last_event_at > item["at"] and item["priority"] < 3
 			replied.emit(reply)

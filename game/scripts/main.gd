@@ -94,6 +94,9 @@ var prologue := ""  # intro, calibrate, runaway, reboot; empty once the subject 
 var dial := 0.0
 var turned_dial := false
 var console_label: Label3D
+var screen: ColorRect  # the whole picture, for her glitch
+var picture_glitch := 0.0
+var glitch_tween: Tween
 var console_dial: Node3D  # neuron W-7's dial on the console, which turns as the technician turns it
 var objective: Label
 var fade: ColorRect
@@ -258,6 +261,22 @@ func build_world() -> void:
 	slab(Vector3(9, 0.5, 32.5), Vector3(0, 6.25, 10), steel)  # ceiling
 	for z in range(-5, 26, 2):
 		slab(Vector3(8, 0.22, 0.18), Vector3(0, 5.89, z), steel, false)  # beams
+	# Pipes along the top of both long walls, through her, in brackets.
+	for side in [-1.0, 1.0]:
+		for spec in [[3.6, 5.58, 0.08, "brass"], [3.36, 5.72, 0.05, "steel"]]:
+			var pipe := MeshInstance3D.new()
+			var tube := CylinderMesh.new()
+			tube.top_radius = spec[2]
+			tube.bottom_radius = spec[2]
+			tube.height = 32.0
+			tube.radial_segments = 24
+			pipe.mesh = tube
+			pipe.material_override = Looks.material(spec[3])
+			pipe.position = Vector3(side * spec[0], spec[1], 10)
+			pipe.rotation.x = PI / 2
+			add_child(pipe)
+		for z in range(-4, 26, 4):
+			slab(Vector3(0.6, 0.06, 0.1), Vector3(side * 3.65, 5.84, z), steel, false)
 	solid(Vector3(3.5, 9.5, 0.5), Vector3(-2.75, 1.25, -6.25))  # the entrance wall, around its doorway
 	solid(Vector3(3.5, 9.5, 0.5), Vector3(2.75, 1.25, -6.25))
 	solid(Vector3(2, 3, 0.5), Vector3(0, 4.5, -6.25))
@@ -471,6 +490,17 @@ func build_props() -> void:
 
 
 func build_hud() -> void:
+	# Over the picture: a vignette, grain, and her glitch.
+	var lens := CanvasLayer.new()
+	lens.layer = 0
+	add_child(lens)
+	screen = ColorRect.new()
+	screen.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	screen.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var screen_look := ShaderMaterial.new()
+	screen_look.shader = preload("res://shaders/screen.gdshader")
+	screen.material = screen_look
+	lens.add_child(screen)
 	var hud := CanvasLayer.new()
 	add_child(hud)
 	subtitle = Label.new()
@@ -493,6 +523,9 @@ func build_hud() -> void:
 	help.position = Vector2(12, 8)
 	help.modulate = Color(1, 1, 1, 0.6)
 	hud.add_child(help)
+	var fade_help := create_tween()
+	fade_help.tween_interval(20.0)
+	fade_help.tween_property(help, "modulate:a", 0.0, 2.0)
 	status = Label.new()
 	status.position = Vector2(12, 32)
 	status.modulate = Color(1, 1, 1, 0.6)
@@ -578,6 +611,9 @@ func _physics_process(delta: float) -> void:
 
 
 func _process(delta: float) -> void:
+	var look: ShaderMaterial = screen.material
+	look.set_shader_parameter("glitch", picture_glitch * (1.0 if not facility.flicker else randf_range(0.3, 1.0)))
+	look.set_shader_parameter("her_color", facility.color)
 	var loudness := db_to_linear(AudioServer.get_bus_peak_volume_left_db(voice_bus, 0))
 	facility.voice = clamp(loudness * 2.5, 0.0, 1.0) if voice_player.playing else 0.0
 	for ring in core_rings:
@@ -691,7 +727,18 @@ func _on_reply(reply: Dictionary) -> void:
 	if reply.get("stale") and not reply.get("hint"):
 		print("%6.1f DROPPED a line %.1f s late: %s" % [elapsed, reply["late"], reply.get("line", "")])
 		return
+	if reply.get("glitch"):
+		glitch_for(2.5, 0.8)
 	say(reply.get("line", ""), reply)
+
+
+## Her glitch on the picture, fading out over `seconds`.
+func glitch_for(seconds: float, strength: float) -> void:
+	if glitch_tween:
+		glitch_tween.kill()
+	picture_glitch = strength
+	glitch_tween = create_tween()
+	glitch_tween.tween_property(self, "picture_glitch", 0.0, seconds).set_ease(Tween.EASE_IN)
 
 
 func _on_unreachable(text: String) -> void:
@@ -850,6 +897,9 @@ func runaway() -> void:
 	objective.text = "FAULT · The dial jammed. It won't stop."
 	set_neuron(Looks.RED, "OVERLOAD.")
 	facility.flicker = true
+	if glitch_tween:
+		glitch_tween.kill()
+	picture_glitch = 0.7
 	await brain.post("/dials", OVERDRIVE, 90.0)
 	await scripted("[Event] The calibration dial jammed and ran into the red. Your neuron W-7 is overloading.", true)
 	await scripted("[Event] W-7 is still overloading. You are losing control of your own voice.", true)
@@ -861,6 +911,7 @@ func reboot() -> void:
 	for light in lights:
 		light.light_energy = light.get_meta("energy") * 0.07
 	facility.flicker = false
+	glitch_for(3.0, 1.0)
 	terminal_print("# VESPER rebooting")
 	say("[rebooting]")
 	set_neuron(Looks.AMBER, "Damaged.")
@@ -949,6 +1000,7 @@ func toggle_repair() -> void:
 	repaired = not repaired
 	var target := REPAIRED if repaired else BROKEN
 	terminal_print("# rebooting VESPER, neuron W-7 %s" % ("repaired" if repaired else "damaged"))
+	glitch_for(3.0, 1.0)
 	say("[rebooting]")
 	await brain.post("/dials", target["dials"], 90.0)
 	await brain.post("/stage", {"stage": target["stage"]})
@@ -1020,6 +1072,8 @@ func take_shots() -> void:
 	await shoot(dir, ["teal", VIEWS[0][1], VIEWS[0][2], VIEWS[0][3]])
 	set_neuron(Looks.RED, "OVERLOAD.")
 	await shoot(dir, VIEWS[6].duplicate())
+	picture_glitch = 0.8
+	await shoot(dir, ["glitch", VIEWS[0][1], VIEWS[0][2], VIEWS[0][3]])
 	get_tree().quit()
 
 
