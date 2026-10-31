@@ -280,12 +280,19 @@ character rules (system prompt, the steering range allowed, a filter on `speak`)
   them live means embedding llama.cpp as a library and setting the vector through its API (not tested yet). The `repeng`
   library trains a control vector from contrasting prompt pairs in minutes on a consumer GPU. *(Check flags and APIs
   against current versions.)*
-- **Her voice (chosen 2026-10-31):** Kokoro-82M (weights Apache 2.0) on the CPU, Bella blended with 30% Nicole, picked
-  by ear from 12 American voices in `voice-test/` (British ones didn't fit her). It runs at about 0.2 s per second of
-  speech and leaves the GPU alone. Her voice follows her repair: fully repaired she is 60% Nicole and slower. Her glitch is
-  the line corrupted after synthesis (stutters, warble, bit-crush): she glitches when the subject finds her core and on her
-  first line after a reboot, the hook for the overcorrection mechanic. Lines are capped at 100 characters, about 5 s of
-  speech; with the voice a turn takes about 3–4 s.
+- **Her voice (chosen 2026-10-31):** Kokoro-82M (weights Apache 2.0) on the CPU, Bella, with GLaDOS-style processing,
+  both picked by ear in `voice-test/` (British voices didn't fit her, and a soft blend didn't sound mean). The processing
+  runs her through the WORLD vocoder: her pitch is snapped to the nearest note and its range squeezed to 60%, as GLaDOS's
+  lines were pitch-corrected, with formants nudged up and a faint machine edge. Repairing her makes her more human: the
+  processing fades, her pitch range comes back, and she drifts toward the soft Nicole voice and slows. Her glitch corrupts
+  the line on top (stutters, warble, bit-crush): she glitches when the subject finds her core and on her first line after
+  a reboot, the hook for the overcorrection mechanic. Voice and processing take about 0.25 s per second of speech, and
+  leave the GPU alone. Lines are capped at 100 characters, about 5 s of speech; a turn takes about 3–4 s.
+- **Meaner comes from delivery, not the dial.** Pushing her dial to 0.5 or rewording her prompt to "mock them without
+  mercy" made her lines worse (third-person narration, loops), not meaner. Steered, she also opened nearly every line with
+  "Oh," or "Ah,": those are now banned at the token level only while one of her last three lines used one, and her first
+  word can't repeat one of those three ("Oh, please" now and then is fine). Her prompt also tells her to speak to the
+  subject directly, which stops her narrating in the third person.
 - **Latency:** comic timing needs instant lines. Pre-generated barks for instant reactions (death, a fall, a solved
   puzzle); the live model for slower beats (chamber changes, long taunts, remembering what you did three chambers ago).
   Streamed text-to-speech for her voice.

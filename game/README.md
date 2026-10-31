@@ -31,9 +31,10 @@ to throw the cube, Escape to free the mouse, F11 for fullscreen.
   from 0 to 2 (hints, open doors and shortcuts instead of traps), and the chamber starts over with her changed. E again
   breaks it, to compare.
 
-**Her voice** comes from the brain with each line (Kokoro, Bella with a touch of Nicole). It softens and slows as she's
-repaired, and it glitches when you find her core and on her first line after a reboot. A newer line cuts the older one
-off; subtitles stay up as long as she talks.
+**Her voice** comes from the brain with each line: Kokoro's Bella with GLaDOS-style processing (pitch snapped to notes,
+range squeezed). Repairing her makes her more human: the processing fades and her voice softens and slows. She glitches
+when you find her core and on her first line after a reboot. A newer line cuts the older one off; subtitles stay up as
+long as she talks.
 
 **Timing:** her turns take about 3–4 seconds and run one at a time. While one runs, a single event waits, chosen by priority (entering, solving, her core, then deaths, then the rest), so a death isn't lost behind a cube pickup. If her line comes back more than 5 seconds late and something newer has happened, the line is dropped and her move still applies, except for the big moments (entering, solving, her core), which are worth hearing a little late. Restarting the chamber discards everything from before it.
 

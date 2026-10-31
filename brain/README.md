@@ -34,10 +34,12 @@ JSON over HTTP on `127.0.0.1:8090`.
 one (show it on her terminal too). `refused` is set if the backstop validator refused her move; she complains about it in
 `line`. `filtered` is true when her first try was regenerated: blocked by the speak filter, or opening with the same words as one of her last five lines (steered, she keeps reaching for "Oh, how daring..."). Lines are capped at 100 characters (about 5 s of speech).
 
-`audio` is the line spoken in her voice (`voice.py`): base64 16-bit mono PCM at `sample_rate`, from Kokoro-82M on the
-CPU, Bella with 30% Nicole. Her warmth moves the voice: fully repaired she is 60% Nicole and slower. `"glitch": true`
-corrupts the line after synthesis (stutters, warble, bit-crush). With the voice a turn takes about 3–4 s, 5–6 s when a
-line is regenerated. Each turn is logged in the brain's terminal with its duration.
+`audio` is the line spoken in her voice (`voice.py`): base64 16-bit mono PCM at `sample_rate`. Kokoro-82M's Bella on the
+CPU, through GLaDOS-style processing with the WORLD vocoder (`pyworld`): pitch snapped to notes, range squeezed, formants
+up, a faint machine edge. Her warmth fades the processing and blends in soft Nicole, slower. `"glitch": true` corrupts
+the line on top (stutters, warble, bit-crush). With the voice a turn takes about 3–4 s, 5–6 s when a line is regenerated.
+Her first word never repeats one of her last three lines' first words, and "Oh"/"Ah"-style openers are banned while one
+was used recently.
 
 Example turn:
 
