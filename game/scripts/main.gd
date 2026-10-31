@@ -80,6 +80,7 @@ var found_core := false
 var repaired := false
 var rebooting := false
 var subtitle_serial := 0
+var subtitle_fade: Tween
 var voice_player: AudioStreamPlayer
 var glitch_next := false
 var test_mode := ""
@@ -587,6 +588,8 @@ func say(line: String, reply := {}) -> void:
 	if line == "":
 		return
 	print("%6.1f VESPER %s" % [elapsed, line])
+	if subtitle_fade:
+		subtitle_fade.kill()  # an older line's fade-out would hide this one
 	subtitle.text = "VESPER: " + line
 	subtitle.modulate.a = 1.0
 	subtitle_serial += 1
@@ -604,7 +607,8 @@ func say(line: String, reply := {}) -> void:
 		print("%6.1f VOICE %.1f s" % [elapsed, stream.get_length()])
 	await get_tree().create_timer(length).timeout
 	if serial == subtitle_serial:
-		create_tween().tween_property(subtitle, "modulate:a", 0.0, 1.0)
+		subtitle_fade = create_tween()
+		subtitle_fade.tween_property(subtitle, "modulate:a", 0.0, 1.0)
 
 
 # --- The prologue: the botched calibration ---------------------------------------------------------
