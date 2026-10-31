@@ -22,6 +22,11 @@ const Brain := preload("res://scripts/brain.gd")
 const Looks := preload("res://scripts/looks.gd")
 const Facility := preload("res://scripts/facility.gd")
 const Air := preload("res://scripts/air.gd")
+const Nerves := preload("res://scripts/nerves.gd")
+const Visor := preload("res://scripts/visor.gd")
+const Sculpt := preload("res://scripts/sculpt.gd")
+const Hologram := preload("res://scripts/hologram.gd")
+const Demos := preload("res://scripts/demos.gd")
 
 const SPAWN := Vector3(0, 0.1, -4.5)
 const DISPENSER := Vector3(2.0, 0.8, -3.0)
@@ -61,6 +66,11 @@ var core_rings: Array = []
 var core_light: OmniLight3D
 var sparks: GPUParticles3D  # from W-7 while it overloads
 var probes: Array[ReflectionProbe] = []
+var nerves: Nerves  # her moves race along them before they happen; junctions reroute them
+var visor: Visor  # V: see her nerves through her walls
+var sculpt: Sculpt  # hold the right mouse button on her wall: pull a tile out into a beam
+var hologram: Hologram  # her bridge of light over the pit, solid where her searchlight eye looks
+var told_her := {}  # when she was last told about each of the subject's new tricks
 var voice_bus := 0
 var rushing: AudioStreamPlayer3D  # her flood
 var exit_whirr: AudioStreamPlayer3D
@@ -117,7 +127,7 @@ func _ready() -> void:
 	# still come quickly. `--fps N` to change the cap.
 	get_viewport().scaling_3d_scale = 0.77
 	Engine.max_fps = int(args[args.find("--fps") + 1]) if "--fps" in args else 60
-	for mode in ["shots", "bench", "tour", "autoplay", "prologue"]:
+	for mode in ["shots", "bench", "tour", "demo", "autoplay", "prologue"]:
 		if "--" + mode in args or (mode == "prologue" and "--prologue-test" in args):
 			test_mode = mode
 	if OS.has_feature("movie"):
@@ -133,6 +143,10 @@ func _ready() -> void:
 	player.rotation.y = PI  # face the pit
 	player.interact.connect(_on_interact)
 	facility.subject = player
+	hologram.subject = player
+	visor = Visor.new()
+	visor.nerves = nerves
+	player.camera.add_child(visor)
 	player.threw.connect(func(): thrown_at = elapsed)
 	brain = Brain.new()
 	brain.state_provider = current_state
@@ -147,6 +161,12 @@ func _ready() -> void:
 		return
 	if test_mode == "tour":
 		tour()
+		return
+	if test_mode == "demo":
+		var demos := Demos.new()
+		demos.game = self
+		add_child(demos)
+		demos.run(args[args.find("--demo") + 1] if args.find("--demo") + 1 < args.size() else "nerves")
 		return
 	if test_mode == "":
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -425,17 +445,18 @@ func build_world() -> void:
 	add_child(acid)
 	acid.body_entered.connect(_on_acid)
 
-	for spec in [["A", 1.4, 5.0, -4.0], ["B", 10.6, 7.0, 4.0]]:  # A held from the left wall, B from the right
+	for spec in [["A", 1.4, 5.0, -4.0], ["B", 10.6, 7.0, -4.0]]:  # both held from the left wall
 		var panel: FloorPanel = FloorPanel.new()
 		add_child(panel)
 		panel.setup(spec[0], spec[1], spec[2], Looks.moving(Looks.model("floor_panel")), spec[3])
 		panels[spec[0]] = panel
-	for side in [-1.0, 1.0]:  # the rails her arms slide in, a slot of her light along each wall of the pit
+	for side in [-1.0]:  # the rail her arms slide in, a slot of her light along the left wall of the pit
 		slab(Vector3(0.12, 0.18, 12), Vector3(side * 3.94, FloorPanel.RAIL_Y, 6), steel, false)
 		slab(Vector3(0.03, 0.05, 12), Vector3(side * 3.87, FloorPanel.RAIL_Y, 6), Looks.material("seam_light"), false)
 
 	build_walls()
 	build_sound()
+	build_mechanics()
 	# What brass, steel, glass and the polished floors reflect: the rooms themselves, not black.
 	probes = [reflections(Vector3(0, 1.5, 6), Vector3(8.4, 9.4, 24.4), Vector3.ZERO),
 		reflections(Vector3(0, 10, 22.1), Vector3(8.4, 20.4, 8.3), Vector3(0, -8.4, 0))]
@@ -476,6 +497,35 @@ func sound(name: String, at: Vector3, pitch := 1.0, parent: Node = self) -> Audi
 	player_3d.position = at
 	parent.add_child(player_3d)
 	return player_3d
+
+
+## The technician's three ways into her body: her nerves and the visor that shows them, her tiles pulled out
+## of her walls, and her bridge of light that hardens where she looks.
+func build_mechanics() -> void:
+	nerves = Nerves.new()
+	add_child(nerves)
+	nerves.arrived.connect(do_move)
+	nerves.rerouted.connect(_on_rerouted)
+	nerves.diverted.connect(_on_diverted)
+	sculpt = Sculpt.new()
+	sculpt.facility = facility
+	add_child(sculpt)
+	sculpt.pulled.connect(func(): tell_her("pulled", "[Event] Subject pulled one of your wall tiles out into a beam to walk on."))
+	hologram = Hologram.new()
+	add_child(hologram)
+	hologram.build(-2.6, 0.0, 12.0, 1.2)
+	for child in facility.eyes()[2].get_children():
+		if child is SpotLight3D:
+			hologram.projector = child
+			child.spot_angle = Hologram.CONE  # her searchlight's cone is what hardens her light
+	hologram.stepped_on.connect(func(): tell_her("hard light", "[Event] Subject is walking over the acid on your bridge of light. It is solid only where your eye looks."))
+
+
+## Tells her about one of the subject's tricks, at most once every 20 seconds per trick.
+func tell_her(trick: String, text: String) -> void:
+	if elapsed - told_her.get(trick, -100.0) > 20.0:
+		told_her[trick] = elapsed
+		event(text)
 
 
 ## A reflection probe for one room, captured once, from `offset` off its center.
@@ -680,7 +730,7 @@ func build_hud() -> void:
 	hud.add_child(crosshair)
 	var help := Label.new()
 	help_label = help
-	help.text = "WASD move · Space jump · E pick up, drop, repair · click throw · Esc free the mouse · F11 fullscreen"
+	help.text = "WASD move · Space jump · E pick up, drop, repair, switch · click throw · V visor · hold right mouse: pull her tiles · Esc free the mouse · F11 fullscreen"
 	help.position = Vector2(12, 8)
 	help.modulate = Color(1, 1, 1, 0.6)
 	hud.add_child(help)
@@ -735,17 +785,23 @@ func build_hud() -> void:
 # --- Watching the subject ------------------------------------------------------------------------
 
 func _unhandled_input(input: InputEvent) -> void:
+	if input is InputEventKey and input.pressed and not input.echo and input.physical_keycode == KEY_V:
+		visor.toggle()
 	if input is InputEventKey and input.pressed and input.physical_keycode == KEY_F11:
 		var full := DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED if full else DisplayServer.WINDOW_MODE_FULLSCREEN)
 
 
 func _physics_process(delta: float) -> void:
-	if not player or test_mode in ["shots", "bench", "tour"]:
+	if not player or test_mode in ["shots", "bench", "tour", "demo"]:
 		return
 	if prologue != "":
 		run_prologue(delta)
 		return
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		var reach := player.look_hit(Sculpt.REACH)
+		if not reach.is_empty():
+			sculpt.pull(reach, delta)
 	elapsed += delta
 	since_progress += delta
 	since_move += delta
@@ -790,6 +846,9 @@ func _physics_process(delta: float) -> void:
 
 
 func _process(delta: float) -> void:
+	nerves.thinking = brain.busy if brain else false
+	nerves.color = facility.color
+	hologram.color = facility.color
 	prompt.text = what_e_does()
 	var look: ShaderMaterial = screen.material
 	look.set_shader_parameter("glitch", picture_glitch)
@@ -814,6 +873,9 @@ func what_e_does() -> String:
 	var hit := player.look_hit()
 	if not hit.is_empty() and hit.collider == cube:
 		return "E · pick up the cube"
+	var junction = nerves.junction_of(hit.get("collider"))
+	if junction:
+		return "E · let her signals through" if junction.switched else "E · reroute her signals to the %s" % ("exit door" if junction.device == "exit" else "pit wall")
 	return ""
 
 
@@ -855,7 +917,7 @@ func _on_acid(body: Node3D) -> void:
 
 
 func kill(what: String) -> void:
-	if test_mode in ["shots", "tour"]:
+	if test_mode in ["shots", "tour", "demo"]:
 		return
 	# A flash, green from the acid, red from a turret, and her glitch.
 	fade.color = Color(0.25, 1.0, 0.1, 0.5) if "acid" in what else Color(1.0, 0.1, 0.05, 0.5)
@@ -898,6 +960,11 @@ func _on_interact() -> void:
 		toggle_repair()
 		return
 	var hit := player.look_hit()
+	var junction = nerves.junction_of(hit.get("collider"))
+	if junction:
+		nerves.toggle(junction)
+		tell_her("junction", "[Event] Subject switched one of your nerve junctions with the calibration probe.")
+		return
 	if not hit.is_empty() and hit.collider == cube:
 		player.grab(cube)
 		if not boarded.has("cube"):
@@ -953,6 +1020,31 @@ func apply_move(name: String, args: Dictionary) -> void:
 	terminal_print("> %s(%s)" % [name, shown])
 	facility.stir(0.25)
 	print("%6.1f MOVE %s %s" % [elapsed, name, args])
+	nerves.send({"name": name, "args": args}, device_for(name, args))
+
+
+## Where a move's device is: the end of the nerve its pulse races down.
+func device_for(name: String, args: Dictionary) -> Vector3:
+	match name:
+		"lock_door":
+			return Vector3(-1.2, 2.9, -5.95) if args.get("door") == "entrance" else Vector3(-1.2, 2.9, 17.97)
+		"open_door", "open_shortcut":
+			return Vector3(-1.2, 2.9, 17.97)
+		"move_panel":
+			var panel: Node3D = panels.get(args.get("panel"), panels["A"])
+			return Vector3(Nerves.TRUNK_X, FloorPanel.RAIL_Y, panel.global_position.z)
+		"spawn_turret":
+			var at := turret_spot(args.get("position", "near_exit"))
+			return at if at.y > 1.0 else Vector3(at.x, -0.06, at.z)
+		"flood_room":
+			return Vector3(0, -0.06, -2.5)
+	return Vector3(0, Nerves.CEILING_Y, 9.0)  # the lights
+
+
+## Her move, once its pulse has reached the device.
+func do_move(move: Dictionary) -> void:
+	var name: String = move["name"]
+	var args: Dictionary = move["args"]
 	match name:
 		"lock_door":
 			if args.get("door") == "entrance":
@@ -989,6 +1081,18 @@ func close_exit() -> void:
 func spawn_turret(spot: String) -> void:
 	if turrets.size() >= 2:
 		return
+	var at := turret_spot(spot)
+	var turret: Turret = Turret.new()
+	turret.target = player
+	turret.from_above = spot == "ceiling" or (at.z > 0.0 and at.z < 12.0)  # no floor to come up through over the pit
+	turret.position = at
+	add_child(turret)
+	facility.ripple(at, 0.25)
+	turret.hit_subject.connect(func(): kill("[Event] Subject was shot by a turret and respawned."))
+	turrets.append(turret)
+
+
+func turret_spot(spot: String) -> Vector3:
 	var forward := -player.global_basis.z
 	var at: Vector3 = {
 		"behind_subject": player.global_position - forward * 2.5,
@@ -998,14 +1102,30 @@ func spawn_turret(spot: String) -> void:
 	}.get(spot, Vector3(2.5, 0, 16.5))
 	if spot != "ceiling":
 		at.y = 0.0
-	var turret: Turret = Turret.new()
-	turret.target = player
-	turret.from_above = spot == "ceiling" or (at.z > 0.0 and at.z < 12.0)  # no floor to come up through over the pit
-	turret.position = at
-	add_child(turret)
-	facility.ripple(at, 0.25)
-	turret.hit_subject.connect(func(): kill("[Event] Subject was shot by a turret and respawned."))
-	turrets.append(turret)
+	return at
+
+
+## The subject switched a junction ahead of her pulse: it goes somewhere else.
+func _on_rerouted(move: Dictionary, device: String) -> void:
+	terminal_print("x %s rerouted at a junction to the %s" % [move["name"], device])
+	event("[Event] The subject rerouted your %s signal at one of your nerve junctions: it is going into the %s instead." % [move["name"], "exit door" if device == "exit" else "pit wall"])
+
+
+## A rerouted pulse reached the junction's device.
+func _on_diverted(_move: Dictionary, device: String) -> void:
+	match device:
+		"exit":
+			open_exit()
+		"steps":
+			push_steps()
+
+
+## Her pit's right wall pushes out a row of steps across the acid, one tile after another.
+func push_steps() -> void:
+	facility.ripple(Vector3(4.0, -0.5, 0.0), 0.2)
+	for z in 12:
+		sculpt.push_out(facility.tile_at(Vector3(4.0, -0.5, z + 0.5), Vector3(-1, 0, 0)), 1.8, 14.0)
+		await get_tree().create_timer(0.09).timeout
 
 
 func flood(level: float) -> void:
@@ -1357,8 +1477,9 @@ func tour() -> void:
 		time += get_process_delta_time()
 		while not beats.is_empty() and time >= beats[0][0]:
 			beats.pop_front()[1].call()
+		time = minf(time, TOUR[-1][0])
 		var k := 0
-		while TOUR[k + 1][0] < time:
+		while k + 2 < TOUR.size() and TOUR[k + 1][0] < time:
 			k += 1
 		var span: float = TOUR[k + 1][0] - TOUR[k][0]
 		var along: float = (time - TOUR[k][0]) / span

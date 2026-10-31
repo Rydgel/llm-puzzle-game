@@ -327,6 +327,32 @@ resolution with FSR 2, and is capped at 60 fps, which slows her turns by about 0
 area lights and shadows from every ceiling strip; now only the long walls light the room and every other strip casts
 shadows. Details in `game/README.md`.
 
+## Three ways into her body (prototypes, 2026-10-31)
+
+Portal's verb is a gun that bends space. Ours come from her being the building, and from her moves being real tool
+calls from a real model: the technician gets into her body. Three prototypes, all in Chamber 4 at once for now
+(`game/README.md` has the controls; `--demo nerves|shape|light` films each one):
+
+- **Her nervous system.** Her moves no longer happen at once. A pulse of her light leaves her core and races along
+  her nerves (under the floor, behind her tiles) to the device, about 7 m/s, and the move happens when it arrives.
+  Her pulses light her seams as they pass. The technician's visor (V) turns the world into an X-ray, every edge
+  traced from the depth buffer, and shows her whole nervous system glowing through her walls. Two junctions on her
+  trunk nerve can be switched with E: a pulse that passes a switched junction lands on the junction's other
+  device, whatever she commanded. By the exit, it opens the exit door; at the pit, it makes the pit wall push out
+  steps. Her thinking time is the player's window: they see it coming and get to a junction first. She is told
+  when her signal is rerouted ("You think you're the first human to ever weaponize my plumbing?").
+- **Reshape her body.** Hold the right mouse button on one of her wall tiles and it slides out on a pillar of
+  itself, her light at its root, solid to stand on, up to 3.4 m. She takes it back: a few seconds after you let go
+  it sinks into the wall. Her rerouted signals do it too, a row at a time.
+- **Her projections turn solid.** Over the acid she projects a bridge in light, a flickering hologram, nothing to
+  stand on. Where the cone of her searchlight eye falls on it, it hardens into solid light; where she looks away,
+  it melts. Her eye follows the subject, so the bridge is solid under them only while she watches them, and only
+  where nothing stands between her eye and the bridge (a panel's shadow is a hole).
+
+What's open: which of these becomes the core verb and which stay as moments; puzzles built on them instead of
+alongside the cube and panels; and how her steering dials should change them (a warmer VESPER who lets you keep
+your beams, a pettier one who looks away on purpose).
+
 ## Technical sketch
 
 - **Model:** a small open-weight model run locally (Qwen or Llama class), so there's no cost per player and the steering

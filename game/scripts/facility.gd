@@ -29,6 +29,7 @@ var _wall_lights: Array[AreaLight3D] = []
 var _hatch_lights: Array[OmniLight3D] = []
 var _tile_mesh: Mesh
 var _tile_offset: Transform3D  # from a tile's spot on the wall to its mesh
+var _multimesh: MultiMesh  # all her wall tiles
 var _ripple := Vector4(0, -100, 0, 99)
 var _ripple_strength := 0.0
 var _glow := 0.0
@@ -192,6 +193,7 @@ func finish() -> void:
 	tiles.multimesh = multimesh
 	tiles.material_override = Looks.material("wall_tile")
 	add_child(tiles)
+	_multimesh = multimesh
 	print("FACILITY %d tiles, %d eyes" % [_tiles.size(), _eyes.size()])
 
 
@@ -271,3 +273,41 @@ func _watch(delta: float) -> void:
 		for child in barrel.get_children():
 			if child is SpotLight3D:
 				child.light_color = color
+
+
+# --- Her tiles one by one, for pulling them out of her walls (scripts/sculpt.gd) ----------------------
+
+## The tile whose face is at `point`, on a wall facing `normal`, or -1.
+func tile_at(point: Vector3, normal: Vector3) -> int:
+	var best := -1
+	var best_distance := 0.75
+	for i in _tiles.size():
+		var spot := _tiles[i]
+		if spot.basis.z.dot(normal) < 0.9:
+			continue
+		var distance := (spot.origin + spot.basis.z * 0.18).distance_to(point)
+		if distance < best_distance:
+			best = i
+			best_distance = distance
+	return best
+
+
+## Where a tile sits on her wall: its back's center, facing out of the wall.
+func tile_spot(i: int) -> Transform3D:
+	return _tiles[i]
+
+
+func tile_mesh() -> Mesh:
+	return _tile_mesh
+
+
+func tile_offset() -> Transform3D:
+	return _tile_offset
+
+
+## Hides a tile in the wall, while it is pulled out as a beam of its own, or shows it again.
+func set_tile_shown(i: int, shown: bool) -> void:
+	var spot := _tiles[i] * _tile_offset
+	if not shown:
+		spot = spot.scaled_local(Vector3(0.001, 0.001, 0.001))
+	_multimesh.set_instance_transform(i, spot)

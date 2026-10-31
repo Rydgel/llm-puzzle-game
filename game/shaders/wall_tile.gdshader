@@ -15,6 +15,7 @@ uniform vec3 subject = vec3(0.0, -100.0, 0.0);  // tiles near the subject lean o
 uniform vec4 ripple = vec4(0.0, -100.0, 0.0, 99.0);  // a ripple's origin (xyz) and age in seconds (w)
 uniform float ripple_strength = 0.0;
 uniform float restless_from = 7.0;  // tiles above this height shift on their own: the shaft over the pit
+uniform float rigid = 0.0;  // 1 for a tile pulled out into a beam (scripts/sculpt.gd): it holds still
 
 varying float side;
 varying float depth;
@@ -33,7 +34,7 @@ void vertex() {
 	float wake = smoothstep(restless_from, restless_from + 3.0, center.y);
 	float cycle = sin(TIME * 0.22 + shade * 61.0);
 	push += wake * (0.9 * pow(max(cycle, 0.0), 24.0) - 0.15 * pow(max(-cycle, 0.0), 8.0));
-	VERTEX.z += push;
+	VERTEX.z += push * (1.0 - rigid);
 	UV = VERTEX.xy * 0.45 + vec2(shade * 7.31, shade * 3.17);
 }
 
@@ -43,5 +44,5 @@ void fragment() {
 	NORMAL_MAP = texture(grain_normal, UV).rgb;
 	NORMAL_MAP_DEPTH = 0.5;
 	ROUGHNESS = mix(0.3, 0.6, texture(grain_roughness, UV).r);
-	EMISSION = her_color * her_energy * side * depth * depth;
+	EMISSION = her_color * her_energy * side * depth * depth * mix(1.0, 0.3, rigid);
 }

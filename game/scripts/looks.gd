@@ -105,6 +105,9 @@ static func material(role: String) -> Material:
 			m.set_shader_parameter("grain", texture("tile_plastic", "color"))
 			m.set_shader_parameter("grain_normal", texture("tile_plastic", "normal"))
 			m.set_shader_parameter("grain_roughness", texture("tile_plastic", "roughness"))
+		"wall_beam":  # a tile pulled out of her wall: the same look, holding still
+			m = material("wall_tile").duplicate()
+			m.set_shader_parameter("rigid", 1.0)
 		"acid":
 			m = ShaderMaterial.new()
 			m.shader = ACID
@@ -123,9 +126,10 @@ static func her_light(color: Color, glow := 1.0) -> void:
 		var m: StandardMaterial3D = material(role)
 		m.emission = color
 		m.emission_energy_multiplier = (IRIS_ENERGY if role == "iris" else SEAM_ENERGY) * glow
-	var tiles: ShaderMaterial = material("wall_tile")
-	tiles.set_shader_parameter("her_color", color)
-	tiles.set_shader_parameter("her_energy", SEAM_ENERGY * glow)
+	for role in ["wall_tile", "wall_beam"]:
+		var tiles: ShaderMaterial = material(role)
+		tiles.set_shader_parameter("her_color", color)
+		tiles.set_shader_parameter("her_energy", SEAM_ENERGY * glow)
 
 
 ## One of her pieces, with its surfaces dressed by role.

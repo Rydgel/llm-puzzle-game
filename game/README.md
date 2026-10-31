@@ -23,8 +23,18 @@ The first playable prototype: one test chamber run by VESPER, her terminal, and 
 
 Without the brain she still talks, from a few written lines, but makes no moves.
 
-**Controls:** WASD to move, the mouse to look, Space to jump, E to pick up or drop the cube and to repair the neuron, a click
-to throw the cube, Escape to free the mouse, F11 for fullscreen.
+**Controls:** WASD to move, the mouse to look, Space to jump, E to pick up or drop the cube, repair the neuron and switch
+a nerve junction, a click to throw the cube, V for the visor, hold the right mouse button on her wall to pull a tile
+out, Escape to free the mouse, F11 for fullscreen.
+
+## Three ways into her body (prototypes)
+
+See `../DESIGN.md`. Her moves race down her nerves as pulses before they happen (`scripts/nerves.gd`); the visor
+(`scripts/visor.gd`, `shaders/visor.gdshader`) shows them through her walls; E on a junction socket (left wall, by
+the exit and at the pit) reroutes them into the exit door or the pit wall's steps. Hold the right mouse button on a
+wall tile to pull it out into a beam (`scripts/sculpt.gd`). Over the left side of the pit her bridge of light
+hardens where her searchlight eye looks (`scripts/hologram.gd`, `shaders/hologram.gdshader`).
+`godot --path game --write-movie demo.avi --fixed-fps 30 -- --demo nerves` (or `shape`, `light`) films each one.
 
 ## The prologue
 
