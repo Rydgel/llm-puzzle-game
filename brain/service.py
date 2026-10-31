@@ -38,6 +38,7 @@ description and "speak_only" skips her move, for example in her core.
 import base64
 import json
 import random
+import re
 import signal
 import sys
 import threading
@@ -70,6 +71,12 @@ BANNED = [[word, False] for w in INTERJECTIONS for word in (w.capitalize(), " " 
 DEFAULTS = {"exit": "locked", "turrets": 0, "where": "in the chamber", "minutes": 0, "deaths": 0}
 LOG = 4
 TRIES = 3
+# She never assumes the subject's gender (MANNERS), but steered she slips: "the guy who broke me". She speaks to
+# the subject as "you", so a gendered word in her line is almost always about them: write the line again, and
+# after the last try fall back to a written line. A joke about someone else ("the last candidate... his name
+# tag") is written again too, now and then; that costs a second, not her manners.
+GENDERED = re.compile(r"\b(he|him|his|himself|she|her|hers|herself|guy|man|woman|girl|boy|lady|gentleman|sir|"
+                      r"ma'?am|madam|mister|dude|bro|son)\b", re.IGNORECASE)
 # Short lines: faster to write and to speak (about 0.2 s of synthesis per second of speech), and punchier.
 LINE_MAX = 100
 
@@ -148,6 +155,9 @@ class Brain:
             if any(marker in text for marker in ("[Facility", "[Event", "VESPER's core:")) and attempt < TRIES - 1:
                 continue
             if first in self.first_words and attempt < TRIES - 1:
+                continue
+            if GENDERED.search(text):
+                print(f"  gendered, written again: {text[:80]}", flush=True)
                 continue
             if text and allowed(self.judge, text)[0]:
                 self.first_words.append(first)

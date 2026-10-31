@@ -776,7 +776,7 @@ func _on_acid(body: Node3D) -> void:
 
 
 func kill(what: String) -> void:
-	if test_mode == "shots":
+	if test_mode in ["shots", "tour"]:
 		return
 	# A flash, green from the acid, red from a turret, and her glitch.
 	fade.color = Color(0.25, 1.0, 0.1, 0.5) if "acid" in what else Color(1.0, 0.1, 0.05, 0.5)
