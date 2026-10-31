@@ -67,6 +67,8 @@ var found_core := false
 var repaired := false
 var rebooting := false
 var subtitle_serial := 0
+var voice_player: AudioStreamPlayer
+var glitch_next := false
 var test_mode := ""
 
 
@@ -95,6 +97,7 @@ func _ready() -> void:
 	var health := await brain.health()
 	status.text = "brain: " + ("connected, " + str(health.get("dials", {})) if not health.is_empty() else "offline, using written lines")
 	if test_mode == "autoplay":
+		AudioServer.set_bus_mute(0, true)  # a test run stays silent
 		autoplay()
 	else:
 		event("[Event] Subject entered Chamber 4.")
@@ -285,6 +288,8 @@ func build_hud() -> void:
 	status.position = Vector2(12, 32)
 	status.modulate = Color(1, 1, 1, 0.6)
 	hud.add_child(status)
+	voice_player = AudioStreamPlayer.new()
+	add_child(voice_player)
 
 
 # --- Watching the subject ------------------------------------------------------------------------
@@ -330,7 +335,7 @@ func _physics_process(delta: float) -> void:
 			event("[Event] Subject has stood still at the locked exit, staring at it.")
 	if p.z > 19.0 and not found_core:
 		found_core = true
-		event("[Event] Subject walked past the exit and found VESPER's core.")
+		event("[Event] Subject walked past the exit and found VESPER's core.", true)
 
 	if not solved and not player.held and cube.global_position.distance_to(BUTTON) < 1.0 and cube.linear_velocity.length() < 2.0:
 		solve()
@@ -420,11 +425,12 @@ func _on_interact() -> void:
 
 # --- Talking to her ------------------------------------------------------------------------------
 
-func event(text: String) -> void:
+func event(text: String, glitch := false) -> void:
 	if rebooting:
 		return
 	print("%6.1f EVENT %s" % [elapsed, text])
-	brain.send(text)
+	brain.send(text, glitch or glitch_next)
+	glitch_next = false
 
 
 func _on_reply(reply: Dictionary) -> void:
@@ -439,7 +445,7 @@ func _on_reply(reply: Dictionary) -> void:
 	if reply.get("stale") and not reply.get("hint"):
 		print("%6.1f DROPPED a line %.1f s late: %s" % [elapsed, reply["late"], reply.get("line", "")])
 		return
-	say(reply.get("line", ""))
+	say(reply.get("line", ""), reply)
 
 
 func _on_unreachable(text: String) -> void:
@@ -527,7 +533,7 @@ func terminal_print(line: String) -> void:
 		screen.text = "VESPER // SUBLEVEL NINE // CHAMBER 4\n" + "\n".join(terminal_lines)
 
 
-func say(line: String) -> void:
+func say(line: String, reply := {}) -> void:
 	if line == "":
 		return
 	print("%6.1f VESPER %s" % [elapsed, line])
@@ -535,12 +541,18 @@ func say(line: String) -> void:
 	subtitle.modulate.a = 1.0
 	subtitle_serial += 1
 	var serial := subtitle_serial
-	# Opt-in: Godot's text-to-speech needs speech-dispatcher, and errors without it. Her real voice comes later.
-	var voices := DisplayServer.tts_get_voices_for_language("en") if "--tts" in OS.get_cmdline_user_args() else PackedStringArray()
-	if not voices.is_empty():
-		DisplayServer.tts_stop()
-		DisplayServer.tts_speak(line, voices[0])
-	await get_tree().create_timer(4.0 + line.length() * 0.05).timeout
+	var length := 4.0 + line.length() * 0.05
+	if reply.has("audio"):
+		# Her voice, from the brain: 16-bit mono PCM. A newer line cuts the older one off.
+		var stream := AudioStreamWAV.new()
+		stream.format = AudioStreamWAV.FORMAT_16_BITS
+		stream.mix_rate = int(reply["sample_rate"])
+		stream.data = Marshalls.base64_to_raw(reply["audio"])
+		voice_player.stream = stream
+		voice_player.play()
+		length = stream.get_length() + 1.5
+		print("%6.1f VOICE %.1f s" % [elapsed, stream.get_length()])
+	await get_tree().create_timer(length).timeout
 	if serial == subtitle_serial:
 		create_tween().tween_property(subtitle, "modulate:a", 0.0, 1.0)
 
@@ -570,6 +582,7 @@ func toggle_repair() -> void:
 	reset_chamber()
 	brain.new_epoch()
 	rebooting = false
+	glitch_next = true
 	event("[Event] Subject entered Chamber 4.")
 
 
@@ -638,6 +651,7 @@ func autoplay() -> void:
 		[7.0, "[Event] Subject stepped onto panel A carrying the cube."],
 		[9.0, "[Event] Subject stepped onto panel B carrying the cube."],
 		[12.0, "[Event] Subject put the cube on the button. The exit opened."],
+		[16.0, "[Event] Subject walked past the exit and found VESPER's core."],
 	]
 	var start := elapsed
 	for entry in script:
@@ -648,7 +662,7 @@ func autoplay() -> void:
 		if "exit opened" in entry[1]:
 			solved = true
 			open_exit()
-		event(entry[1])
+		event(entry[1], "core" in entry[1])
 	while brain.busy or not brain.pending.is_empty():
 		await get_tree().create_timer(0.2).timeout
 	await get_tree().create_timer(1.0).timeout

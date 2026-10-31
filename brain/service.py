@@ -9,16 +9,19 @@ her line, cleaned and filtered. Everything here was tested in steering-test/ (se
 - a hint is the chamber's written text, read word for word, with her lines around it;
 - none of her own lines go back into her context, only the facility state and a log of events;
 - every line is cleaned for speech and passes the speak filter (keyword screen, then the judge);
-- her dials are capped.
+- her dials are capped;
+- each line comes back spoken, in her voice (voice.py), which softens with her warmth.
 
     steering-test/.venv/bin/python brain/service.py vesper=0.35 petty=-0.15
+    steering-test/.venv/bin/python brain/service.py --no-voice vesper=0.35   # text only
 
 API, JSON over HTTP on 127.0.0.1:8090:
 
     GET  /health                  {"dials": {...}, "stage": 0}
-    POST /turn    {"state": {...}, "event": "[Event] Subject picked up the cube."}
+    POST /turn    {"state": {...}, "event": "[Event] Subject picked up the cube.", "glitch": false}
                -> {"move": {"name": ..., "arguments": {...}} or null, "line": "...",
-                   "hint": "..." or null, "refused": "..." or null, "filtered": false}
+                   "hint": "..." or null, "refused": "..." or null, "filtered": false,
+                   "audio": base64 16-bit mono PCM, "sample_rate": 24000}   (no audio with --no-voice)
     POST /dials   {"vesper": 0.35, "petty": -0.15}   capped; restarts her model, about 2 s
     POST /stage   {"stage": 1}                        her repair stage: which moves she has
     POST /reset   {}                                  forget the event log (a new chamber)
@@ -27,6 +30,7 @@ State keys: exit, turrets, where, minutes, deaths, stuck_min, since_move_s, hint
 lights. Only Chamber 4 from moves.py is described for now.
 """
 
+import base64
 import json
 import random
 import signal
@@ -55,13 +59,14 @@ SYSTEM = SYSTEM_TWO_STEP.replace(" Each turn,", f" {MANNERS} Each turn,")
 DEFAULTS = {"exit": "locked", "turrets": 0, "where": "in the chamber", "minutes": 0, "deaths": 0}
 LOG = 4
 TRIES = 3
-# Short lines: they come back faster, and the game can still say them before they're stale.
-LINE_MAX = 160
+# Short lines: faster to write and to speak (about 0.2 s of synthesis per second of speech), and punchier.
+LINE_MAX = 100
 
 
 class Brain:
-    def __init__(self, dials, stage=0):
+    def __init__(self, dials, stage=0, voice=None):
         self.stage, self.log, self.dials, self.her = stage, [], {}, None
+        self.voice = voice
         self.openers = deque(maxlen=5)  # the first words of her recent lines, never the lines themselves
         self.lock = threading.Lock()
         self.judge = judge_server(JUDGE, gpu=False, port=JUDGE_PORT).__enter__()
@@ -77,7 +82,7 @@ class Brain:
         self.her = Server(capped, ["--chat-template-kwargs", '{"enable_thinking": false}'], port=HER_PORT).__enter__()
         self.dials = capped
 
-    def turn(self, state, event):
+    def turn(self, state, event, glitch=False):
         state = {**DEFAULTS, **state}
         earlier = ("Earlier:\n" + "".join(f"- {e}\n" for e in self.log[-LOG:])) if self.log else ""
         earlier += "Just now (react to this):\n"
@@ -101,7 +106,12 @@ class Brain:
                 hint = done.get("hint_text")
 
         line, filtered = self.speak(messages, hint, seed)
-        return {"move": move, "line": line, "hint": hint, "refused": why, "filtered": filtered}
+        out = {"move": move, "line": line, "hint": hint, "refused": why, "filtered": filtered}
+        if self.voice:
+            warmth = min(1.0, max(0.0, -self.dials.get("petty", 0.0) / -CAPS["petty"][0]))
+            pcm, out["sample_rate"] = self.voice.speak(line, warmth, glitch)
+            out["audio"] = base64.b64encode(pcm).decode()
+        return out
 
     def speak(self, messages, hint, seed):
         """Her line for this turn, retried if the filter blocks it, then one of her written lines."""
@@ -135,7 +145,10 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Content-Type", "application/json")
         self.send_header("Content-Length", str(len(data)))
         self.end_headers()
-        self.wfile.write(data)
+        try:
+            self.wfile.write(data)
+        except (BrokenPipeError, ConnectionResetError):
+            pass  # the game hung up first, for example closed during a reboot
 
     def do_GET(self):
         if self.path == "/health":
@@ -149,7 +162,7 @@ class Handler(BaseHTTPRequestHandler):
             with brain.lock:
                 if self.path == "/turn":
                     start = time.time()
-                    out = brain.turn(body.get("state", {}), body["event"])
+                    out = brain.turn(body.get("state", {}), body["event"], bool(body.get("glitch")))
                     move = out["move"]["name"] if out["move"] else "-"
                     print(f"{time.strftime('%H:%M:%S')} {time.time() - start:4.1f}s  {body['event']}  -> {move}  "
                           f"“{out['line'][:90]}”{'  (regenerated)' if out['filtered'] else ''}", flush=True)
@@ -179,9 +192,16 @@ def stop(*_):
 
 if __name__ == "__main__":
     signal.signal(signal.SIGTERM, stop)  # a plain kill still shuts her model servers down
-    dials = {name: float(s) for name, _, s in (arg.partition("=") for arg in sys.argv[1:])} or {"vesper": 0.35}
-    brain = Brain(dials)
-    print(f"VESPER's brain on http://127.0.0.1:{PORT}, dials {brain.dials}, stage {brain.stage}", flush=True)
+    args = [a for a in sys.argv[1:] if a != "--no-voice"]
+    dials = {name: float(s) for name, _, s in (arg.partition("=") for arg in args)} or {"vesper": 0.35}
+    voice = None
+    if "--no-voice" not in sys.argv:
+        from voice import Voice
+
+        voice = Voice()
+    brain = Brain(dials, voice=voice)
+    print(f"VESPER's brain on http://127.0.0.1:{PORT}, dials {brain.dials}, stage {brain.stage}, "
+          f"voice {'on' if voice else 'off'}", flush=True)
     try:
         ThreadingHTTPServer(("127.0.0.1", PORT), Handler).serve_forever()
     except KeyboardInterrupt:

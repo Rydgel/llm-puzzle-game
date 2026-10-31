@@ -31,7 +31,11 @@ to throw the cube, Escape to free the mouse, F11 for fullscreen.
   from 0 to 2 (hints, open doors and shortcuts instead of traps), and the chamber starts over with her changed. E again
   breaks it, to compare.
 
-**Timing:** her turns take about 2 seconds and run one at a time. While one runs, a single event waits, chosen by priority (entering, solving, her core, then deaths, then the rest), so a death isn't lost behind a cube pickup. If her line comes back more than 5 seconds late and something newer has happened, the line is dropped and her move still applies. Restarting the chamber discards everything from before it.
+**Her voice** comes from the brain with each line (Kokoro, Bella with a touch of Nicole). It softens and slows as she's
+repaired, and it glitches when you find her core and on her first line after a reboot. A newer line cuts the older one
+off; subtitles stay up as long as she talks.
+
+**Timing:** her turns take about 3–4 seconds and run one at a time. While one runs, a single event waits, chosen by priority (entering, solving, her core, then deaths, then the rest), so a death isn't lost behind a cube pickup. If her line comes back more than 5 seconds late and something newer has happened, the line is dropped and her move still applies, except for the big moments (entering, solving, her core), which are worth hearing a little late. Restarting the chamber discards everything from before it.
 
 **What the game tells her:** entering, picking up the cube, stepping onto a panel, falling in the acid, being shot, the
 cube in the acid (thrown or dropped), staring at her camera for 3 seconds, standing at the locked exit, no progress for a
@@ -43,4 +47,6 @@ Arguments go after `--`:
 
 - `godot --path game -- --shots` saves screenshots to `game/shots/` and quits.
 - `godot --path game -- --autoplay` sends five scripted events through the brain and prints her moves and lines.
-- `godot --path game -- --tts` also speaks her lines with Godot's text-to-speech (needs `speech-dispatcher`).
+- `godot --path game -- --tts` speaks her lines with Godot's own text-to-speech instead, when the brain runs with
+  `--no-voice` (needs `speech-dispatcher`).
+- `--autoplay` runs muted.

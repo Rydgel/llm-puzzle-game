@@ -280,6 +280,12 @@ character rules (system prompt, the steering range allowed, a filter on `speak`)
   them live means embedding llama.cpp as a library and setting the vector through its API (not tested yet). The `repeng`
   library trains a control vector from contrasting prompt pairs in minutes on a consumer GPU. *(Check flags and APIs
   against current versions.)*
+- **Her voice (chosen 2026-10-31):** Kokoro-82M (weights Apache 2.0) on the CPU, Bella blended with 30% Nicole, picked
+  by ear from 12 American voices in `voice-test/` (British ones didn't fit her). It runs at about 0.2 s per second of
+  speech and leaves the GPU alone. Her voice follows her repair: fully repaired she is 60% Nicole and slower. Her glitch is
+  the line corrupted after synthesis (stutters, warble, bit-crush): she glitches when the subject finds her core and on her
+  first line after a reboot, the hook for the overcorrection mechanic. Lines are capped at 100 characters, about 5 s of
+  speech; with the voice a turn takes about 3–4 s.
 - **Latency:** comic timing needs instant lines. Pre-generated barks for instant reactions (death, a fall, a solved
   puzzle); the live model for slower beats (chamber changes, long taunts, remembering what you did three chambers ago).
   Streamed text-to-speech for her voice.

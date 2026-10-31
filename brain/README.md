@@ -7,7 +7,8 @@ line is cleaned and filtered, and her dials are capped.
 
 ## Run
 
-Needs the models and venv from `../steering-test/README.md`, and nothing else on ports 8081, 8082 and 8090.
+Needs the models and venv from `../steering-test/README.md`, her voice model from `../voice-test/README.md` (or run
+with `--no-voice` for text only), and nothing else on ports 8081, 8082 and 8090.
 
 ```bash
 steering-test/.venv/bin/python brain/service.py vesper=0.35 petty=-0.15
@@ -24,14 +25,19 @@ JSON over HTTP on `127.0.0.1:8090`.
 | Call | Body | Returns |
 |---|---|---|
 | `GET /health` | | `{"dials": {...}, "stage": 0}` |
-| `POST /turn` | `{"state": {...}, "event": "[Event] Subject picked up the cube."}` | `{"move", "line", "hint", "refused", "filtered"}` |
+| `POST /turn` | `{"state": {...}, "event": "[Event] Subject picked up the cube.", "glitch": false}` | `{"move", "line", "hint", "refused", "filtered", "audio", "sample_rate"}` |
 | `POST /dials` | `{"vesper": 0.35, "petty": -0.15}` | the dials after capping; restarts her model, about 2 s |
 | `POST /stage` | `{"stage": 1}` | her repair stage: 0 cruel moves, 1 adds hints, 2 only kind moves |
 | `POST /reset` | `{}` | forgets the event log, for a new chamber |
 
 `move` is `{"name": ..., "arguments": {...}}` or `null` when she waits. `hint` is the written hint text when she gives
 one (show it on her terminal too). `refused` is set if the backstop validator refused her move; she complains about it in
-`line`. `filtered` is true when her first try was regenerated: blocked by the speak filter, or opening with the same words as one of her last five lines (steered, she keeps reaching for "Oh, how daring..."). Lines are capped at 160 characters, so a turn takes about 2 s. Each turn is logged in the brain's terminal with its duration.
+`line`. `filtered` is true when her first try was regenerated: blocked by the speak filter, or opening with the same words as one of her last five lines (steered, she keeps reaching for "Oh, how daring..."). Lines are capped at 100 characters (about 5 s of speech).
+
+`audio` is the line spoken in her voice (`voice.py`): base64 16-bit mono PCM at `sample_rate`, from Kokoro-82M on the
+CPU, Bella with 30% Nicole. Her warmth moves the voice: fully repaired she is 60% Nicole and slower. `"glitch": true`
+corrupts the line after synthesis (stutters, warble, bit-crush). With the voice a turn takes about 3–4 s, 5–6 s when a
+line is regenerated. Each turn is logged in the brain's terminal with its duration.
 
 Example turn:
 

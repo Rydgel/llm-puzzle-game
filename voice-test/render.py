@@ -101,13 +101,14 @@ def machine(x, sr):
     return 0.8 * comb + 0.2 * ring
 
 
-ARC_VOICE = "af_heart"
+# Her voice, picked by ear: Bella with a touch of Nicole. Repairing her shifts it toward soft Nicole and slows it.
+HER_VOICE = (("af_bella", 0.7), ("af_nicole", 0.3))
 ARC = {
-    "broken": (kokoro_voice(ARC_VOICE, lang="en-us", speed=1.05), None),
-    "repaired: slower, blended with soft Nicole": (
-        kokoro_voice(blend((ARC_VOICE, 0.7), ("af_nicole", 0.3)), lang="en-us", speed=0.92), None),
-    "glitch: corrupted": (kokoro_voice(ARC_VOICE, lang="en-us"), corrupt),
-    "machine edge": (kokoro_voice(ARC_VOICE, lang="en-us"), machine),
+    "broken": (kokoro_voice(blend(*HER_VOICE), lang="en-us", speed=1.05), None),
+    "repaired: half Nicole, slower": (
+        kokoro_voice(blend(("af_bella", 0.5), ("af_nicole", 0.5)), lang="en-us", speed=0.92), None),
+    "glitch: corrupted": (kokoro_voice(blend(*HER_VOICE), lang="en-us"), corrupt),
+    "machine edge": (kokoro_voice(blend(*HER_VOICE), lang="en-us"), machine),
 }
 
 
@@ -174,9 +175,9 @@ audio{{width:170px;height:32px}}
 Piper: runtime GPL-3.0, LJSpeech trained on public-domain recordings. "× real time" is synthesis time over speech
 length: below 1 is faster than she speaks.</p>
 <table><thead><tr><th>Line</th>{heads}</tr></thead><tbody>{rows}</tbody></table>
-<h2>Her arc in one voice (Kokoro Heart)</h2>
-<p>Broken a touch faster; repaired slower and blended 30% with the soft Nicole voice; a glitch, the line corrupted
-after synthesis; and a faint machine edge on her normal voice. Once you pick her voice, the arc gets redone in it.</p>
+<h2>Her arc in her voice (Kokoro Bella + Nicole)</h2>
+<p>Broken: Bella with 30% Nicole, a touch faster. Repaired: half Nicole, slower. A glitch, the line corrupted after
+synthesis, and a faint machine edge on her normal voice.</p>
 <table><thead><tr><th>Line</th>{arc_heads}</tr></thead><tbody>{arc_rows}</tbody></table>
 """)
     print("wrote", OUT / "index.html")

@@ -21,8 +21,8 @@ var epoch := 0
 var last_event_at := 0.0
 
 
-func send(event: String) -> void:
-	var item := {"text": event, "at": now(), "priority": priority(event), "epoch": epoch}
+func send(event: String, glitch := false) -> void:
+	var item := {"text": event, "at": now(), "priority": priority(event), "epoch": epoch, "glitch": glitch}
 	last_event_at = item["at"]
 	if busy:
 		if pending.is_empty() or item["priority"] >= pending["priority"]:
@@ -38,7 +38,7 @@ func new_epoch() -> void:
 
 func _run(item: Dictionary) -> void:
 	busy = true
-	var reply := await post("/turn", {"event": item["text"], "state": state_provider.call()})
+	var reply := await post("/turn", {"event": item["text"], "state": state_provider.call(), "glitch": item["glitch"]})
 	busy = false
 	if item["epoch"] == epoch:
 		if reply.is_empty():
@@ -46,7 +46,8 @@ func _run(item: Dictionary) -> void:
 		else:
 			var late: float = now() - item["at"]
 			reply["late"] = late
-			reply["stale"] = late > STALE and last_event_at > item["at"]
+			# The big moments (entering, solving, her core) are worth hearing a little late.
+			reply["stale"] = late > STALE and last_event_at > item["at"] and item["priority"] < 3
 			replied.emit(reply)
 	if not pending.is_empty():
 		var next := pending
