@@ -61,7 +61,9 @@ while, solving the chamber, finding her core. The subject never speaks.
 
 The facility is her body (`../DESIGN.md`, Art direction). `scripts/facility.gd` builds her walls: tiles on a 1 m grid
 in one MultiMesh, her light in the seams, her eyes in place of some tiles, and hatches whose tile slides aside onto her
-machinery. Over the acid pit the ceiling opens onto a shaft of her tiles 30 m tall, where they shift on their own. The tiles breathe while she talks, ripple out from her nearest eye when she speaks or acts, and lean toward
+machinery. Over the acid pit the ceiling opens onto a shaft of her tiles 30 m tall, where they shift on their own, and
+her core rises 20 m, her cables coming down out of the dark to neuron W-7, lit from far above. Her voice carries a
+little of the room. The tiles breathe while she talks, ripple out from her nearest eye when she speaks or acts, and lean toward
 you (`shaders/wall_tile.gdshader`). Her eyes follow you; one carries a searchlight. Her light is amber while she is
 broken, red while W-7 overloads, teal once repaired, and brightens with her voice.
 
@@ -87,8 +89,9 @@ Arguments go after `--`:
 - `godot --path game -- --shots` saves screenshots to `game/shots/` and quits, fullscreen: the views, her walls
   moving, and her teal and red light.
 - `godot --path game -- --bench` prints frame rates at each view, uncapped, and what each effect costs.
-- `godot --path game --write-movie tour.avi --fixed-fps 30 --quit-after 960 -- --tour` records a 32-second camera
-  tour with sound, her brain live: the entrance, up the shaft, over the pit, into her core, where W-7 is repaired.
+- `godot --path game --write-movie tour.avi --fixed-fps 30 --quit-after 1050 -- --tour` records a 35-second camera
+  tour with sound, her brain live: the entrance, up the shaft, over the pit as she spawns a turret and floods the
+  room, into her core, where W-7 is repaired, then up her core.
 - `godot --path game -- --prologue-test` plays the prologue on its own (the dial turns by itself) and prints her
   lines, then one line in Chamber 4 to check she remembers you.
 - `godot --path game -- --autoplay` sends five scripted events through the brain and prints her moves and lines.

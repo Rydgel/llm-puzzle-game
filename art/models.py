@@ -196,18 +196,18 @@ def terminal():
 
 
 def core():
-    """Her core: neuron W-7 in a glass sphere, held in brass rings on a pedestal, fed by cables that hang
-    from the ceiling. Origin on the floor, the ceiling 6 m up."""
+    """Her core: neuron W-7 in a glass sphere, held in brass rings on a pedestal, fed by cables that come
+    down from 20 m up, out of the dark. Origin on the floor."""
     cyl("pedestal", 0.45, 0.9, (0, 0, 0.45), "steel", rotation=(0, 0, 0), vertices=64)
     cyl("cap", 0.55, 0.06, (0, 0, 0.92), "brass", rotation=(0, 0, 0), vertices=64)
     sphere("neuron", 0.27, (0, 0, 1.45), "iris")
     sphere("glass", 0.48, (0, 0, 1.45), "glass")
     ring("ring_a", 0.62, 0.025, (0, 0, 1.45), "brass", rotation=(math.radians(70), 0, 0))
     ring("ring_b", 0.66, 0.025, (0, 0, 1.45), "brass", rotation=(0, math.radians(70), math.radians(35)))
-    for k, (angle, reach, thickness) in enumerate([(5, 2.3, 0.045), (165, 2.2, 0.035), (215, 2.1, 0.05), (265, 1.9, 0.04), (320, 2.2, 0.035)]):
+    for k, (angle, reach, thickness) in enumerate([(40, 2.3, 0.045), (165, 2.2, 0.035), (215, 2.1, 0.05), (265, 1.9, 0.04), (320, 2.2, 0.035)]):
         a = math.radians(angle)
         out = lambda r, z: (r * math.cos(a), r * math.sin(a), z)
-        cable(f"cable{k}", [out(reach, 6.05), out(reach * 0.55, 0.12), out(0.47, 0.35)], thickness)
+        cable(f"cable{k}", [out(reach * 0.8, 20.0), out(reach, 7.0), out(reach * 0.55, 0.12), out(0.47, 0.35)], thickness)
 
 
 def cable(name, points, thickness):

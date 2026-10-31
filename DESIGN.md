@@ -317,6 +317,8 @@ dispenser, ceiling light. All of the list above is in, in real time: tiles breat
 nearest eye when she speaks or acts, and lean toward the subject; seven eyes follow the subject; four hatches slide open
 onto her machinery; her light changes with W-7. Over the acid pit the ceiling opens onto a shaft of her tiles 30 m
 tall, where tiles shift on their own and nine more eyes look down: the scale of her body, from inside one chamber. Her
+core rises 20 m, her cables coming down out of the dark to W-7. Her moves show in her body: turrets come up through a
+hatch of her light, and when she dims the lights her seams glow brighter. Her
 body is heard too (`art/sounds.py`, synthesized): a hum everywhere, clanks echoing down the shaft, hatches whirring,
 tiles clacking where a ripple starts. Global illumination is SDFGI rather than baked, since her walls move and
 her light changes color; her changing lights stay out of it, or it would keep a ghost of her old color. Measured with her

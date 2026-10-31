@@ -267,7 +267,31 @@ func build_world() -> void:
 	for x in [-4.25, 4.25]:
 		solid(Vector3(0.5, 9.5, 32.5), Vector3(x, 1.25, 10))
 	slab(Vector3(9, 0.5, 6.25), Vector3(0, 6.25, -3.125), steel)  # ceiling, open over the pit
-	slab(Vector3(9, 0.5, 14.25), Vector3(0, 6.25, 19.125), steel)
+	slab(Vector3(9, 0.5, 6.25), Vector3(0, 6.25, 15.125), steel)  # over the far platform; her core is open
+	# Her core rises 20 m, her cables coming down out of the dark, a light far above on her neuron.
+	slab(Vector3(9, 0.5, 8.5), Vector3(0, 20.25, 22.1), steel, false)
+	var core_lamp := MeshInstance3D.new()
+	var core_disc := CylinderMesh.new()
+	core_disc.top_radius = 0.9
+	core_disc.bottom_radius = 0.9
+	core_disc.height = 0.1
+	core_lamp.mesh = core_disc
+	core_lamp.material_override = Looks.material("strip_light")
+	core_lamp.position = Vector3(0, 19.95, NEURON.z)
+	add_child(core_lamp)
+	var core_top := SpotLight3D.new()
+	core_top.light_color = Color(0.85, 0.9, 1.0)
+	core_top.light_energy = 5.0
+	core_top.spot_range = 26.0
+	core_top.spot_angle = 16.0
+	core_top.spot_attenuation = 0.4
+	core_top.shadow_enabled = true
+	core_top.light_volumetric_fog_energy = 1.5
+	core_top.position = Vector3(0, 19.8, NEURON.z)
+	core_top.rotation.x = -PI / 2
+	core_top.set_meta("energy", core_top.light_energy)
+	add_child(core_top)
+	lights.append(core_top)
 	# Over the pit, a shaft of her tiles 30 m up, light falling from the top through the haze.
 	slab(Vector3(9, 0.5, 12.5), Vector3(0, 36.25, 6), steel, false)
 	var lamp := MeshInstance3D.new()
@@ -292,7 +316,7 @@ func build_world() -> void:
 	shaft_light.set_meta("energy", shaft_light.light_energy)
 	add_child(shaft_light)
 	lights.append(shaft_light)
-	for z in range(-5, 26, 2):
+	for z in range(-5, 18, 2):
 		slab(Vector3(8, 0.22, 0.18), Vector3(0, 5.89, z), steel, false)  # beams
 	# Pipes along the top of both long walls, through her, in brackets.
 	for side in [-1.0, 1.0]:
@@ -356,13 +380,13 @@ func build_world() -> void:
 	add_child(acid_light)
 
 	# Ceiling light strips, cool white, over the chamber; dimmer over her core.
-	for z in [-3.0, 1.0, 5.0, 9.0, 13.0, 16.5, 20.5, 24.0]:
+	for z in [-3.0, 1.0, 5.0, 9.0, 13.0, 16.5]:  # none over her core: it is lit from far above
 		piece("ceiling_light", Vector3(0, 5.94, z))
-		var shadowed: bool = z in [-3.0, 5.0, 13.0, 20.5]  # shadows from every other strip: they cost
+		var shadowed: bool = z in [-3.0, 5.0, 13.0]  # shadows from every other strip: they cost
 		var light := AreaLight3D.new()
 		light.area_size = Vector2(5.9, 0.2)
 		light.light_color = Color(0.86, 0.93, 1.0)
-		light.light_energy = 1.4 if z < 18.0 else 0.7
+		light.light_energy = 1.4
 		light.area_range = 13.0
 		light.shadow_enabled = shadowed
 		light.light_volumetric_fog_energy = 1.5
@@ -465,6 +489,11 @@ func build_walls() -> void:
 	facility.wall(Vector3(4, 0, 17.93), Vector3(-4, 0, 17.93), 0, 6, [doorway], [Vector2i(1, 4)], [], false)
 	facility.wall(Vector3(-4, 0, 18.07), Vector3(4, 0, 18.07), 0, 6, [doorway], [Vector2i(1, 4)], [], false, 0.0)
 	facility.wall(Vector3(4, 0, 26.18), Vector3(-4, 0, 26.18), 0, 6, [], [Vector2i(6, 4)], [], false)
+	# Up her core, to 20 m.
+	facility.wall(Vector3(-4.18, 0, 26), Vector3(-4.18, 0, 18), 6, 20, [], [Vector2i(3, 6)], [], false)
+	facility.wall(Vector3(4.18, 0, 18), Vector3(4.18, 0, 26), 6, 20, [], [Vector2i(5, 9)], [], false)
+	facility.wall(Vector3(4, 0, 26.18), Vector3(-4, 0, 26.18), 6, 20, [], [Vector2i(2, 3)], [], false)
+	facility.wall(Vector3(-4, 0, 18.07), Vector3(4, 0, 18.07), 6, 20, [], [], [], false, 0.0)
 	facility.finish()
 
 	var paint := Color(0.06, 0.06, 0.07, 0.92)
@@ -618,6 +647,14 @@ func build_hud() -> void:
 	voice_bus = AudioServer.bus_count - 1
 	AudioServer.set_bus_name(voice_bus, "Voice")
 	voice_player.bus = "Voice"
+	# A little of the room in her voice: she speaks from the whole facility, not a speaker.
+	var room := AudioEffectReverb.new()
+	room.room_size = 0.55
+	room.damping = 0.6
+	room.wet = 0.14
+	room.dry = 1.0
+	room.predelay_msec = 25.0
+	AudioServer.add_bus_effect(voice_bus, room)
 	objective = Label.new()
 	objective.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
 	objective.offset_top = 60
@@ -1152,6 +1189,7 @@ const VIEWS := [  # name, where the subject stands, which way they face, how far
 	["far", Vector3(0, 0.1, 12.6), PI, -0.2],
 	["back", Vector3(1.5, 0.1, 16.5), 0.25, 0.05],
 	["core", Vector3(0, 0.1, 20.2), PI, 0.0],
+	["above", Vector3(-1.5, 0.1, 19.6), PI + 0.35, 0.85],
 ]
 
 
@@ -1200,8 +1238,9 @@ func shoot(dir: String, view: Array, action := func(): pass, after := 0.0) -> vo
 
 
 ## A camera tour for a video, with her brain live: the entrance, up the shaft, over the pit as a turret comes
-## up and her flood comes in, past her eye, through the exit into her core, where W-7 is repaired. Record it with the movie maker:
-## `godot --path game --write-movie tour.avi --fixed-fps 30 --quit-after 960 -- --tour`
+## up and her flood comes in, past her eye, through the exit into her core, where W-7 is repaired, then up
+## her core into the dark. Record it with the movie maker:
+## `godot --path game --write-movie tour.avi --fixed-fps 30 --quit-after 1050 -- --tour`
 const TOUR := [  # seconds, where the camera is, what it looks at
 	[0.0, Vector3(0.6, 1.6, -5.3), Vector3(0, 1.4, 6)],
 	[4.0, Vector3(0, 1.6, -2.2), Vector3(0, 3.2, 8)],
@@ -1211,7 +1250,8 @@ const TOUR := [  # seconds, where the camera is, what it looks at
 	[20.0, Vector3(0, 1.6, 14.0), Vector3(0, 1.6, 20)],
 	[24.0, Vector3(0, 1.6, 19.6), Vector3(0, 1.45, 23.5)],
 	[28.0, Vector3(-1.4, 1.5, 21.6), Vector3(0, 1.45, 23.5)],
-	[32.0, Vector3(-1.9, 1.7, 23.0), Vector3(0, 1.6, 23.5)],
+	[31.0, Vector3(-1.9, 1.6, 22.8), Vector3(0, 1.8, 23.5)],
+	[35.0, Vector3(-1.7, 1.5, 22.0), Vector3(0.3, 17, 24.2)],
 ]
 
 
