@@ -11,6 +11,8 @@ const Looks := preload("res://scripts/looks.gd")
 const SEAM_DEPTH := 0.17  # her light, behind the tiles' backs: 35 cm behind their faces
 const EYE_REACH := 0.35  # how far an eye can turn: the z of its gaze, at the edge of its cone
 const WALL_LIGHT := 0.18  # energy of the light her seams spill into the room, per wall
+const SERVO := preload("res://sounds/servo.wav")  # from art/sounds.py
+const CLACK := preload("res://sounds/clack.wav")
 
 var subject: Node3D  # the subject: her walls lean toward them, her eyes follow them
 var voice := 0.0  # how loud she is right now, 0 to 1
@@ -28,10 +30,15 @@ var _ripple := Vector4(0, -100, 0, 99)
 var _ripple_strength := 0.0
 var _glow := 0.0
 var _color_tween: Tween
+var _clack: AudioStreamPlayer3D  # her tiles shifting, where a ripple starts
 
 
 func _init() -> void:
 	_seams.begin(Mesh.PRIMITIVE_TRIANGLES)
+	_clack = AudioStreamPlayer3D.new()
+	_clack.stream = CLACK
+	_clack.unit_size = 5.0
+	add_child(_clack)
 	var source := Looks.model("tile")
 	var tile: MeshInstance3D = source.find_children("*", "MeshInstance3D")[0]
 	_tile_mesh = tile.mesh
@@ -122,13 +129,22 @@ func _add_hatch(spot: Transform3D) -> void:
 	tile.gi_mode = GeometryInstance3D.GI_MODE_DYNAMIC
 	tile.transform = spot
 	add_child(tile)
+	var whirr := AudioStreamPlayer3D.new()
+	whirr.stream = SERVO
+	whirr.unit_size = 3.0
+	whirr.volume_db = -6.0
+	whirr.pitch_scale = randf_range(0.85, 1.15)
+	whirr.position = spot.origin
+	add_child(whirr)
 	var out := spot.origin + spot.basis.z * 0.22
 	var aside := out + spot.basis.x * 0.72
 	var slide := create_tween().set_loops().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
 	slide.tween_interval(randf_range(3.0, 10.0))
+	slide.tween_callback(whirr.play)
 	slide.tween_property(tile, "position", out, 0.5)
 	slide.tween_property(tile, "position", aside, 0.9)
 	slide.tween_interval(randf_range(4.0, 9.0))
+	slide.tween_callback(whirr.play)
 	slide.tween_property(tile, "position", out, 0.9)
 	slide.tween_property(tile, "position", spot.origin, 0.5)
 
@@ -189,6 +205,9 @@ func set_color(to: Color, seconds := 1.5) -> void:
 func ripple(at: Vector3, strength := 0.15) -> void:
 	_ripple = Vector4(at.x, at.y, at.z, 0.0)
 	_ripple_strength = strength
+	_clack.position = at
+	_clack.volume_db = linear_to_db(clamp(strength * 4.0, 0.2, 1.0))
+	_clack.play()
 
 
 ## A ripple out from the eye nearest the subject: she has turned her attention to them.

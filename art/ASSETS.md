@@ -11,4 +11,5 @@ downloads them into `game/textures/` (kept out of git).
 | `terrazzo` | Terrazzo 013, 2K | [ambientCG](https://ambientcg.com/view?id=Terrazzo013) | CC0 | her core and the office areas |
 
 Models are made in Blender from `art/models.py` and need no attribution. The painted signs in `game/decals/` are
-rendered by `art/decals.sh` in Noto Sans (SIL Open Font License); the game ships the images, not the font.
+rendered by `art/decals.sh` in Noto Sans (SIL Open Font License); the game ships the images, not the font. The sounds in
+`game/sounds/` are synthesized by `art/sounds.py`.

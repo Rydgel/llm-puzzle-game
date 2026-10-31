@@ -61,16 +61,19 @@ while, solving the chamber, finding her core. The subject never speaks.
 
 The facility is her body (`../DESIGN.md`, Art direction). `scripts/facility.gd` builds her walls: tiles on a 1 m grid
 in one MultiMesh, her light in the seams, her eyes in place of some tiles, and hatches whose tile slides aside onto her
-machinery. The tiles breathe while she talks, ripple out from her nearest eye when she speaks or acts, and lean toward
+machinery. Over the acid pit the ceiling opens onto a shaft of her tiles 30 m tall, where they shift on their own. The tiles breathe while she talks, ripple out from her nearest eye when she speaks or acts, and lean toward
 you (`shaders/wall_tile.gdshader`). Her eyes follow you; one carries a searchlight. Her light is amber while she is
 broken, red while W-7 overloads, teal once repaired, and brightens with her voice.
+
+Her body is heard too: a low hum everywhere, clanks echoing down the shaft over the pit, hatches whirring, tiles clacking
+where a ripple starts. The sounds are synthesized by `../art/sounds.py`.
 
 `scripts/looks.gd` dresses every model by the role its surfaces are named for (tile, brass, steel, iris, seam_light…),
 one shared material per role. The models come from `../art/models.py` (Blender), the signs from `../art/decals.sh`.
 
 **Rendering and budget.** Forward+ with SDFGI, volumetric fog, SSR, SSAO, SSIL, glow, AgX tone mapping and area lights.
 Her brain keeps its 8B model on the same GPU, so the game renders at 77% and FSR 2 upscales, and the frame rate is capped
-at 60 (`--fps N` changes it). On the RTX 4070 Laptop at 1080p: about 100 fps uncapped, 1.4 GB of video memory, and her
+at 60 (`--fps N` changes it). On the RTX 4070 Laptop at 1080p: about 90 fps uncapped, 1.4 GB of video memory, and her
 turns about 0.3 s slower while the game runs.
 
 ## Test modes

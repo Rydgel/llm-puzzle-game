@@ -389,6 +389,32 @@ func build_world() -> void:
 		panels[spec[0]] = panel
 
 	build_walls()
+	build_sound()
+
+
+## Her body's sounds (art/sounds.py): the hum of her machinery everywhere, clanks echoing down the shaft.
+## Her hatches whirr and her tiles clack on their own (facility.gd).
+func build_sound() -> void:
+	var hum := AudioStreamPlayer.new()
+	hum.stream = looped("hum")
+	hum.volume_db = -22.0
+	hum.autoplay = true
+	add_child(hum)
+	var echoes := AudioStreamPlayer3D.new()
+	echoes.stream = looped("shaft")
+	echoes.position = Vector3(0, 16, 6)
+	echoes.unit_size = 14.0
+	echoes.volume_db = -10.0
+	echoes.autoplay = true
+	add_child(echoes)
+
+
+func looped(name: String) -> AudioStreamWAV:
+	var stream: AudioStreamWAV = load("res://sounds/%s.wav" % name).duplicate()
+	stream.loop_mode = AudioStreamWAV.LOOP_FORWARD
+	stream.loop_begin = 0
+	stream.loop_end = int(stream.get_length() * stream.mix_rate)
+	return stream
 
 
 ## Her walls, eyes and light (scripts/facility.gd). Tiles are on a 1 m grid; lines run along the tiles'
