@@ -9,3 +9,7 @@ __pycache__/
 # Godot's import cache and the screenshots from `godot --path game -- --shots`
 game/.godot/
 game/shots/
+# Voice models, their environment and the rendered audio: see voice-test/render.py
+voice-test/models/
+voice-test/.venv/
+voice-test/out/
