@@ -6,6 +6,7 @@
 - shaft: distant clanks echoing in the shaft over the pit, over a low wind. A 16 s loop.
 - servo: a hatch's actuator, a motor whirring up, then a clunk.
 - clack: her tiles shifting in a ripple, a cascade of clicks.
+- flood: water rushing in through the floor, bubbling, for about 3 seconds.
 
 Loops are built so they repeat seamlessly: every tone completes whole cycles, and noise and echoes are made
 periodic in the frequency domain.
@@ -117,9 +118,26 @@ def clack():
     save("clack", out)
 
 
+def flood():
+    seconds = 4.0
+    t = np.arange(int(RATE * seconds)) / RATE
+    swell = np.clip(t / 0.5, 0, 1) * np.clip((seconds - t) / 0.9, 0, 1)
+    rush = band(rng.normal(size=t.size), 150, 2500)
+    churn = 0.6 + 0.4 * band(rng.normal(size=t.size), 2, 9) / 0.05  # slow surges
+    rush *= np.clip(churn, 0.2, 1.4)
+    bubbles = np.zeros_like(t)
+    for at in rng.uniform(0, seconds - 0.2, 70):
+        local = np.clip(t - at, 0, None)
+        pitch = rng.uniform(300, 900)
+        chirp = np.sin(2 * np.pi * (pitch * local + 1500 * local**2)) * np.exp(-local / 0.03) * (t >= at)
+        bubbles += rng.uniform(0.2, 1.0) * chirp
+    save("flood", swell * (rush / np.max(np.abs(rush)) + 0.35 * bubbles / np.max(np.abs(bubbles))))
+
+
 if __name__ == "__main__":
     OUT.mkdir(parents=True, exist_ok=True)
     hum()
     shaft()
     servo()
     clack()
+    flood()

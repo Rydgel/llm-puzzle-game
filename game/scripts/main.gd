@@ -59,6 +59,9 @@ var button_plate: Node3D
 var core_rings: Array = []
 var core_light: OmniLight3D
 var voice_bus := 0
+var rushing: AudioStreamPlayer3D  # her flood
+var exit_whirr: AudioStreamPlayer3D
+var entrance_whirr: AudioStreamPlayer3D
 var terminals: Array[Label3D] = []
 var terminal_lines: Array[String] = []
 var subtitle: Label
@@ -411,6 +414,20 @@ func build_sound() -> void:
 	echoes.volume_db = -10.0
 	echoes.autoplay = true
 	add_child(echoes)
+	rushing = sound("flood", Vector3(0, 0.5, 6))
+	rushing.unit_size = 14.0
+	exit_whirr = sound("servo", Vector3.ZERO, 0.6, exit_door)
+	entrance_whirr = sound("servo", Vector3.ZERO, 0.6, entrance_door)
+
+
+func sound(name: String, at: Vector3, pitch := 1.0, parent: Node = self) -> AudioStreamPlayer3D:
+	var player_3d := AudioStreamPlayer3D.new()
+	player_3d.stream = load("res://sounds/%s.wav" % name)
+	player_3d.pitch_scale = pitch
+	player_3d.unit_size = 6.0
+	player_3d.position = at
+	parent.add_child(player_3d)
+	return player_3d
 
 
 func looped(name: String) -> AudioStreamWAV:
@@ -494,11 +511,11 @@ func build_props() -> void:
 		var inward: float = 1.0 if spot[1] > 0 else -1.0
 		piece("terminal", spot[0], deg_to_rad(spot[1]))
 		var screen := Label3D.new()
-		screen.position = spot[0] + Vector3(0.13 * inward, 1.2, 1.7 * inward)
+		screen.position = spot[0] + Vector3(0.13 * inward, 0.95, 1.7 * inward)
 		screen.rotation_degrees.y = spot[1]
 		screen.font_size = 32
 		screen.pixel_size = 0.0035
-		screen.modulate = Color(0.45, 1.0, 0.55)
+		screen.modulate = Color(0.55, 1.5, 0.65)  # past 1, so it glows
 		screen.outline_size = 0
 		screen.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 		screen.vertical_alignment = VERTICAL_ALIGNMENT_TOP
@@ -512,9 +529,11 @@ func build_props() -> void:
 	var plane := PlaneMesh.new()
 	plane.size = Vector2(8, 32)
 	water.mesh = plane
-	var water_look := material(Color(0.06, 0.16, 0.2), 0.0, 0.75)
-	water_look.roughness = 0.04
+	var water_look := ShaderMaterial.new()
+	water_look.shader = preload("res://shaders/water.gdshader")
+	water_look.set_shader_parameter("ripples", Looks.noise(true))
 	water.material_override = water_look
+	water.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	water.position = Vector3(0, -0.4, 10)
 	water.visible = false
 	add_child(water)
@@ -721,6 +740,10 @@ func _on_acid(body: Node3D) -> void:
 func kill(what: String) -> void:
 	if test_mode == "shots":
 		return
+	# A flash, green from the acid, red from a turret, and her glitch.
+	fade.color = Color(0.25, 1.0, 0.1, 0.5) if "acid" in what else Color(1.0, 0.1, 0.05, 0.5)
+	create_tween().tween_property(fade, "color:a", 0.0, 0.9).set_ease(Tween.EASE_IN)
+	glitch_for(0.6, 0.45)
 	deaths += 1
 	if player.held:
 		player.drop()
@@ -816,6 +839,7 @@ func apply_move(name: String, args: Dictionary) -> void:
 	match name:
 		"lock_door":
 			if args.get("door") == "entrance":
+				entrance_whirr.play()
 				create_tween().tween_property(entrance_door, "position:y", 1.5, 1.0)
 			elif not solved:
 				close_exit()
@@ -834,10 +858,13 @@ func apply_move(name: String, args: Dictionary) -> void:
 
 func open_exit() -> void:
 	exit_open = true
+	exit_whirr.play()
 	create_tween().tween_property(exit_door, "position:y", 4.6, 1.2)
 
 
 func close_exit() -> void:
+	if exit_open:
+		exit_whirr.play()
 	exit_open = false
 	create_tween().tween_property(exit_door, "position:y", 1.5, 1.2)
 
@@ -856,23 +883,31 @@ func spawn_turret(spot: String) -> void:
 		at.y = 0.0
 	var turret: Turret = Turret.new()
 	turret.target = player
+	turret.from_above = spot == "ceiling" or (at.z > 0.0 and at.z < 12.0)  # no floor to come up through over the pit
+	turret.position = at
 	add_child(turret)
-	turret.global_position = at
+	facility.ripple(at, 0.25)
 	turret.hit_subject.connect(func(): kill("[Event] Subject was shot by a turret and respawned."))
 	turrets.append(turret)
 
 
 func flood(level: float) -> void:
 	water.visible = true
+	rushing.pitch_scale = 1.0
+	rushing.play()
 	var tween := create_tween()
 	tween.tween_property(water, "position:y", level, 3.0)
 	tween.tween_interval(20.0)  # it drains: her moves never last
+	tween.tween_callback(func(): rushing.pitch_scale = 0.75)
+	tween.tween_callback(rushing.play)
 	tween.tween_property(water, "position:y", -0.4, 3.0)
 	tween.tween_callback(func(): water.visible = false)
 
 
 func set_lights(level: String) -> void:
 	lights_level = level
+	# In the dark, she is what's left: her seams and eyes glow brighter as the lights go down.
+	create_tween().tween_property(facility, "presence", 1.0 + 1.4 * (1.0 - LIGHT_LEVELS.get(level, 1.0)), 1.5)
 	for light in lights:
 		create_tween().tween_property(light, "light_energy", light.get_meta("energy") * LIGHT_LEVELS.get(level, 1.0), 1.5)
 	var strips: StandardMaterial3D = Looks.material("strip_light")
@@ -988,6 +1023,7 @@ func reboot() -> void:
 
 
 func exile() -> void:
+	fade.color = Color(0, 0, 0, fade.color.a)  # not a death's flash color
 	var tween := create_tween()
 	tween.tween_property(fade, "color:a", 1.0, 1.0)
 	await tween.finished
@@ -1136,6 +1172,11 @@ func take_shots() -> void:
 	await shoot(dir, ["red"] + VIEWS.filter(func(v): return v[0] == "core")[0].slice(1))
 	picture_glitch = 0.8
 	await shoot(dir, ["glitch"] + VIEWS[0].slice(1))
+	picture_glitch = 0.0
+	set_neuron(Looks.AMBER, "Damaged.")
+	# Her moves: a turret coming up through the floor, then the room flooded to the waist.
+	await shoot(dir, ["rising", Vector3(0, 0.1, -1.5), -1.1, -0.2], func(): spawn_turret("next_to_cube"), 0.9)
+	await shoot(dir, ["flood", Vector3(-1.0, 0.1, -3.0), PI + 0.2, -0.25], func(): flood(0.9), 3.4)
 	get_tree().quit()
 
 

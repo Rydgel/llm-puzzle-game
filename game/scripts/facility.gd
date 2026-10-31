@@ -17,6 +17,7 @@ const CLACK := preload("res://sounds/clack.wav")
 var subject: Node3D  # the subject: her walls lean toward them, her eyes follow them
 var voice := 0.0  # how loud she is right now, 0 to 1
 var flicker := false  # W-7 overloading: her light stutters
+var presence := 1.0  # above 1 when the room's lights are down and her light is what's left
 
 var color := Looks.AMBER
 var _tiles: Array[Transform3D] = []
@@ -223,7 +224,7 @@ func stir(strength := 0.15) -> void:
 
 func _process(delta: float) -> void:
 	_glow = lerp(_glow, voice, 1.0 - exp(-delta * 14.0))
-	var glow := 1.0 + 1.6 * _glow
+	var glow := (1.0 + 1.6 * _glow) * presence
 	if flicker:
 		glow *= randf_range(0.1, 2.2)
 	Looks.her_light(color, glow)

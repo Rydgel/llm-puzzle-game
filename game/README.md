@@ -65,6 +65,10 @@ machinery. Over the acid pit the ceiling opens onto a shaft of her tiles 30 m ta
 you (`shaders/wall_tile.gdshader`). Her eyes follow you; one carries a searchlight. Her light is amber while she is
 broken, red while W-7 overloads, teal once repaired, and brightens with her voice.
 
+Her moves show in her body: a turret comes up through a hatch of her light in the floor (or down from above, over the
+pit), the walls ripple out from it, and a whirr goes with it; when she dims the lights, her seams and eyes glow brighter;
+her flood is real water, rushing in and draining away. A death flashes green (acid) or red (turret), with her glitch.
+
 Her body is heard too: a low hum everywhere, clanks echoing down the shaft over the pit, hatches whirring, tiles clacking
 where a ripple starts. The sounds are synthesized by `../art/sounds.py`.
 
