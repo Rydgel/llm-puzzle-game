@@ -27,6 +27,8 @@ var _seams := SurfaceTool.new()  # her light behind the tiles, one quad per cell
 var _eyes: Array[Node3D] = []  # each eye's barrel, which turns
 var _wall_lights: Array[AreaLight3D] = []
 var _hatch_lights: Array[OmniLight3D] = []
+var _vents: Array[Dictionary] = []
+var _vents_open := false
 var _tile_mesh: Mesh
 var _tile_offset: Transform3D  # from a tile's spot on the wall to its mesh
 var _multimesh: MultiMesh  # all her wall tiles
@@ -57,9 +59,9 @@ func _init() -> void:
 ## A wall of tiles along the line from `a` to `b`, from `bottom` to `top`. The line is on the tiles'
 ## backs; their faces are 18 cm in front, to the right of someone walking from a to b. `holes` are cells
 ## left empty, as Rect2i(col, row, cols, rows) counted from a and from the bottom; `eyes` are cells that
-## hold one of her eyes, and `hatches` cells whose tile slides aside now and then, onto her machinery,
-## both as Vector2i(col, row).
-func wall(a: Vector3, b: Vector3, bottom: float, top: float, holes: Array = [], eyes: Array = [], hatches: Array = [], lit := true, seam_depth := SEAM_DEPTH) -> void:
+## hold one of her eyes, `hatches` cells whose tile slides aside now and then, onto her machinery, and
+## `vents` cells that open onto the acid when she floods it, all as Vector2i(col, row).
+func wall(a: Vector3, b: Vector3, bottom: float, top: float, holes: Array = [], eyes: Array = [], hatches: Array = [], lit := true, seam_depth := SEAM_DEPTH, vents: Array = []) -> void:
 	a.y = bottom
 	b.y = bottom
 	var run := b - a
@@ -77,6 +79,9 @@ func wall(a: Vector3, b: Vector3, bottom: float, top: float, holes: Array = [], 
 				_add_eye(spot)
 			elif cell in hatches:
 				_add_hatch(spot)
+				continue
+			elif cell in vents:
+				_add_vent(spot)
 				continue
 			else:
 				_tiles.append(spot)
@@ -115,15 +120,60 @@ func _add_eye(spot: Transform3D) -> void:
 
 ## A tile that slides out and aside every few seconds, onto her machinery and a light in her color.
 func _add_hatch(spot: Transform3D) -> void:
+	var light := _light_inside(spot, 1.5)
+	_hatch_lights.append(light)
+	var hatch := _sliding_tile(spot)
+	var slide := create_tween().set_loops().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
+	slide.tween_interval(randf_range(3.0, 10.0))
+	_slide(slide, hatch, true)
+	slide.tween_interval(randf_range(4.0, 9.0))
+	_slide(slide, hatch, false)
+
+
+## One of her vents onto the acid, in the pit's walls: a tile over her machinery that slides aside when her
+## flood pours acid through it (open_vents), lit green from inside.
+func _add_vent(spot: Transform3D) -> void:
+	var light := _light_inside(spot, 2.0)
+	light.light_color = Color(0.4, 1.0, 0.2)
+	var vent := _sliding_tile(spot)
+	vent["spot"] = spot
+	_vents.append(vent)
+
+
+## Opens or closes her vents onto the acid, each a moment after the last.
+func open_vents(open: bool) -> void:
+	if open == _vents_open:
+		return
+	_vents_open = open
+	for k in _vents.size():
+		var slide := create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
+		slide.tween_interval(k * 0.15)
+		_slide(slide, _vents[k], open)
+
+
+## Where each vent's mouth is, and which way it faces.
+func vents() -> Array[Transform3D]:
+	var spots: Array[Transform3D] = []
+	for vent in _vents:
+		spots.append(vent["spot"])
+	return spots
+
+
+func _light_inside(spot: Transform3D, energy: float) -> OmniLight3D:
 	var machinery := Looks.model("hatch")
 	machinery.transform = spot
 	add_child(machinery)
 	var light := OmniLight3D.new()
 	light.omni_range = 1.8
-	light.light_energy = 1.5
+	light.light_energy = energy
 	light.position = spot * Vector3(0, 0, -0.15)
 	add_child(light)
-	_hatch_lights.append(light)
+	return light
+
+
+## A tile on its own, in front of her machinery, that can slide out and aside: its node, its whirr, and
+## where it rests, comes out to, and slides to.
+func _sliding_tile(spot: Transform3D) -> Dictionary:
 	var multimesh := MultiMesh.new()
 	multimesh.transform_format = MultiMesh.TRANSFORM_3D
 	multimesh.use_custom_data = true
@@ -145,16 +195,13 @@ func _add_hatch(spot: Transform3D) -> void:
 	whirr.position = spot.origin
 	add_child(whirr)
 	var out := spot.origin + spot.basis.z * 0.22
-	var aside := out + spot.basis.x * 0.72
-	var slide := create_tween().set_loops().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
-	slide.tween_interval(randf_range(3.0, 10.0))
-	slide.tween_callback(whirr.play)
-	slide.tween_property(tile, "position", out, 0.5)
-	slide.tween_property(tile, "position", aside, 0.9)
-	slide.tween_interval(randf_range(4.0, 9.0))
-	slide.tween_callback(whirr.play)
-	slide.tween_property(tile, "position", out, 0.9)
-	slide.tween_property(tile, "position", spot.origin, 0.5)
+	return {"tile": tile, "whirr": whirr, "rest": spot.origin, "out": out, "aside": out + spot.basis.x * 0.72}
+
+
+func _slide(slide: Tween, sliding: Dictionary, open: bool) -> void:
+	slide.tween_callback(sliding["whirr"].play)
+	slide.tween_property(sliding["tile"], "position", sliding["out"], 0.5 if open else 0.9)
+	slide.tween_property(sliding["tile"], "position", sliding["aside"] if open else sliding["rest"], 0.9 if open else 0.5)
 
 
 ## Her searchlight: a cone of her light from one eye, on the subject wherever they go.

@@ -9,6 +9,9 @@ uniform sampler2D churn : hint_default_black, filter_linear_mipmap, repeat_enabl
 uniform sampler2D ripples : hint_normal, filter_linear_mipmap, repeat_enable;
 uniform vec3 color : source_color = vec3(0.32, 1.0, 0.1);
 uniform float energy = 1.6;
+uniform vec4 pours[4];  // where her vents' streams land (x, z) and how hard they pour (z), 0 to 1
+uniform float agitation = 0.0;  // 0 at rest, 1 while it fills or drains: it heaves, churns and foams
+uniform float stir = 0.0;  // its own clock, which runs faster while it is agitated
 
 varying vec3 world;
 
@@ -21,7 +24,13 @@ float veins(vec2 at, float drift) {
 
 void vertex() {
 	vec3 at = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
-	VERTEX.y += 0.035 * sin(at.x * 0.9 + TIME * 0.6) + 0.045 * sin(at.z * 0.65 - TIME * 0.45);
+	float heave = 1.0 + 2.0 * agitation;
+	VERTEX.y += heave * (0.035 * sin(at.x * 0.9 + TIME * 0.6) + 0.045 * sin(at.z * 0.65 - TIME * 0.45));
+	// Rings of waves out from where the streams land.
+	for (int i = 0; i < 4; i++) {
+		float d = distance(at.xz, pours[i].xy);
+		VERTEX.y += pours[i].z * 0.06 * sin(d * 7.0 - TIME * 9.0) * exp(-d * 0.9);
+	}
 	world = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 }
 
@@ -34,12 +43,18 @@ void fragment() {
 	for (int layer = 0; layer < 4; layer++) {
 		float down = 0.3 + float(layer) * 0.7;
 		vec2 at = world.xz + ray.xz / slope * down;
-		float drift = TIME * (0.006 + 0.004 * float(layer));
+		float drift = stir * (0.006 + 0.004 * float(layer));
 		float cloud = texture(churn, at * 0.05 + vec2(drift, -drift * 0.7) + float(layer) * 0.23).r;
 		inside += smoothstep(0.4, 0.85, cloud) * exp(-down * 0.6);
 	}
 	// A crust floating on top in slow patches, dull and dark: acid, not water.
-	float crust = smoothstep(0.52, 0.66, texture(churn, world.xz * 0.11 + vec2(TIME * 0.004, TIME * 0.003)).r);
+	float crust = smoothstep(0.52, 0.66, texture(churn, world.xz * 0.11 + vec2(stir * 0.004, stir * 0.003)).r);
+	crust *= 1.0 - 0.7 * agitation;  // it breaks up while the acid moves
+	// Foam where the streams land, churned, and along the walls while it moves.
+	float foam = 0.0;
+	for (int i = 0; i < 4; i++) {
+		foam += pours[i].z * smoothstep(1.1, 0.1, distance(world.xz, pours[i].xy));
+	}
 	vec3 surface = 0.5 * (texture(ripples, world.xz * 0.06 + vec2(TIME * 0.006, TIME * 0.004)).rgb
 		+ texture(ripples, world.xz * 0.1 - vec2(TIME * 0.005, -TIME * 0.007)).rgb);
 	NORMAL_MAP = surface;
@@ -53,9 +68,10 @@ void fragment() {
 	vec3 bent = texture(screen, SCREEN_UV + (surface.xy - 0.5) * 0.04 * murk).rgb;
 	vec3 body = color * energy * (0.05 + 0.5 * inside);
 	float edge = 1.0 - smoothstep(0.0, 0.3, thickness);  // where it meets the walls
+	foam = clamp((foam + 0.5 * agitation * edge) * (0.4 + 0.7 * texture(churn, world.xz * 0.35 + stir * 0.05).r), 0.0, 1.0);
 	vec3 glow = mix(bent * vec3(0.35, 0.9, 0.25), body, murk) + color * energy * (0.35 * veins(world.xz * 0.09, 1.0) + 0.8 * edge);
-	ALBEDO = vec3(0.07, 0.1, 0.02) * crust;
-	ROUGHNESS = mix(0.08, 0.7, crust);
+	ALBEDO = mix(vec3(0.07, 0.1, 0.02) * crust, vec3(0.45, 0.75, 0.25), foam);
+	ROUGHNESS = mix(mix(0.08, 0.7, crust), 0.5, foam);
 	SPECULAR = 0.5;
-	EMISSION = glow * (1.0 - 0.75 * crust);
+	EMISSION = glow * (1.0 - 0.75 * crust) + vec3(0.5, 1.3, 0.3) * energy * 0.6 * foam;
 }
