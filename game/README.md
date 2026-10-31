@@ -83,6 +83,8 @@ Arguments go after `--`:
 - `godot --path game -- --shots` saves screenshots to `game/shots/` and quits, fullscreen: the views, her walls
   moving, and her teal and red light.
 - `godot --path game -- --bench` prints frame rates at each view, uncapped, and what each effect costs.
+- `godot --path game --write-movie tour.avi --fixed-fps 30 --quit-after 960 -- --tour` records a 32-second camera
+  tour with sound, her brain live: the entrance, up the shaft, over the pit, into her core, where W-7 is repaired.
 - `godot --path game -- --prologue-test` plays the prologue on its own (the dial turns by itself) and prints her
   lines, then one line in Chamber 4 to check she remembers you.
 - `godot --path game -- --autoplay` sends five scripted events through the brain and prints her moves and lines.

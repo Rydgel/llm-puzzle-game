@@ -94,6 +94,7 @@ var prologue := ""  # intro, calibrate, runaway, reboot; empty once the subject 
 var dial := 0.0
 var turned_dial := false
 var console_label: Label3D
+var help_label: Label
 var screen: ColorRect  # the whole picture, for her glitch
 var picture_glitch := 0.0
 var glitch_tween: Tween
@@ -108,7 +109,7 @@ func _ready() -> void:
 	# still come quickly. `--fps N` to change the cap.
 	get_viewport().scaling_3d_scale = 0.77
 	Engine.max_fps = int(args[args.find("--fps") + 1]) if "--fps" in args else 60
-	for mode in ["shots", "bench", "autoplay", "prologue"]:
+	for mode in ["shots", "bench", "tour", "autoplay", "prologue"]:
 		if "--" + mode in args or (mode == "prologue" and "--prologue-test" in args):
 			test_mode = mode
 	build_world()
@@ -131,6 +132,9 @@ func _ready() -> void:
 		return
 	if test_mode == "bench":
 		bench()
+		return
+	if test_mode == "tour":
+		tour()
 		return
 	if test_mode == "":
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -575,6 +579,7 @@ func build_hud() -> void:
 	crosshair.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
 	hud.add_child(crosshair)
 	var help := Label.new()
+	help_label = help
 	help.text = "WASD move · Space jump · E pick up, drop, repair · click throw · Esc free the mouse · F11 fullscreen"
 	help.position = Vector2(12, 8)
 	help.modulate = Color(1, 1, 1, 0.6)
@@ -618,7 +623,7 @@ func _unhandled_input(input: InputEvent) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if not player or test_mode in ["shots", "bench"]:
+	if not player or test_mode in ["shots", "bench", "tour"]:
 		return
 	if prologue != "":
 		run_prologue(delta)
@@ -1147,6 +1152,62 @@ func shoot(dir: String, view: Array, action := func(): pass, after := 0.0) -> vo
 	await RenderingServer.frame_post_draw
 	get_viewport().get_texture().get_image().save_png("%s/%s.png" % [dir, view[0]])
 	print("SHOT ", view[0])
+
+
+## A camera tour for a video, with her brain live: the entrance, up the shaft, over the pit, past her eye,
+## through the exit into her core, where W-7 is repaired. Record it with the movie maker:
+## `godot --path game --write-movie tour.avi --fixed-fps 30 --quit-after 960 -- --tour`
+const TOUR := [  # seconds, where the camera is, what it looks at
+	[0.0, Vector3(0.6, 1.6, -5.3), Vector3(0, 1.4, 6)],
+	[4.0, Vector3(0, 1.6, -2.2), Vector3(0, 3.2, 8)],
+	[8.0, Vector3(-0.6, 1.7, -0.7), Vector3(0, 24, 7)],
+	[12.0, Vector3(0, 2.7, 3.0), Vector3(0, 0, 12)],
+	[16.0, Vector3(0.4, 2.4, 9.6), Vector3(4, 4.5, 6.5)],
+	[20.0, Vector3(0, 1.6, 14.0), Vector3(0, 1.6, 20)],
+	[24.0, Vector3(0, 1.6, 19.6), Vector3(0, 1.45, 23.5)],
+	[28.0, Vector3(-1.4, 1.5, 21.6), Vector3(0, 1.45, 23.5)],
+	[32.0, Vector3(-1.9, 1.7, 23.0), Vector3(0, 1.6, 23.5)],
+]
+
+
+func tour() -> void:
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	help_label.visible = false
+	status.visible = false
+	objective.text = ""
+	player.set_physics_process(false)
+	var beats := [
+		[0.5, func(): event("[Event] Subject entered Chamber 4.")],
+		[14.5, func(): facility.stir(0.3)],
+		[17.0, solve],
+		[25.5, func(): toggle_look_repaired()],
+	]
+	var time := 0.0
+	while time < TOUR[-1][0]:
+		time += get_process_delta_time()
+		while not beats.is_empty() and time >= beats[0][0]:
+			beats.pop_front()[1].call()
+		var k := 0
+		while TOUR[k + 1][0] < time:
+			k += 1
+		var span: float = TOUR[k + 1][0] - TOUR[k][0]
+		var along: float = (time - TOUR[k][0]) / span
+		var before: Array = TOUR[max(k - 1, 0)]
+		var after: Array = TOUR[min(k + 2, TOUR.size() - 1)]
+		var eye: Vector3 = TOUR[k][1].cubic_interpolate(TOUR[k + 1][1], before[1], after[1], along)
+		var target: Vector3 = TOUR[k][2].cubic_interpolate(TOUR[k + 1][2], before[2], after[2], along)
+		player.global_position = eye - Vector3(0, 1.6, 0)
+		player.camera.look_at(target)
+		await get_tree().process_frame
+	get_tree().quit()
+
+
+## On the tour, W-7 repaired in front of the camera: her light turns teal, with her glitch and a ripple.
+func toggle_look_repaired() -> void:
+	repaired = true
+	show_neuron()
+	glitch_for(1.5, 0.9)
+	facility.ripple(NEURON, 0.3)
 
 
 ## Frames per second and video memory at each view, for the budget in DESIGN.md (the brain keeps its 8B
