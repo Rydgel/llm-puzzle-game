@@ -14,6 +14,8 @@ const WALL_LIGHT := 0.18  # energy of the light her seams spill into the room, p
 const SERVO := preload("res://sounds/servo.wav")  # from art/sounds.py
 const CLACK := preload("res://sounds/clack.wav")
 
+signal recolored  # her light has finished changing color
+
 var subject: Node3D  # the subject: her walls lean toward them, her eyes follow them
 var voice := 0.0  # how loud she is right now, 0 to 1
 var flicker := false  # W-7 overloading: her light stutters
@@ -203,6 +205,7 @@ func set_color(to: Color, seconds := 1.5) -> void:
 		_color_tween.kill()
 	_color_tween = create_tween()
 	_color_tween.tween_property(self, "color", to, seconds)
+	_color_tween.tween_callback(recolored.emit)
 
 
 ## A ripple through her walls, out from `at`.

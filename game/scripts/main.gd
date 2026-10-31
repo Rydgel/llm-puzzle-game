@@ -60,6 +60,7 @@ var button_plate: Node3D
 var core_rings: Array = []
 var core_light: OmniLight3D
 var sparks: GPUParticles3D  # from W-7 while it overloads
+var probes: Array[ReflectionProbe] = []
 var voice_bus := 0
 var rushing: AudioStreamPlayer3D  # her flood
 var exit_whirr: AudioStreamPlayer3D
@@ -424,14 +425,21 @@ func build_world() -> void:
 	add_child(acid)
 	acid.body_entered.connect(_on_acid)
 
-	for spec in [["A", 1.4, 5.0], ["B", 10.6, 7.0]]:
+	for spec in [["A", 1.4, 5.0, -4.0], ["B", 10.6, 7.0, 4.0]]:  # A held from the left wall, B from the right
 		var panel: FloorPanel = FloorPanel.new()
 		add_child(panel)
-		panel.setup(spec[0], spec[1], spec[2], Looks.moving(Looks.model("floor_panel")))
+		panel.setup(spec[0], spec[1], spec[2], Looks.moving(Looks.model("floor_panel")), spec[3])
 		panels[spec[0]] = panel
+	for side in [-1.0, 1.0]:  # the rails her arms slide in, a slot of her light along each wall of the pit
+		slab(Vector3(0.12, 0.18, 12), Vector3(side * 3.94, FloorPanel.RAIL_Y, 6), steel, false)
+		slab(Vector3(0.03, 0.05, 12), Vector3(side * 3.87, FloorPanel.RAIL_Y, 6), Looks.material("seam_light"), false)
 
 	build_walls()
 	build_sound()
+	# What brass, steel, glass and the polished floors reflect: the rooms themselves, not black.
+	probes = [reflections(Vector3(0, 1.5, 6), Vector3(8.4, 9.4, 24.4), Vector3.ZERO),
+		reflections(Vector3(0, 10, 22.1), Vector3(8.4, 20.4, 8.3), Vector3(0, -8.4, 0))]
+	facility.recolored.connect(func(): for probe in probes: refresh(probe))
 	# Dust in the chamber, up the shaft and up her core; fumes off the acid.
 	add_child(Air.dust(Vector3(7.6, 5.6, 32), Vector3(0, 3, 10), 400))
 	add_child(Air.dust(Vector3(7.6, 29, 11.6), Vector3(0, 21, 6), 500))
@@ -468,6 +476,28 @@ func sound(name: String, at: Vector3, pitch := 1.0, parent: Node = self) -> Audi
 	player_3d.position = at
 	parent.add_child(player_3d)
 	return player_3d
+
+
+## A reflection probe for one room, captured once, from `offset` off its center.
+func reflections(at: Vector3, size: Vector3, offset: Vector3) -> ReflectionProbe:
+	var probe := ReflectionProbe.new()
+	probe.position = at
+	probe.size = size
+	probe.origin_offset = offset
+	probe.box_projection = true
+	probe.interior = true
+	probe.ambient_mode = ReflectionProbe.AMBIENT_DISABLED  # global illumination lights the room
+	probe.update_mode = ReflectionProbe.UPDATE_ONCE
+	add_child(probe)
+	return probe
+
+
+## Captures a probe again, once her light has changed color.
+func refresh(probe: ReflectionProbe) -> void:
+	probe.update_mode = ReflectionProbe.UPDATE_ALWAYS
+	await get_tree().process_frame
+	await get_tree().process_frame
+	probe.update_mode = ReflectionProbe.UPDATE_ONCE
 
 
 func looped(name: String) -> AudioStreamWAV:
