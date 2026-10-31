@@ -117,8 +117,10 @@ def empty(name, at, parent=None):
 # --- The pieces ---------------------------------------------------------------------------------
 
 def tile():
-    """One of her wall tiles: 0.975 m square, 18 cm deep, origin on the back face."""
-    box("tile", (0.975, 0.18, 0.975), (0, -0.09, 0), "tile", bevel=0.02)
+    """One of her wall tiles: 0.975 m square, 18 cm deep, origin on the back face. Godot sets hundreds of
+    them by their mesh alone, so the origin is baked into the vertices."""
+    obj = box("tile", (0.975, 0.18, 0.975), (0, -0.09, 0), "tile", bevel=0.02)
+    bpy.ops.object.transform_apply(location=True)
 
 
 def eye():
@@ -134,11 +136,11 @@ def eye():
 def floor_panel():
     """The panels that shuttle over the pit: 2.4 x 2.4 x 0.4, origin at the center, a band of her light."""
     box("body", (2.4, 2.4, 0.4), (0, 0, 0), "steel", bevel=0.03)
-    box("top", (2.25, 2.25, 0.04), (0, 0, 0.215), "tile", bevel=0.01)
+    box("top", (2.25, 2.25, 0.03), (0, 0, 0.19), "tile", bevel=0.008)
     box("band", (2.42, 2.42, 0.05), (0, 0, -0.05), "seam_light")
     for k, (x, y) in enumerate([(1.15, 0), (-1.15, 0), (0, 1.15), (0, -1.15)]):
         size = (0.06, 2.2, 0.012) if x else (2.2, 0.06, 0.012)
-        box(f"hazard{k}", size, (x * 0.96, y * 0.96, 0.24), "hazard")
+        box(f"hazard{k}", size, (x * 0.96, y * 0.96, 0.2), "hazard")
 
 
 def cube():
@@ -186,10 +188,11 @@ def turret():
 
 
 def terminal():
-    """Her wall terminal: a steel bezel and a dark screen. Origin on the back face; Godot writes on it."""
-    box("bezel", (3.7, 0.1, 2.1), (0, -0.05, 0), "steel", bevel=0.02)
-    box("screen", (3.5, 0.02, 1.9), (0, -0.105, 0), "screen")
-    box("lip", (3.7, 0.18, 0.06), (0, -0.09, -1.08), "steel", bevel=0.01)
+    """Her wall terminal: a steel bezel and a dark screen, set in a hole of 4 x 3 tiles, her light in the
+    seam around it. Origin on the back face; Godot writes on it."""
+    box("bezel", (3.9, 0.1, 2.9), (0, -0.05, 0), "steel", bevel=0.02)
+    box("screen", (3.7, 0.02, 2.7), (0, -0.105, 0), "screen")
+    box("lip", (3.9, 0.18, 0.06), (0, -0.09, -1.48), "steel", bevel=0.01)
 
 
 def core():
@@ -209,13 +212,24 @@ def console():
     box("screen", (0.66, 0.46, 0.01), (0, -0.07, 1.085), "screen", rotation=(math.radians(-30), 0, 0))
 
 
+def dispenser():
+    """The cube dispenser: a glass tube hanging from the ceiling, held in brass rings, a ring of her light
+    at its mouth. Origin at the ceiling; the mouth is 3.6 m below it, above the subject's head."""
+    cyl("cap", 0.62, 0.4, (0, 0, -0.2), "steel", rotation=(0, 0, 0), vertices=64)
+    cyl("tube", 0.48, 3.0, (0, 0, -1.9), "glass", rotation=(0, 0, 0), vertices=64)
+    for k, z in enumerate((-0.6, -1.6, -2.6)):
+        ring(f"band{k}", 0.5, 0.035, (0, 0, z), "brass", rotation=(0, 0, 0))
+    cyl("mouth", 0.56, 0.12, (0, 0, -3.5), "steel", rotation=(0, 0, 0), vertices=64)
+    ring("mouth_light", 0.5, 0.02, (0, 0, -3.57), "iris", rotation=(0, 0, 0))
+
+
 def ceiling_light():
     """A ceiling light strip: a steel housing and a cool white diffuser underneath. Origin at the center."""
     box("housing", (6.0, 0.28, 0.12), (0, 0, 0), "steel", bevel=0.01)
     box("diffuser", (5.9, 0.18, 0.02), (0, 0, -0.065), "strip_light")
 
 
-PIECES = {f.__name__: f for f in (tile, eye, floor_panel, cube, button, door, turret, terminal, core, console, ceiling_light)}
+PIECES = {f.__name__: f for f in (tile, eye, floor_panel, cube, button, door, turret, terminal, core, console, dispenser, ceiling_light)}
 
 
 def preview(name):

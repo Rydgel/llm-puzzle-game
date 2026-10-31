@@ -16,16 +16,11 @@ var nudge_left := 0.0
 var offset := Vector3.ZERO
 
 
-func setup(name_: String, start_z: float, end_z: float, material: Material) -> void:
+func setup(name_: String, start_z: float, end_z: float, look: Node3D) -> void:
 	letter = name_
 	from_z = start_z
 	to_z = end_z
-	var mesh := MeshInstance3D.new()
-	var box := BoxMesh.new()
-	box.size = SIZE
-	mesh.mesh = box
-	mesh.material_override = material
-	add_child(mesh)
+	add_child(look)
 	var shape := CollisionShape3D.new()
 	var box_shape := BoxShape3D.new()
 	box_shape.size = SIZE
@@ -36,8 +31,9 @@ func setup(name_: String, start_z: float, end_z: float, material: Material) -> v
 	label.font_size = 160
 	label.pixel_size = 0.005
 	label.rotation_degrees = Vector3(-90, 180, 0)  # lying flat, readable from the entrance side
-	label.position.y = SIZE.y / 2 + 0.01
-	label.modulate = Color(0.1, 0.1, 0.1)
+	label.position.y = SIZE.y / 2 + 0.008
+	label.modulate = Color(0.08, 0.08, 0.09)
+	label.shaded = true
 	add_child(label)
 	position = Vector3(0, -SIZE.y / 2, from_z)
 

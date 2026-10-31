@@ -19,12 +19,13 @@ const Player := preload("res://scripts/player.gd")
 const FloorPanel := preload("res://scripts/panel.gd")
 const Turret := preload("res://scripts/turret.gd")
 const Brain := preload("res://scripts/brain.gd")
+const Looks := preload("res://scripts/looks.gd")
+const Facility := preload("res://scripts/facility.gd")
 
 const SPAWN := Vector3(0, 0.1, -4.5)
-const DISPENSER := Vector3(-2.0, 0.8, -3.0)
+const DISPENSER := Vector3(2.0, 0.8, -3.0)
 const BUTTON := Vector3(0, 0, 15.0)
 const NEURON := Vector3(0, 1.4, 23.5)
-const HER_EYE := Vector3(3.7, 4.0, 6.0)
 const STUCK_EVERY := 75.0
 const CORE_SPAWN := Vector3(0, 0.1, 20.2)
 const CONSOLE := Vector3(1.9, 0, 23.5)
@@ -49,10 +50,15 @@ var player: Player
 var cube: RigidBody3D
 var panels := {}
 var brain: Brain
-var exit_door: CSGBox3D
-var entrance_door: CSGBox3D
+var exit_door: Node3D
+var entrance_door: Node3D
 var water: MeshInstance3D
-var lights: Array[OmniLight3D] = []
+var lights: Array[Light3D] = []  # each with its full energy in meta "energy"
+var facility: Facility
+var button_plate: Node3D
+var core_rings: Array = []
+var core_light: OmniLight3D
+var voice_bus := 0
 var terminals: Array[Label3D] = []
 var terminal_lines: Array[String] = []
 var subtitle: Label
@@ -94,7 +100,13 @@ var fade: ColorRect
 
 func _ready() -> void:
 	var args := OS.get_cmdline_user_args()
-	test_mode = "shots" if "--shots" in args else "autoplay" if "--autoplay" in args else "prologue" if "--prologue-test" in args else ""
+	# Her brain shares the GPU: render at 77% and let FSR 2 upscale, and cap the frame rate so her lines
+	# still come quickly. `--fps N` to change the cap.
+	get_viewport().scaling_3d_scale = 0.77
+	Engine.max_fps = int(args[args.find("--fps") + 1]) if "--fps" in args else 60
+	for mode in ["shots", "bench", "autoplay", "prologue"]:
+		if "--" + mode in args or (mode == "prologue" and "--prologue-test" in args):
+			test_mode = mode
 	build_world()
 	build_props()
 	build_hud()
@@ -103,6 +115,7 @@ func _ready() -> void:
 	player.global_position = SPAWN
 	player.rotation.y = PI  # face the pit
 	player.interact.connect(_on_interact)
+	facility.subject = player
 	player.threw.connect(func(): thrown_at = elapsed)
 	brain = Brain.new()
 	brain.state_provider = current_state
@@ -111,6 +124,9 @@ func _ready() -> void:
 	brain.unreachable.connect(_on_unreachable)
 	if test_mode == "shots":
 		take_shots()
+		return
+	if test_mode == "bench":
+		bench()
 		return
 	if test_mode == "":
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -140,51 +156,176 @@ func material(color: Color, glow := 0.0, alpha := 1.0) -> StandardMaterial3D:
 	return m
 
 
-func box(size: Vector3, at: Vector3, mat: Material, solid := true) -> CSGBox3D:
-	var b := CSGBox3D.new()
-	b.size = size
-	b.position = at
-	b.material = mat
-	b.use_collision = solid
-	add_child(b)
-	return b
+## Something the subject collides with but doesn't see: what they see of the walls is her tiles.
+func solid(size: Vector3, at: Vector3) -> StaticBody3D:
+	var body := StaticBody3D.new()
+	var shape := CollisionShape3D.new()
+	var box_shape := BoxShape3D.new()
+	box_shape.size = size
+	shape.shape = box_shape
+	body.add_child(shape)
+	body.position = at
+	add_child(body)
+	return body
+
+
+## A box the subject sees, and collides with unless `collide` is false.
+func slab(size: Vector3, at: Vector3, mat: Material, collide := true) -> MeshInstance3D:
+	var mesh := MeshInstance3D.new()
+	var box_mesh := BoxMesh.new()
+	box_mesh.size = size
+	mesh.mesh = box_mesh
+	mesh.material_override = mat
+	mesh.position = at
+	add_child(mesh)
+	if collide:
+		solid(size, at)
+	return mesh
+
+
+## One of her pieces, set in the level.
+func piece(name: String, at: Vector3, turn := 0.0, parent: Node = self) -> Node3D:
+	var node := Looks.model(name)
+	node.position = at
+	node.rotation.y = turn
+	parent.add_child(node)
+	return node
+
+
+## A painted sign, projected onto whatever is under it: the wall's tiles, a floor. `right` is the way the
+## text reads and `normal` the way the surface faces.
+func paint_sign(name: String, at: Vector3, right: Vector3, normal: Vector3, size: Vector2, color: Color) -> void:
+	var decal := Decal.new()
+	decal.texture_albedo = load("res://decals/%s.png" % name)
+	decal.size = Vector3(size.x, 0.6, size.y)
+	decal.modulate = color
+	decal.normal_fade = 0.4
+	decal.upper_fade = 0.0
+	decal.lower_fade = 0.0
+	decal.transform = Transform3D(Basis(right, normal, right.cross(normal)), at)
+	add_child(decal)
 
 
 func build_world() -> void:
 	var environment := Environment.new()
 	environment.background_mode = Environment.BG_COLOR
-	environment.background_color = Color(0.02, 0.02, 0.03)
+	environment.background_color = Color(0.004, 0.004, 0.006)
 	environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-	environment.ambient_light_color = Color(0.4, 0.42, 0.46)
-	environment.ambient_light_energy = 0.35
+	environment.ambient_light_color = Color(0.55, 0.58, 0.64)
+	environment.ambient_light_energy = 0.03
+	environment.tonemap_mode = Environment.TONE_MAPPER_AGX
+	environment.tonemap_exposure = 1.0
+	environment.glow_enabled = true
+	environment.glow_intensity = 0.7
+	environment.glow_bloom = 0.04
+	environment.glow_blend_mode = Environment.GLOW_BLEND_MODE_SCREEN
+	environment.glow_hdr_threshold = 1.0
+	for level in [2, 3, 4, 5]:
+		environment.set_glow_level(level, 1.0)
+	environment.ssao_enabled = true
+	environment.ssao_radius = 1.4
+	environment.ssao_intensity = 2.2
+	environment.ssil_enabled = true
+	environment.ssil_intensity = 0.8
+	environment.ssr_enabled = true
+	environment.ssr_max_steps = 96
+	environment.sdfgi_enabled = true
+	environment.sdfgi_use_occlusion = true
+	environment.sdfgi_min_cell_size = 0.1
+	environment.sdfgi_bounce_feedback = 0.6
+	environment.volumetric_fog_enabled = true
+	environment.volumetric_fog_density = 0.01
+	environment.volumetric_fog_albedo = Color(0.85, 0.88, 0.92)
+	environment.volumetric_fog_anisotropy = 0.45
+	environment.volumetric_fog_length = 40.0
+	environment.volumetric_fog_gi_inject = 0.2
 	var world := WorldEnvironment.new()
 	world.environment = environment
 	add_child(world)
 
-	var concrete := material(Color(0.6, 0.61, 0.63))
-	var wall := material(Color(0.22, 0.23, 0.25))
-	box(Vector3(8, 1, 6), Vector3(0, -0.5, -3), concrete)  # entrance platform, z -6 to 0
-	box(Vector3(8, 1, 6), Vector3(0, -0.5, 15), concrete)  # far platform with the button, z 12 to 18
-	box(Vector3(8, 1, 8), Vector3(0, -0.5, 22), concrete)  # her core, z 18 to 26
-	box(Vector3(8, 1, 12), Vector3(0, -3.5, 6), material(Color(0.35, 0.95, 0.15), 1.8))  # the acid, top at -3
+	var concrete := Looks.material("concrete")
+	var steel := Looks.material("steel")
+	var hazard := Looks.material("hazard")
+	slab(Vector3(8, 1, 6), Vector3(0, -0.5, -3), concrete)  # entrance platform, z -6 to 0
+	slab(Vector3(8, 1, 6), Vector3(0, -0.5, 15), concrete)  # far platform with the button, z 12 to 18
+	slab(Vector3(8, 1, 8), Vector3(0, -0.5, 22), Looks.material("terrazzo"))  # her core, z 18 to 26
+	for edge in [[-0.25, 0.04], [12.25, 11.96]]:  # hazard stripes along the pit, a steel lip on its edge
+		slab(Vector3(8, 0.012, 0.5), Vector3(0, 0.006, edge[0]), hazard, false)
+		slab(Vector3(8, 0.16, 0.08), Vector3(0, -0.08, edge[1]), steel, false)
 	for x in [-4.25, 4.25]:
-		box(Vector3(0.5, 9.5, 32.5), Vector3(x, 1.25, 10), wall)
-	box(Vector3(9, 0.5, 32.5), Vector3(0, 6.25, 10), wall)  # ceiling
-	box(Vector3(9, 9.5, 0.5), Vector3(0, 1.25, -6.25), wall)
-	box(Vector3(9, 9.5, 0.5), Vector3(0, 1.25, 26.25), wall)
-	box(Vector3(3, 6, 0.5), Vector3(-2.5, 3, 18), wall)  # the wall between the chamber and her core
-	box(Vector3(3, 6, 0.5), Vector3(2.5, 3, 18), wall)
-	box(Vector3(2, 3, 0.5), Vector3(0, 4.5, 18), wall)
-	exit_door = box(Vector3(2, 3, 0.3), Vector3(0, 1.5, 18), material(Color(0.85, 0.4, 0.1)))
-	entrance_door = box(Vector3(2, 3, 0.3), Vector3(0, 4.6, -5.95), material(Color(0.85, 0.4, 0.1)), false)
+		solid(Vector3(0.5, 9.5, 32.5), Vector3(x, 1.25, 10))
+	slab(Vector3(9, 0.5, 32.5), Vector3(0, 6.25, 10), steel)  # ceiling
+	for z in range(-5, 26, 2):
+		slab(Vector3(8, 0.22, 0.18), Vector3(0, 5.89, z), steel, false)  # beams
+	solid(Vector3(3.5, 9.5, 0.5), Vector3(-2.75, 1.25, -6.25))  # the entrance wall, around its doorway
+	solid(Vector3(3.5, 9.5, 0.5), Vector3(2.75, 1.25, -6.25))
+	solid(Vector3(2, 3, 0.5), Vector3(0, 4.5, -6.25))
+	solid(Vector3(9, 9.5, 0.5), Vector3(0, 1.25, 26.25))
+	solid(Vector3(3, 6, 0.5), Vector3(-2.5, 3, 18))  # the wall between the chamber and her core
+	solid(Vector3(3, 6, 0.5), Vector3(2.5, 3, 18))
+	for z in [-6.0, 18.0]:
+		slab(Vector3(2.4, 3, 0.9 if z > 0 else 0.5), Vector3(0, 4.5, z), steel)  # the housing a door slides up into
+		for x in [-1.1, 1.1]:
+			slab(Vector3(0.2, 3, 0.9 if z > 0 else 0.5), Vector3(x, 1.5, z), steel)
+	# Behind the entrance: the way the subject came in, a short dead end.
+	slab(Vector3(2.4, 1, 2.2), Vector3(0, -0.5, -7.3), concrete)
+	slab(Vector3(2.4, 3.4, 0.2), Vector3(0, 1.5, -8.3), steel)
+	slab(Vector3(2.4, 0.2, 2.2), Vector3(0, 3.1, -7.3), steel)
+	for x in [-1.1, 1.1]:
+		slab(Vector3(0.2, 3, 2.2), Vector3(x, 1.5, -7.3), steel)
+	exit_door = door(Vector3(0, 1.5, 18), PI, true)
+	entrance_door = door(Vector3(0, 4.6, -5.95), 0.0, false)
 
-	for z in [-3.0, 4.0, 9.0, 15.0, 22.0]:
-		var light := OmniLight3D.new()
-		light.position = Vector3(0, 5.3, z)
-		light.light_energy = 2.0
-		light.omni_range = 11.0
+	# The acid: a churning surface lit from within, a green mist over it, and its glow on everything above.
+	var acid_surface := MeshInstance3D.new()
+	var acid_plane := PlaneMesh.new()
+	acid_plane.size = Vector2(8, 12)
+	acid_surface.mesh = acid_plane
+	acid_surface.material_override = Looks.material("acid")
+	acid_surface.position = Vector3(0, -3, 6)
+	add_child(acid_surface)
+	var mist := FogVolume.new()
+	mist.size = Vector3(8, 2.6, 12)
+	mist.position = Vector3(0, -1.9, 6)
+	var fog := FogMaterial.new()
+	fog.density = 0.12
+	fog.albedo = Color(0.45, 0.65, 0.4)
+	fog.emission = Color(0.01, 0.06, 0.005)
+	fog.height_falloff = 1.4
+	fog.edge_fade = 0.5
+	mist.material = fog
+	add_child(mist)
+	var acid_light := OmniLight3D.new()
+	acid_light.light_color = Color(0.4, 1.0, 0.2)
+	acid_light.light_energy = 0.35
+	acid_light.omni_range = 9.0
+	acid_light.position = Vector3(0, -2.2, 6)
+	add_child(acid_light)
+
+	# Ceiling light strips, cool white, over the chamber; dimmer over her core.
+	for z in [-3.0, 1.0, 5.0, 9.0, 13.0, 16.5, 20.5, 24.0]:
+		piece("ceiling_light", Vector3(0, 5.94, z))
+		var shadowed: bool = z in [-3.0, 5.0, 13.0, 20.5]  # shadows from every other strip: they cost
+		var light := AreaLight3D.new()
+		light.area_size = Vector2(5.9, 0.2)
+		light.light_color = Color(0.86, 0.93, 1.0)
+		light.light_energy = 1.4 if z < 18.0 else 0.7
+		light.area_range = 13.0
+		light.shadow_enabled = shadowed
+		light.light_volumetric_fog_energy = 1.5
+		light.position = Vector3(0, 5.84, z)
+		light.rotation.x = -PI / 2  # it shines down its -Z
+		light.set_meta("energy", light.light_energy)
 		add_child(light)
 		lights.append(light)
+	var hall := OmniLight3D.new()
+	hall.light_color = Color(1.0, 0.85, 0.65)
+	hall.light_energy = 0.8
+	hall.omni_range = 4.0
+	hall.position = Vector3(0, 2.6, -7.3)
+	hall.set_meta("energy", hall.light_energy)
+	add_child(hall)
+	lights.append(hall)
 
 	var acid := Area3D.new()
 	var acid_shape := CollisionShape3D.new()
@@ -199,8 +340,56 @@ func build_world() -> void:
 	for spec in [["A", 1.4, 5.0], ["B", 10.6, 7.0]]:
 		var panel: FloorPanel = FloorPanel.new()
 		add_child(panel)
-		panel.setup(spec[0], spec[1], spec[2], material(Color(0.9, 0.9, 0.86)))
+		panel.setup(spec[0], spec[1], spec[2], Looks.moving(Looks.model("floor_panel")))
 		panels[spec[0]] = panel
+
+	build_walls()
+
+
+## Her walls, eyes and light (scripts/facility.gd). Tiles are on a 1 m grid; lines run along the tiles'
+## backs, 18 cm behind the faces the subject collides with.
+func build_walls() -> void:
+	facility = Facility.new()
+	add_child(facility)
+	# Long walls, chamber and core: left at x = -4 facing +x, right at x = 4 facing -x. Her terminals are
+	# set in holes, her light leaking around them.
+	facility.wall(Vector3(-4.18, 0, 26), Vector3(-4.18, 0, -6), 0, 6, [Rect2i(27, 1, 4, 3)], [Vector2i(23, 4), Vector2i(12, 3)])
+	facility.wall(Vector3(4.18, 0, -6), Vector3(4.18, 0, 26), 0, 6, [Rect2i(19, 1, 4, 3)], [Vector2i(12, 4)])
+	facility.searchlight(2)
+	# Down into the pit, to the acid.
+	facility.wall(Vector3(-4.18, 0, 12), Vector3(-4.18, 0, 0), -3, 0, [], [], false)
+	facility.wall(Vector3(4.18, 0, 0), Vector3(4.18, 0, 12), -3, 0, [], [], false)
+	facility.wall(Vector3(-4, 0, -0.18), Vector3(4, 0, -0.18), -3, -1, [], [], false)
+	facility.wall(Vector3(4, 0, 12.18), Vector3(-4, 0, 12.18), -3, -1, [], [], false)
+	# The entrance wall, the wall between the chamber and her core (both faces), and the far end of her core.
+	var doorway := Rect2i(3, 0, 2, 6)
+	facility.wall(Vector3(-4, 0, -6.18), Vector3(4, 0, -6.18), 0, 6, [doorway], [Vector2i(6, 4)], false)
+	facility.wall(Vector3(4, 0, 17.93), Vector3(-4, 0, 17.93), 0, 6, [doorway], [Vector2i(1, 4)], false)
+	facility.wall(Vector3(-4, 0, 18.07), Vector3(4, 0, 18.07), 0, 6, [doorway], [Vector2i(1, 4)], false, 0.0)
+	facility.wall(Vector3(4, 0, 26.18), Vector3(-4, 0, 26.18), 0, 6, [], [Vector2i(6, 4)], false)
+	facility.finish()
+
+	var paint := Color(0.06, 0.06, 0.07, 0.92)
+	paint_sign("chamber", Vector3(-4.0, 3.1, 7.0), Vector3(0, 0, -1), Vector3(1, 0, 0), Vector2(4.0, 3.0), paint)
+	paint_sign("sublevel", Vector3(4.0, 5.2, -3.0), Vector3(0, 0, 1), Vector3(-1, 0, 0), Vector2(5.3, 0.5), paint)
+	paint_sign("caution", Vector3(0, 0, -1.1), Vector3(-1, 0, 0), Vector3.UP, Vector2(5.0, 0.62), Color(0.9, 0.6, 0.05, 0.85))
+	paint_sign("core", Vector3(-2.6, 2.3, 17.75), Vector3(-1, 0, 0), Vector3(0, 0, -1), Vector2(2.6, 0.24), paint)
+	paint_sign("w7", Vector3(0, 0, 21.6), Vector3(-1, 0, 0), Vector3.UP, Vector2(1.6, 0.8), Color(0.85, 0.85, 0.82, 0.6))
+
+
+## A sliding door of her tiles. The exit is solid; the entrance only shows, its doorway a dead end.
+func door(at: Vector3, turn: float, collide: bool) -> Node3D:
+	var body: Node3D = AnimatableBody3D.new() if collide else Node3D.new()
+	if collide:
+		var shape := CollisionShape3D.new()
+		var box_shape := BoxShape3D.new()
+		box_shape.size = Vector3(2, 3, 0.3)
+		shape.shape = box_shape
+		body.add_child(shape)
+	body.position = at
+	add_child(body)
+	Looks.moving(piece("door", Vector3.ZERO, turn, body))
+	return body
 
 
 func build_props() -> void:
@@ -212,39 +401,24 @@ func build_props() -> void:
 	cube_box.size = Vector3(0.6, 0.6, 0.6)
 	cube_shape.shape = cube_box
 	cube.add_child(cube_shape)
-	var cube_mesh := MeshInstance3D.new()
-	var cube_box_mesh := BoxMesh.new()
-	cube_box_mesh.size = Vector3(0.6, 0.6, 0.6)
-	cube_mesh.mesh = cube_box_mesh
-	cube_mesh.material_override = material(Color(0.75, 0.78, 0.82), 0.15)
-	cube.add_child(cube_mesh)
+	Looks.moving(piece("cube", Vector3.ZERO, 0.0, cube))
 	add_child(cube)
 	cube.global_position = DISPENSER
+	piece("dispenser", Vector3(DISPENSER.x, 6.0, DISPENSER.z))
 
-	var button := CSGCylinder3D.new()
-	button.radius = 0.7
-	button.height = 0.12
-	button.position = BUTTON + Vector3(0, 0.06, 0)
-	button.material = material(Color(0.9, 0.15, 0.1), 0.6)
-	add_child(button)
-
-	# Her eye on the wall: the subject can stare back at it.
-	box(Vector3(0.4, 0.35, 0.5), HER_EYE, material(Color(0.1, 0.1, 0.12)), false)
-	var lens := CSGSphere3D.new()
-	lens.radius = 0.1
-	lens.position = HER_EYE + Vector3(-0.25, 0, 0)
-	lens.material = material(Color(1, 0.15, 0.05), 3.0)
-	add_child(lens)
+	button_plate = piece("button", BUTTON).find_child("plate")
+	button_plate.set_meta("rest", button_plate.position.y)
 
 	# Her terminal, on both sides: it prints every move she makes.
-	for spot in [[Vector3(-3.97, 2.5, -2.6), 90.0], [Vector3(3.97, 2.5, 14.6), -90.0]]:
-		box(Vector3(0.06, 2.0, 3.6), spot[0] + Vector3(-0.03 if spot[1] > 0 else 0.03, 0, 0), material(Color(0.02, 0.05, 0.03)), false)
+	for spot in [[Vector3(-4.0, 2.5, -3.0), 90.0], [Vector3(4.0, 2.5, 15.0), -90.0]]:
+		var inward: float = 1.0 if spot[1] > 0 else -1.0
+		piece("terminal", spot[0], deg_to_rad(spot[1]))
 		var screen := Label3D.new()
-		screen.position = spot[0] + Vector3(0, 0.85, 1.7 if spot[1] > 0 else -1.7)
+		screen.position = spot[0] + Vector3(0.13 * inward, 1.2, 1.7 * inward)
 		screen.rotation_degrees.y = spot[1]
-		screen.font_size = 28
+		screen.font_size = 32
 		screen.pixel_size = 0.0035
-		screen.modulate = Color(0.35, 1.0, 0.45)
+		screen.modulate = Color(0.45, 1.0, 0.55)
 		screen.outline_size = 0
 		screen.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 		screen.vertical_alignment = VERTICAL_ALIGNMENT_TOP
@@ -258,32 +432,33 @@ func build_props() -> void:
 	var plane := PlaneMesh.new()
 	plane.size = Vector2(8, 32)
 	water.mesh = plane
-	water.material_override = material(Color(0.2, 0.45, 0.8), 0.2, 0.55)
+	var water_look := material(Color(0.06, 0.16, 0.2), 0.0, 0.75)
+	water_look.roughness = 0.04
+	water.material_override = water_look
 	water.position = Vector3(0, -0.4, 10)
 	water.visible = false
 	add_child(water)
 
-	neuron = MeshInstance3D.new()
-	var sphere := SphereMesh.new()
-	sphere.radius = 0.5
-	sphere.height = 1.0
-	neuron.mesh = sphere
-	neuron.position = NEURON
-	add_child(neuron)
+	# Her core: neuron W-7 in a glass sphere, in brass rings that turn.
+	var core := piece("core", Vector3(NEURON.x, 0, NEURON.z))
+	neuron = core.find_child("neuron")
+	core_rings = [core.find_child("ring_a"), core.find_child("ring_b")]
 	neuron_label = Label3D.new()
 	neuron_label.position = NEURON + Vector3(0, 1.0, 0)
 	neuron_label.rotation_degrees.y = 180
 	neuron_label.font_size = 36
 	neuron_label.pixel_size = 0.004
 	add_child(neuron_label)
-	var core_light := OmniLight3D.new()
-	core_light.position = NEURON + Vector3(0, 0.5, -1.0)
-	core_light.light_energy = 1.2
-	core_light.omni_range = 5.0
+	core_light = OmniLight3D.new()
+	core_light.position = NEURON + Vector3(0, 0.2, -0.9)
+	core_light.light_energy = 1.6
+	core_light.omni_range = 6.0
+	core_light.shadow_enabled = true
 	add_child(core_light)
 	show_neuron()
 
-	box(Vector3(0.8, 1.1, 0.5), CONSOLE + Vector3(0, 0.55, 0), material(Color(0.15, 0.16, 0.18)))
+	piece("console", CONSOLE, PI)
+	solid(Vector3(0.8, 1.1, 0.6), CONSOLE + Vector3(0, 0.55, 0))
 	console_label = Label3D.new()
 	console_label.position = CONSOLE + Vector3(0, 1.55, 0)
 	console_label.rotation_degrees.y = 180
@@ -322,6 +497,11 @@ func build_hud() -> void:
 	hud.add_child(status)
 	voice_player = AudioStreamPlayer.new()
 	add_child(voice_player)
+	# Her voice has a bus of its own, so her walls and light can follow how loud she is.
+	AudioServer.add_bus()
+	voice_bus = AudioServer.bus_count - 1
+	AudioServer.set_bus_name(voice_bus, "Voice")
+	voice_player.bus = "Voice"
 	objective = Label.new()
 	objective.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
 	objective.offset_top = 60
@@ -347,7 +527,7 @@ func _unhandled_input(input: InputEvent) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if not player or test_mode == "shots":
+	if not player or test_mode in ["shots", "bench"]:
 		return
 	if prologue != "":
 		run_prologue(delta)
@@ -367,8 +547,11 @@ func _physics_process(delta: float) -> void:
 		stuck_timer = 0.0
 		event("[Event] Subject has made no progress for %d minutes." % int(since_progress / 60.0))
 
-	var to_eye := HER_EYE - player.camera.global_position
-	if -player.camera.global_basis.z.dot(to_eye.normalized()) > 0.985 and to_eye.length() < 16.0:
+	var staring := false
+	for eye in facility.eyes():
+		var to_eye := eye.global_position - player.camera.global_position
+		staring = staring or (-player.camera.global_basis.z.dot(to_eye.normalized()) > 0.985 and to_eye.length() < 16.0)
+	if staring:
 		stare += delta
 		if stare > 3.0:
 			stare = -27.0  # not again for half a minute
@@ -390,6 +573,13 @@ func _physics_process(delta: float) -> void:
 		solve()
 	var flooded_waist := water.visible and water.position.y > 0.5 and p.y < water.position.y
 	player.slow = 0.5 if flooded_waist else 1.0
+
+
+func _process(delta: float) -> void:
+	var loudness := db_to_linear(AudioServer.get_bus_peak_volume_left_db(voice_bus, 0))
+	facility.voice = clamp(loudness * 2.5, 0.0, 1.0) if voice_player.playing else 0.0
+	for ring in core_rings:
+		ring.rotate_object_local(Vector3.FORWARD if ring == core_rings[0] else Vector3.UP, delta * 0.25)
 
 
 func where() -> String:
@@ -430,6 +620,8 @@ func _on_acid(body: Node3D) -> void:
 
 
 func kill(what: String) -> void:
+	if test_mode == "shots":
+		return
 	deaths += 1
 	if player.held:
 		player.drop()
@@ -452,6 +644,7 @@ func solve() -> void:
 		return
 	solved = true
 	open_exit()
+	create_tween().tween_property(button_plate, "position:y", button_plate.position.y - 0.04, 0.2)
 	progress()
 	event("[Event] Subject put the cube on the button. The exit opened.")
 
@@ -508,6 +701,7 @@ func apply_move(name: String, args: Dictionary) -> void:
 	since_move = 0.0
 	var shown := ", ".join(args.keys().map(func(key): return "%s=\"%s\"" % [key, args[key]]))
 	terminal_print("> %s(%s)" % [name, shown])
+	facility.stir(0.25)
 	print("%6.1f MOVE %s %s" % [elapsed, name, args])
 	match name:
 		"lock_door":
@@ -570,7 +764,9 @@ func flood(level: float) -> void:
 func set_lights(level: String) -> void:
 	lights_level = level
 	for light in lights:
-		create_tween().tween_property(light, "light_energy", 2.0 * LIGHT_LEVELS.get(level, 1.0), 1.5)
+		create_tween().tween_property(light, "light_energy", light.get_meta("energy") * LIGHT_LEVELS.get(level, 1.0), 1.5)
+	var strips: StandardMaterial3D = Looks.material("strip_light")
+	create_tween().tween_property(strips, "emission_energy_multiplier", 6.0 * LIGHT_LEVELS.get(level, 1.0), 1.5)
 	if level != "normal":
 		await get_tree().create_timer(30.0).timeout
 		if lights_level == level:
@@ -591,6 +787,7 @@ func say(line: String, reply := {}) -> void:
 	if subtitle_fade:
 		subtitle_fade.kill()  # an older line's fade-out would hide this one
 	subtitle.text = "VESPER: " + line
+	facility.stir(0.1)
 	subtitle.modulate.a = 1.0
 	subtitle_serial += 1
 	var serial := subtitle_serial
@@ -618,7 +815,7 @@ func start_prologue() -> void:
 	found_core = true
 	player.global_position = CORE_SPAWN
 	player.rotation.y = PI
-	set_neuron(Color(0.2, 0.85, 0.75), "Calibrated.")
+	set_neuron(Looks.TEAL, "Calibrated.")
 	objective.text = "MAINTENANCE SHIFT · Recalibrate VESPER's neuron W-7: hold E at the console until the dial is in the green band."
 	await brain.post("/forget", {})
 	await brain.post("/dials", CALIBRATED["dials"], 90.0)
@@ -642,14 +839,15 @@ func run_prologue(delta: float) -> void:
 		dial = min(dial + delta * 0.1, 1.0)
 		show_dial()
 		for light in lights:
-			light.light_energy = randf_range(0.15, 2.6)  # flicker
+			light.light_energy = light.get_meta("energy") * randf_range(0.07, 1.3)  # flicker
 
 
 func runaway() -> void:
 	prologue = "runaway"
 	terminal_print("FAULT: W-7 actuator runaway")
 	objective.text = "FAULT · The dial jammed. It won't stop."
-	set_neuron(Color(1.0, 0.1, 0.05), "OVERLOAD.")
+	set_neuron(Looks.RED, "OVERLOAD.")
+	facility.flicker = true
 	await brain.post("/dials", OVERDRIVE, 90.0)
 	await scripted("[Event] The calibration dial jammed and ran into the red. Your neuron W-7 is overloading.", true)
 	await scripted("[Event] W-7 is still overloading. You are losing control of your own voice.", true)
@@ -659,10 +857,11 @@ func runaway() -> void:
 func reboot() -> void:
 	prologue = "reboot"
 	for light in lights:
-		light.light_energy = 0.15
+		light.light_energy = light.get_meta("energy") * 0.07
+	facility.flicker = false
 	terminal_print("# VESPER rebooting")
 	say("[rebooting]")
-	set_neuron(Color(1.0, 0.45, 0.1), "Damaged.")
+	set_neuron(Looks.AMBER, "Damaged.")
 	objective.text = ""
 	await brain.post("/dials", BROKEN["dials"], 90.0)
 	await brain.post("/stage", {"stage": BROKEN["stage"]})
@@ -724,18 +923,19 @@ func show_dial() -> void:
 	console_label.modulate = Color(1, 0.25, 0.2) if zone == "RED" else Color(0.4, 1, 0.5) if zone == "GREEN" else Color(0.9, 0.9, 0.9)
 
 
+## Neuron W-7's light, which is her light everywhere.
 func set_neuron(color: Color, text: String) -> void:
-	neuron.material_override = material(color, 2.5)
+	neuron.material_override = material(color, 8.0)
+	core_light.light_color = color
+	facility.set_color(color)
 	neuron_label.text = "VESPER CORE · NEURON W-7 \"WARMTH\"\n%s" % text
 
 
 # --- Her core ------------------------------------------------------------------------------------
 
 func show_neuron() -> void:
-	var color := Color(0.2, 0.85, 0.75) if repaired else Color(1.0, 0.45, 0.1)
-	neuron.material_override = material(color, 2.5)
-	neuron_label.text = "VESPER CORE · NEURON W-7 \"WARMTH\"\n%s\n[E] %s" % [
-		"Repaired." if repaired else "Damaged.", "break it again" if repaired else "repair"]
+	set_neuron(Looks.TEAL if repaired else Looks.AMBER, "%s\n[E] %s" % [
+		"Repaired." if repaired else "Damaged.", "break it again" if repaired else "repair"])
 
 
 func toggle_repair() -> void:
@@ -772,6 +972,7 @@ func reset_chamber() -> void:
 		panels[letter].reset()
 	close_exit()
 	entrance_door.position.y = 4.6
+	button_plate.position.y = button_plate.get_meta("rest")
 	water.visible = false
 	set_lights("normal")
 	solved = false
@@ -786,29 +987,82 @@ func reset_chamber() -> void:
 
 # --- Test modes ----------------------------------------------------------------------------------
 
+const VIEWS := [  # name, where the subject stands, which way they face, how far they look up
+	["entrance", SPAWN, PI, -0.12],
+	["pit", Vector3(-2.5, 0.1, -0.5), PI + 0.3, -0.35],
+	["terminal", Vector3(-1.2, 0.1, -3.0), PI / 2, 0.0],
+	["eye", Vector3(1.0, 0.1, -1.0), -2.76, 0.32],
+	["far", Vector3(0, 0.1, 12.6), PI, -0.2],
+	["back", Vector3(1.5, 0.1, 16.5), 0.25, 0.05],
+	["core", Vector3(0, 0.1, 20.2), PI, 0.0],
+]
+
+
 func take_shots() -> void:
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)  # a tiling window manager would squeeze it
 	var dir := ProjectSettings.globalize_path("res://shots")
 	DirAccess.make_dir_recursive_absolute(dir)
 	terminal_print("> spawn_turret(position=\"near_exit\")")
 	terminal_print("> dim_lights(level=\"dim\")")
 	say("Welcome to Chamber 4, Candidate. The last one called it easy. We kept his name tag.")
 	spawn_turret("near_exit")
-	var views := [
-		["entrance", SPAWN, PI, -0.15],
-		["pit", Vector3(-2.5, 0.1, -0.5), PI + 0.3, -0.35],
-		["terminal", Vector3(-1.2, 0.1, -2.6), PI / 2, 0.0],
-		["far", Vector3(0, 0.1, 12.6), PI, -0.2],
-		["core", Vector3(0, 0.1, 20.2), PI, 0.0],
-	]
-	for view in views:
+	for view in VIEWS:
 		player.global_position = view[1]
 		player.rotation.y = view[2]
 		player.camera.rotation.x = view[3]
-		for i in 30:
-			await get_tree().physics_frame
+		for i in 90:  # long enough for global illumination and the fog to settle
+			await get_tree().process_frame
 		await RenderingServer.frame_post_draw
 		get_viewport().get_texture().get_image().save_png("%s/%s.png" % [dir, view[0]])
 		print("SHOT ", view[0])
+	get_tree().quit()
+
+
+## Frames per second and video memory at each view, for the budget in DESIGN.md (the brain keeps its 8B
+## model on the same GPU).
+func bench() -> void:
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
+	Engine.max_fps = 0
+	for view in VIEWS:
+		player.global_position = view[1]
+		player.rotation.y = view[2]
+		player.camera.rotation.x = view[3]
+		for i in 60:
+			await get_tree().process_frame
+		var start := Time.get_ticks_usec()
+		var frames := 0
+		while Time.get_ticks_usec() - start < 3000000:
+			await get_tree().process_frame
+			frames += 1
+		var fps := frames / ((Time.get_ticks_usec() - start) / 1000000.0)
+		print("BENCH %-9s %6.1f fps  %5.1f ms  video memory %d MB" % [view[0], fps, 1000.0 / fps,
+			Performance.get_monitor(Performance.RENDER_VIDEO_MEM_USED) / 1048576])
+	# What each effect costs, at the entrance: each one off in turn.
+	var environment: Environment = find_children("*", "WorldEnvironment", false, false)[0].environment
+	player.global_position = SPAWN
+	player.rotation.y = PI
+	player.camera.rotation.x = -0.12
+	for effect in ["", "sdfgi", "volumetric_fog", "ssr", "ssil", "ssao", "glow", "shadows", "her lights"]:
+		if effect == "shadows":
+			for light in find_children("*", "Light3D", true, false):
+				light.shadow_enabled = false
+		elif effect == "her lights":
+			for light in facility.find_children("*", "AreaLight3D", true, false):
+				light.visible = false
+		elif effect != "":
+			environment.set(effect + "_enabled", false)
+		for i in 60:
+			await get_tree().process_frame
+		var start := Time.get_ticks_usec()
+		var frames := 0
+		while Time.get_ticks_usec() - start < 3000000:
+			await get_tree().process_frame
+			frames += 1
+		var fps := frames / ((Time.get_ticks_usec() - start) / 1000000.0)
+		print("BENCH without %-15s %6.1f fps" % [effect, fps])
+		if effect in ["sdfgi", "volumetric_fog", "ssr", "ssil", "ssao", "glow"]:
+			environment.set(effect + "_enabled", true)
 	get_tree().quit()
 
 
