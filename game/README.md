@@ -70,7 +70,8 @@ broken, red while W-7 overloads, teal once repaired, and brightens with her voic
 
 Her moves show in her body: a turret comes up through a hatch of her light in the floor (or down from above, over the
 pit), the walls ripple out from it, and a whirr goes with it; when she dims the lights, her seams and eyes glow brighter;
-her flood raises the acid in the pit toward the platforms, churning, then drains it. A death flashes green (acid) or red (turret), with her glitch.
+her flood opens vents in the pit's walls that pour acid in, foaming where the streams land, until it nears the
+platforms; then the vents close and it drains (`scripts/acid.gd`). A death flashes green (acid) or red (turret), with her glitch.
 
 Dust drifts through her light, fumes rise off the acid, and W-7 throws sparks when it overloads (`scripts/air.gd`).
 The acid is deep: you see into it, through glowing clouds churning at different depths, a dull crust drifting on top
@@ -103,6 +104,7 @@ Arguments go after `--`:
   tour with sound, her brain live: the entrance, up the shaft, over the pit as she spawns a turret and floods the
   room, into her core, where W-7 is repaired, then up her core. Any test mode records the same way, with sound, for
   example the prologue: `godot --path game --write-movie prologue.avi --fixed-fps 30 -- --prologue-test`.
+- `-- --pour` is a 13-second close camera on her flood, from the edge of the pit (`--quit-after 400`).
 - `godot --path game -- --prologue-test` plays the prologue on its own (the dial turns by itself) and prints her
   lines, then one line in Chamber 4 to check she remembers you.
 - `godot --path game -- --autoplay` sends five scripted events through the brain and prints her moves and lines.

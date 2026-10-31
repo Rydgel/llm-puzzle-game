@@ -163,8 +163,8 @@ static func bubbles(size: Vector2, amount: int) -> GPUParticles3D:
 
 
 ## A splash where something falls into the acid: glowing green droplets thrown up, falling back. Fire it with
-## restart() where the splash is.
-static func splash() -> GPUParticles3D:
+## restart() where the splash is. A `steady` one splashes all the time it's emitting: where a stream lands.
+static func splash(steady := false) -> GPUParticles3D:
 	var motion := ParticleProcessMaterial.new()
 	motion.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_SPHERE
 	motion.emission_sphere_radius = 0.3
@@ -191,11 +191,14 @@ static func splash() -> GPUParticles3D:
 	var drop := QuadMesh.new()
 	drop.size = Vector2(0.16, 0.16)
 	drop.material = look
-	var burst := _particles(motion, drop, 64, 1.0, Vector3.ZERO, Vector3(4, 5, 4))
-	burst.one_shot = true
-	burst.explosiveness = 0.9
+	var burst := _particles(motion, drop, 30 if steady else 64, 0.7 if steady else 1.0, Vector3.ZERO, Vector3(4, 5, 4))
+	burst.one_shot = not steady
+	burst.explosiveness = 0.0 if steady else 0.9
 	burst.preprocess = 0.0
 	burst.emitting = false
+	if steady:
+		motion.initial_velocity_min = 1.0
+		motion.initial_velocity_max = 2.8
 	return burst
 
 
