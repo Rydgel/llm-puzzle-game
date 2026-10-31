@@ -32,6 +32,8 @@ import random
 import signal
 import sys
 import threading
+import time
+from collections import deque
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
@@ -51,13 +53,16 @@ PORT, HER_PORT, JUDGE_PORT = 8090, 8081, 8082
 JUDGE = HERE / "models" / "Qwen3-1.7B-Q8_0.gguf"
 SYSTEM = SYSTEM_TWO_STEP.replace(" Each turn,", f" {MANNERS} Each turn,")
 DEFAULTS = {"exit": "locked", "turrets": 0, "where": "in the chamber", "minutes": 0, "deaths": 0}
-LOG = 6
+LOG = 4
 TRIES = 3
+# Short lines: they come back faster, and the game can still say them before they're stale.
+LINE_MAX = 160
 
 
 class Brain:
     def __init__(self, dials, stage=0):
         self.stage, self.log, self.dials, self.her = stage, [], {}, None
+        self.openers = deque(maxlen=5)  # the first words of her recent lines, never the lines themselves
         self.lock = threading.Lock()
         self.judge = judge_server(JUDGE, gpu=False, port=JUDGE_PORT).__enter__()
         self.set_dials(dials)
@@ -74,7 +79,8 @@ class Brain:
 
     def turn(self, state, event):
         state = {**DEFAULTS, **state}
-        earlier = ("Earlier:\n" + "".join(f"- {e}\n" for e in self.log[-LOG:]) + "Now:\n") if self.log else ""
+        earlier = ("Earlier:\n" + "".join(f"- {e}\n" for e in self.log[-LOG:])) if self.log else ""
+        earlier += "Just now (react to this):\n"
         self.log.append(event)
         messages = [{"role": "system", "content": SYSTEM}, {"role": "user", "content": STATE.format(**state) + "\n" + earlier + event}]
         seed = random.randrange(1 << 30)
@@ -104,9 +110,15 @@ class Brain:
                 before, after, _ = ask_frame(self.her, messages, seed + attempt)
                 text = " ".join(part for part in (clean(before), hint, clean(after)) if part)
             else:
-                text, _ = ask_line(self.her, messages, seed + attempt)
+                text, _ = ask_line(self.her, messages, seed + attempt, max_length=LINE_MAX)
                 text = clean(text)
+            # Steered, she keeps reaching for the same opener ("Oh, how daring..."): try again unless it's the
+            # last try. Only the first words are kept, so her own lines still never go back into her context.
+            opener = " ".join(text.lower().split()[:3])
+            if opener in self.openers and attempt < TRIES - 1:
+                continue
             if text and allowed(self.judge, text)[0]:
+                self.openers.append(opener)
                 return text, attempt > 0
         return random.choice(her_lines()), True
 
@@ -136,7 +148,11 @@ class Handler(BaseHTTPRequestHandler):
             body = json.loads(self.rfile.read(int(self.headers.get("Content-Length") or 0)) or b"{}")
             with brain.lock:
                 if self.path == "/turn":
+                    start = time.time()
                     out = brain.turn(body.get("state", {}), body["event"])
+                    move = out["move"]["name"] if out["move"] else "-"
+                    print(f"{time.strftime('%H:%M:%S')} {time.time() - start:4.1f}s  {body['event']}  -> {move}  "
+                          f"“{out['line'][:90]}”{'  (regenerated)' if out['filtered'] else ''}", flush=True)
                 elif self.path == "/dials":
                     brain.set_dials(body)
                     out = {"dials": brain.dials}
@@ -145,6 +161,7 @@ class Handler(BaseHTTPRequestHandler):
                     out = {"stage": brain.stage}
                 elif self.path == "/reset":
                     brain.log = []
+                    brain.openers.clear()
                     out = {"ok": True}
                 else:
                     return self.send(404, {"error": f"no {self.path}"})

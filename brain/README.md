@@ -31,7 +31,7 @@ JSON over HTTP on `127.0.0.1:8090`.
 
 `move` is `{"name": ..., "arguments": {...}}` or `null` when she waits. `hint` is the written hint text when she gives
 one (show it on her terminal too). `refused` is set if the backstop validator refused her move; she complains about it in
-`line`. `filtered` is true when the speak filter blocked a first try.
+`line`. `filtered` is true when her first try was regenerated: blocked by the speak filter, or opening with the same words as one of her last five lines (steered, she keeps reaching for "Oh, how daring..."). Lines are capped at 160 characters, so a turn takes about 2 s. Each turn is logged in the brain's terminal with its duration.
 
 Example turn:
 

@@ -31,6 +31,8 @@ to throw the cube, Escape to free the mouse, F11 for fullscreen.
   from 0 to 2 (hints, open doors and shortcuts instead of traps), and the chamber starts over with her changed. E again
   breaks it, to compare.
 
+**Timing:** her turns take about 2 seconds and run one at a time. While one runs, a single event waits, chosen by priority (entering, solving, her core, then deaths, then the rest), so a death isn't lost behind a cube pickup. If her line comes back more than 5 seconds late and something newer has happened, the line is dropped and her move still applies. Restarting the chamber discards everything from before it.
+
 **What the game tells her:** entering, picking up the cube, stepping onto a panel, falling in the acid, being shot, the
 cube in the acid (thrown or dropped), staring at her camera for 3 seconds, standing at the locked exit, no progress for a
 while, solving the chamber, finding her core. The subject never speaks.

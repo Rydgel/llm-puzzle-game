@@ -218,18 +218,19 @@ def run_grammar(srv, state, user, seed):
     return out
 
 
-def ask_line(srv, messages, seed):
+def ask_line(srv, messages, seed, max_length=LINE_SCHEMA["properties"]["line"]["maxLength"]):
+    schema = {**LINE_SCHEMA, "properties": {"line": {"type": "string", "maxLength": max_length}}}
     body = {
         "messages": messages,
         "temperature": 0.7,
         "top_p": 0.9,
         "seed": seed,
-        "max_tokens": 150,
-        "response_format": {"type": "json_schema", "json_schema": {"name": "line", "schema": LINE_SCHEMA}},
+        "max_tokens": max_length // 3 + 30,
+        "response_format": {"type": "json_schema", "json_schema": {"name": "line", "schema": schema}},
     }
     try:
         content = srv.post("/v1/chat/completions", body)["choices"][0]["message"]["content"]
-        return whole_sentences(json.loads(content)["line"]), None
+        return whole_sentences(json.loads(content)["line"], max_length), None
     except urllib.error.HTTPError as e:
         return "", e.read().decode()[:300]
     except (json.JSONDecodeError, KeyError, TypeError) as e:
@@ -268,9 +269,9 @@ def ask_frame(srv, messages, seed):
         return "", "", f"bad frame: {e}"
 
 
-def whole_sentences(line):
+def whole_sentences(line, max_length=LINE_SCHEMA["properties"]["line"]["maxLength"]):
     """A line that hit the length cap ends mid-sentence: cut it back to its last full sentence."""
-    if len(line) < LINE_SCHEMA["properties"]["line"]["maxLength"] - 5:
+    if len(line) < max_length - 5:
         return line
     ends = [m.end() for m in re.finditer(r"[.!?…][*”\"’']*(?=\s|$)", line)]
     return line[: ends[-1]] if ends else line

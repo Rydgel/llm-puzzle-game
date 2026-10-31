@@ -36,7 +36,6 @@ var player: Player
 var cube: RigidBody3D
 var panels := {}
 var brain: Brain
-var pad: Area3D
 var exit_door: CSGBox3D
 var entrance_door: CSGBox3D
 var water: MeshInstance3D
@@ -202,14 +201,6 @@ func build_props() -> void:
 	button.position = BUTTON + Vector3(0, 0.06, 0)
 	button.material = material(Color(0.9, 0.15, 0.1), 0.6)
 	add_child(button)
-	pad = Area3D.new()
-	var pad_shape := CollisionShape3D.new()
-	var pad_box := BoxShape3D.new()
-	pad_box.size = Vector3(1.4, 0.8, 1.4)
-	pad_shape.shape = pad_box
-	pad.add_child(pad_shape)
-	pad.position = BUTTON + Vector3(0, 0.4, 0)
-	add_child(pad)
 
 	# Her eye on the wall: the subject can stare back at it.
 	box(Vector3(0.4, 0.35, 0.5), HER_EYE, material(Color(0.1, 0.1, 0.12)), false)
@@ -341,7 +332,7 @@ func _physics_process(delta: float) -> void:
 		found_core = true
 		event("[Event] Subject walked past the exit and found VESPER's core.")
 
-	if not solved and not player.held and pad.overlaps_body(cube):
+	if not solved and not player.held and cube.global_position.distance_to(BUTTON) < 1.0 and cube.linear_velocity.length() < 2.0:
 		solve()
 	var flooded_waist := water.visible and water.position.y > 0.5 and p.y < water.position.y
 	player.slow = 0.5 if flooded_waist else 1.0
@@ -430,7 +421,9 @@ func _on_interact() -> void:
 # --- Talking to her ------------------------------------------------------------------------------
 
 func event(text: String) -> void:
-	print("EVENT ", text)
+	if rebooting:
+		return
+	print("%6.1f EVENT %s" % [elapsed, text])
 	brain.send(text)
 
 
@@ -443,6 +436,9 @@ func _on_reply(reply: Dictionary) -> void:
 	if reply.get("hint"):
 		hints_given += 1
 		terminal_print("HINT: %s" % reply["hint"])
+	if reply.get("stale") and not reply.get("hint"):
+		print("%6.1f DROPPED a line %.1f s late: %s" % [elapsed, reply["late"], reply.get("line", "")])
+		return
 	say(reply.get("line", ""))
 
 
@@ -455,7 +451,7 @@ func apply_move(name: String, args: Dictionary) -> void:
 	since_move = 0.0
 	var shown := ", ".join(args.keys().map(func(key): return "%s=\"%s\"" % [key, args[key]]))
 	terminal_print("> %s(%s)" % [name, shown])
-	print("MOVE ", name, " ", args)
+	print("%6.1f MOVE %s %s" % [elapsed, name, args])
 	match name:
 		"lock_door":
 			if args.get("door") == "entrance":
@@ -534,7 +530,7 @@ func terminal_print(line: String) -> void:
 func say(line: String) -> void:
 	if line == "":
 		return
-	print("VESPER ", line)
+	print("%6.1f VESPER %s" % [elapsed, line])
 	subtitle.text = "VESPER: " + line
 	subtitle.modulate.a = 1.0
 	subtitle_serial += 1
@@ -562,6 +558,7 @@ func toggle_repair() -> void:
 	if rebooting:
 		return
 	rebooting = true
+	brain.new_epoch()
 	repaired = not repaired
 	var target := REPAIRED if repaired else BROKEN
 	terminal_print("# rebooting VESPER, neuron W-7 %s" % ("repaired" if repaired else "damaged"))
@@ -571,6 +568,7 @@ func toggle_repair() -> void:
 	await brain.post("/reset", {})
 	show_neuron()
 	reset_chamber()
+	brain.new_epoch()
 	rebooting = false
 	event("[Event] Subject entered Chamber 4.")
 
@@ -630,23 +628,29 @@ func take_shots() -> void:
 
 
 func autoplay() -> void:
+	# A burst like a real player's: events keep coming while her turns are still running.
 	var script := [
-		"[Event] Subject entered Chamber 4.",
-		"[Event] Subject picked up the cube.",
-		"[Event] Subject fell into the acid pit and was respawned.",
-		"[Event] Subject has been staring at the camera.",
-		"[Event] Subject put the cube on the button. The exit opened.",
+		[0.0, "[Event] Subject entered Chamber 4."],
+		[1.0, "[Event] Subject picked up the cube."],
+		[2.5, "[Event] Subject stepped onto panel A carrying the cube."],
+		[3.5, "[Event] Subject fell into the acid pit and was respawned."],
+		[5.0, "[Event] Subject picked up the cube."],
+		[7.0, "[Event] Subject stepped onto panel A carrying the cube."],
+		[9.0, "[Event] Subject stepped onto panel B carrying the cube."],
+		[12.0, "[Event] Subject put the cube on the button. The exit opened."],
 	]
-	for text in script:
-		if "acid" in text:
+	var start := elapsed
+	for entry in script:
+		while elapsed - start < entry[0]:
+			await get_tree().physics_frame
+		if "acid" in entry[1]:
 			deaths += 1
-		if "exit opened" in text:
+		if "exit opened" in entry[1]:
 			solved = true
 			open_exit()
-		event(text)
-		await get_tree().create_timer(0.5).timeout
-		while brain.busy:
-			await get_tree().create_timer(0.2).timeout
-		await get_tree().create_timer(0.5).timeout
+		event(entry[1])
+	while brain.busy or not brain.pending.is_empty():
+		await get_tree().create_timer(0.2).timeout
+	await get_tree().create_timer(1.0).timeout
 	print("AUTOPLAY done")
 	get_tree().quit()
