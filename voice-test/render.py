@@ -1,8 +1,8 @@
 """VESPER's lines in each candidate voice, to listen to side by side. Writes out/*.wav and out/index.html.
 
 Candidates, all local, CPU only and with clean licenses:
-- Kokoro-82M (weights Apache 2.0, kokoro-onnx MIT): British female voices, one American, and a blend.
-- Piper (piper-tts, GPL-3.0): the two English voices trained from scratch on public-domain recordings.
+- Kokoro-82M (weights Apache 2.0, kokoro-onnx MIT): its American female voices, and two blends.
+- Piper (piper-tts, GPL-3.0): LJSpeech, an American voice trained from scratch on public-domain recordings.
 
 Then her arc in one voice: broken, repaired (slower, blended with a warmer voice), a glitch (the line
 corrupted: stutters, warble, bit-crush), and a faint machine edge.
@@ -57,15 +57,20 @@ def piper_voice(name):
     return speak
 
 
+# American voices: the UK ones didn't fit her. Grades are Kokoro's own, from its VOICES.md; D-graded voices are left out.
 VOICES = {
-    "Kokoro Emma (UK)": kokoro_voice("bf_emma"),
-    "Kokoro Isabella (UK)": kokoro_voice("bf_isabella"),
-    "Kokoro Alice (UK)": kokoro_voice("bf_alice"),
-    "Kokoro Lily (UK)": kokoro_voice("bf_lily"),
-    "Kokoro Heart (US)": kokoro_voice("af_heart", lang="en-us"),
-    "Kokoro Emma + Nicole": kokoro_voice(blend(("bf_emma", 0.7), ("af_nicole", 0.3))),
-    "Piper Cori (UK)": piper_voice("en_GB-cori-high"),
-    "Piper LJSpeech (US)": piper_voice("en_US-ljspeech-high"),
+    "Kokoro Heart (A)": kokoro_voice("af_heart", lang="en-us"),
+    "Kokoro Bella (A-)": kokoro_voice("af_bella", lang="en-us"),
+    "Kokoro Nicole (B-, soft)": kokoro_voice("af_nicole", lang="en-us"),
+    "Kokoro Sarah (C+)": kokoro_voice("af_sarah", lang="en-us"),
+    "Kokoro Aoede (C+)": kokoro_voice("af_aoede", lang="en-us"),
+    "Kokoro Kore (C+)": kokoro_voice("af_kore", lang="en-us"),
+    "Kokoro Nova (C)": kokoro_voice("af_nova", lang="en-us"),
+    "Kokoro Alloy (C)": kokoro_voice("af_alloy", lang="en-us"),
+    "Kokoro Sky (C-)": kokoro_voice("af_sky", lang="en-us"),
+    "Kokoro Heart + Bella": kokoro_voice(blend(("af_heart", 0.5), ("af_bella", 0.5)), lang="en-us"),
+    "Kokoro Bella + Nicole": kokoro_voice(blend(("af_bella", 0.7), ("af_nicole", 0.3)), lang="en-us"),
+    "Piper LJSpeech": piper_voice("en_US-ljspeech-high"),
 }
 
 
@@ -96,11 +101,13 @@ def machine(x, sr):
     return 0.8 * comb + 0.2 * ring
 
 
+ARC_VOICE = "af_heart"
 ARC = {
-    "broken": (kokoro_voice("bf_emma", speed=1.05), None),
-    "repaired: slower, blended with Heart": (kokoro_voice(blend(("bf_emma", 0.6), ("af_heart", 0.4)), speed=0.92), None),
-    "glitch: corrupted": (kokoro_voice("bf_emma"), corrupt),
-    "machine edge": (kokoro_voice("bf_emma"), machine),
+    "broken": (kokoro_voice(ARC_VOICE, lang="en-us", speed=1.05), None),
+    "repaired: slower, blended with soft Nicole": (
+        kokoro_voice(blend((ARC_VOICE, 0.7), ("af_nicole", 0.3)), lang="en-us", speed=0.92), None),
+    "glitch: corrupted": (kokoro_voice(ARC_VOICE, lang="en-us"), corrupt),
+    "machine edge": (kokoro_voice(ARC_VOICE, lang="en-us"), machine),
 }
 
 
@@ -162,13 +169,14 @@ table{{border-collapse:collapse}} th,td{{border:1px solid #2c3038;padding:6px;ve
 th small{{display:block;color:#889;font-weight:normal;margin-top:4px}} tbody th{{max-width:260px;font-weight:normal}}
 audio{{width:170px;height:32px}}
 </style>
-<h1>VESPER: candidate voices</h1>
-<p>All local and CPU only. Kokoro-82M: weights Apache 2.0, runtime MIT. Piper: runtime GPL-3.0, voices trained on
-public-domain recordings. "× real time" is synthesis time over speech length: below 1 is faster than she speaks.</p>
+<h1>VESPER: candidate voices (American)</h1>
+<p>All local and CPU only. Kokoro-82M: weights Apache 2.0, runtime MIT; the letter is Kokoro's own quality grade.
+Piper: runtime GPL-3.0, LJSpeech trained on public-domain recordings. "× real time" is synthesis time over speech
+length: below 1 is faster than she speaks.</p>
 <table><thead><tr><th>Line</th>{heads}</tr></thead><tbody>{rows}</tbody></table>
-<h2>Her arc in one voice (Kokoro Emma)</h2>
-<p>Broken a touch faster; repaired slower and blended 40% with the warmer Heart voice; a glitch, the line corrupted
-after synthesis; and a faint machine edge on her normal voice.</p>
+<h2>Her arc in one voice (Kokoro Heart)</h2>
+<p>Broken a touch faster; repaired slower and blended 30% with the soft Nicole voice; a glitch, the line corrupted
+after synthesis; and a faint machine edge on her normal voice. Once you pick her voice, the arc gets redone in it.</p>
 <table><thead><tr><th>Line</th>{arc_heads}</tr></thead><tbody>{arc_rows}</tbody></table>
 """)
     print("wrote", OUT / "index.html")
