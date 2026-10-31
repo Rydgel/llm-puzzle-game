@@ -32,7 +32,7 @@ def clean(line):
     line = STAGE_DIRECTION.sub("", line)
     line = EMOJI.sub("", line)
     line = CJK.sub("", line)
-    line = line.replace("*", "").strip(" \"“”")
+    line = line.replace("*", "").replace("`", "").strip(" \"“”,;")
     line = re.sub(r"\s+", " ", line).strip()
     if len(line) > MAX_LEN:
         ends = [m.end() for m in re.finditer(r"[.!?…][\"”’']*(?=\s|$)", line[:MAX_LEN])]
