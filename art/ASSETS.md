@@ -12,4 +12,11 @@ downloads them into `game/textures/` (kept out of git).
 
 Models are made in Blender from `art/models.py` and need no attribution. The painted signs in `game/decals/` are
 rendered by `art/decals.sh` in Noto Sans (SIL Open Font License); the game ships the images, not the font. The sounds in
-`game/sounds/` are synthesized by `art/sounds.py`.
+`game/sounds/` are synthesized by `art/sounds.py`, except:
+
+| In the game | Sound | Source | License | Used for |
+|---|---|---|---|---|
+| `valve.wav` | release_air_pffft, by reg7783: a pneumatic nail gun unplugged from its air line | [Freesound 131302](https://freesound.org/people/reg7783/sounds/131302/) | CC0 | a hatch or vent letting its tile go |
+
+`valve.wav` is the HQ preview, cut, faded out and set to a -3 dB peak (-1.9 dB): `ffmpeg -ss 0.15 -t 1.15
+-i 131302.mp3 -af "afade=t=in:d=0.005,afade=t=out:st=0.8:d=0.35,volume=-1.9dB" -ac 1 -ar 44100 valve.wav`.

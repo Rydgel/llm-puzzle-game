@@ -4,7 +4,7 @@
 
 - hum: her machinery, a low hum with a slow beat, room rumble and a faint whine. A 10 s loop.
 - shaft: distant clanks echoing in the shaft over the pit, over a low wind. A 16 s loop.
-- servo: a hatch's actuator, a motor whirring up, then a clunk.
+- servo: an actuator (doors, turrets coming up), a motor whirring up, then a clunk.
 - clack: her tiles shifting in a ripple, a cascade of clicks.
 - flood: water rushing in through the floor, bubbling, for about 3 seconds.
 - sizzle: something falling into the acid: a plop, then a hiss with crackles, about 1.2 seconds.

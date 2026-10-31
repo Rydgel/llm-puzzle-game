@@ -11,7 +11,7 @@ const Looks := preload("res://scripts/looks.gd")
 const SEAM_DEPTH := 0.17  # her light, behind the tiles' backs: 35 cm behind their faces
 const EYE_REACH := 0.35  # how far an eye can turn: the z of its gaze, at the edge of its cone
 const WALL_LIGHT := 0.18  # energy of the light her seams spill into the room, per wall
-const SERVO := preload("res://sounds/servo.wav")  # from art/sounds.py
+const VALVE := preload("res://sounds/valve.wav")  # from art/sounds.py: a hatch or vent letting its tile go
 const CLACK := preload("res://sounds/clack.wav")
 
 signal recolored  # her light has finished changing color
@@ -188,10 +188,10 @@ func _sliding_tile(spot: Transform3D) -> Dictionary:
 	tile.transform = spot
 	add_child(tile)
 	var whirr := AudioStreamPlayer3D.new()
-	whirr.stream = SERVO
+	whirr.stream = VALVE
 	whirr.unit_size = 3.0
 	whirr.volume_db = -6.0
-	whirr.pitch_scale = randf_range(0.85, 1.15)
+	whirr.pitch_scale = randf_range(0.9, 1.1)
 	whirr.position = spot.origin
 	add_child(whirr)
 	var out := spot.origin + spot.basis.z * 0.22
