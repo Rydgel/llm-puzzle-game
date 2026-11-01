@@ -28,10 +28,11 @@ var last_event_at := 0.0
 
 
 ## `said`: what the subject typed to her. It goes to the brain as their words, never as an event of the
-## facility's, and it matters: they're waiting for her answer.
-func send(event: String, glitch := false, said := "") -> void:
+## facility's, and it matters: they're waiting for her answer. `scene`: where she is when it isn't the chamber
+## (her core); there she only speaks.
+func send(event: String, glitch := false, said := "", scene := "") -> void:
 	var item := {"text": event, "said": said, "at": now(), "priority": 3 if said != "" else priority(event),
-		"epoch": epoch, "glitch": glitch}
+		"epoch": epoch, "glitch": glitch, "scene": scene}
 	last_event_at = item["at"]
 	if busy:
 		if pending.is_empty() or item["priority"] >= pending["priority"]:
@@ -49,6 +50,9 @@ func _run(item: Dictionary) -> void:
 	busy = true
 	var turn := {"answered": false, "spoken": false, "done": false, "hint": false}
 	var body := {"state": state_provider.call(), "glitch": item["glitch"], "stream": true}
+	if item["scene"] != "":
+		body["scene"] = item["scene"]
+		body["speak_only"] = true
 	if item["said"] != "":
 		body["said"] = item["said"]
 	else:

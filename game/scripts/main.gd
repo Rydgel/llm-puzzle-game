@@ -118,6 +118,7 @@ var glitch_next := false
 var test_mode := ""
 var prologue := ""  # intro, calibrate, runaway, reboot; empty once the subject is in the chambers
 var dial := 0.0
+var auto_dial_at := 0.0  # when the test modes start turning the dial by themselves
 var turned_dial := false
 var console_label: Label3D
 var help_label: Label
@@ -795,9 +796,13 @@ func build_hud() -> void:
 func _unhandled_input(input: InputEvent) -> void:
 	if input is InputEventKey and input.pressed and not input.echo and input.physical_keycode == KEY_V:
 		visor.toggle()
-	if input is InputEventKey and input.pressed and not input.echo and input.physical_keycode in [KEY_ENTER, KEY_KP_ENTER]:
-		if test_mode in ["", "autoplay"] and prologue == "" and not rebooting:  # in the prologue, the story runs on its own
-			get_viewport().set_input_as_handled()
+	if input is InputEventKey and input.pressed and not input.echo and input.physical_keycode in [KEY_ENTER, KEY_KP_ENTER] \
+			and test_mode in ["", "autoplay", "prologue"]:
+		get_viewport().set_input_as_handled()
+		if not can_talk():
+			print("%6.1f NOT LISTENING (%s)" % [elapsed, prologue if prologue != "" else "rebooting"])
+			show_heard("She can't hear you right now.", 2.0)
+		else:
 			talk_box.visible = true
 			talk_box.grab_focus()
 			player.talking = true
@@ -1044,14 +1049,27 @@ func _on_talked(text: String) -> void:
 	if text == "":
 		return
 	print("%6.1f SAID %s" % [elapsed, text])
-	heard.text = "YOU: " + text
+	show_heard("YOU: " + text, 6.0)
+	if prologue == "calibrate":  # the technician, at her console in her core
+		brain.send("[Subject said] " + text, false, text, CORE_SCENE)
+	elif prologue == "" and not rebooting:
+		brain.send("[Subject said] " + text, glitch_next, text)
+		glitch_next = false
+
+
+## Talking is open whenever the subject has their hands free: at the console before the dial jams, and in the
+## chambers. Not while the story runs (her greeting, the overload, her reboot), nor while the chamber restarts.
+func can_talk() -> bool:
+	return prologue in ["", "calibrate"] and not rebooting
+
+
+## Over her subtitle, for `seconds`: what the subject said to her, or why she can't hear them.
+func show_heard(text: String, seconds: float) -> void:
+	heard.text = text
 	heard.modulate.a = 1.0
 	heard_serial += 1
 	var serial := heard_serial
-	if not rebooting and prologue == "":
-		brain.send("[Subject said] " + text, glitch_next, text)
-		glitch_next = false
-	await get_tree().create_timer(6.0).timeout
+	await get_tree().create_timer(seconds).timeout
 	if serial == heard_serial:
 		create_tween().tween_property(heard, "modulate:a", 0.0, 1.0)
 
@@ -1300,12 +1318,16 @@ func start_prologue() -> void:
 	await brain.post("/stage", {"stage": CALIBRATED["stage"]})
 	await scripted("[Event] Your colleague the technician entered your core for a routine calibration of your neuron W-7. Greet them; call them Technician.")
 	prologue = "calibrate"
+	if test_mode == "prologue":  # say something to her at the console, and let her answer before the dial turns
+		auto_dial_at = elapsed + 6.0
+		type_to_her("Morning. How are you feeling today?")
 
 
 func run_prologue(delta: float) -> void:
 	elapsed += delta
-	var holding := Input.is_physical_key_pressed(KEY_E) and player.global_position.distance_to(CONSOLE) < 2.5
-	if prologue == "calibrate" and (holding or test_mode in ["prologue", "demo"]):
+	var holding := Input.is_physical_key_pressed(KEY_E) and player.global_position.distance_to(CONSOLE) < 2.5 \
+		and not player.talking  # an "e" typed to her isn't a hand on the dial
+	if prologue == "calibrate" and (holding or (test_mode in ["prologue", "demo"] and elapsed >= auto_dial_at)):
 		dial = min(dial + delta * 0.18, 1.0)
 		show_dial()
 		if not turned_dial:
@@ -1325,6 +1347,8 @@ func run_prologue(delta: float) -> void:
 
 func runaway() -> void:
 	prologue = "runaway"
+	if test_mode == "prologue":
+		_press(KEY_ENTER)  # she can't hear anyone through the overload
 	terminal_print("FAULT: W-7 actuator runaway")
 	objective.text = "FAULT · The dial jammed. It won't stop."
 	set_neuron(Looks.RED, "Overload")
@@ -1681,11 +1705,8 @@ func autoplay() -> void:
 	for entry in script:
 		while elapsed - start < entry[0]:
 			await get_tree().physics_frame
-		if entry.size() > 2:  # typed to her, through the keys and the box a player would use
-			_press(KEY_ENTER)
-			await get_tree().process_frame
-			talk_box.text = entry[1]
-			_press(KEY_ENTER)
+		if entry.size() > 2:
+			type_to_her(entry[1])
 			continue
 		if "acid" in entry[1]:
 			deaths += 1
@@ -1699,6 +1720,14 @@ func autoplay() -> void:
 	await get_tree().create_timer(6.0).timeout  # her last line's voice plays out
 	print("AUTOPLAY done")
 	get_tree().quit()
+
+
+## Types a line to her through the keys and the box a player would use, for the test modes.
+func type_to_her(text: String) -> void:
+	_press(KEY_ENTER)
+	await get_tree().process_frame
+	talk_box.text = text
+	_press(KEY_ENTER)
 
 
 func _press(key: Key) -> void:

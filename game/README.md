@@ -76,8 +76,9 @@ while, solving the chamber, finding her core.
 
 **Talking to her** is a bonus (see `../DESIGN.md`): Enter opens a box, Enter sends, Escape closes it, and you stand
 still while you type. Argue, flatter or bluff; she answers in her own words, and the brain still decides which of her
-moves are legal, so talk can earn a hint or a shortcut but never skips the chamber. The subject never speaks out loud,
-and talking is off during the prologue, while the story runs.
+moves are legal, so talk can earn a hint or a shortcut but never skips the chamber. In the prologue you can talk to her
+at the console; while the story runs (her greeting, the overload, her reboot) and while the chamber restarts, Enter
+only shows that she can't hear you. The subject never speaks out loud.
 
 ## How it looks
 
@@ -127,8 +128,8 @@ Arguments go after `--`:
   room, into her core, where W-7 is repaired, then up her core. Any test mode records the same way, with sound, for
   example the prologue: `godot --path game --write-movie prologue.avi --fixed-fps 30 -- --prologue-test`.
 - `-- --pour` is a 22-second camera on her flood, from the edge of the pit as it overflows (`--quit-after 660`).
-- `godot --path game -- --prologue-test` plays the prologue on its own (the dial turns by itself) and prints her
-  lines, then one line in Chamber 4 to check she remembers you.
+- `godot --path game -- --prologue-test` plays the prologue on its own (it says good morning to her at the console,
+  then the dial turns by itself) and prints her lines, then one line in Chamber 4 to check she remembers you.
 - `godot --path game -- --autoplay` sends a burst of scripted events through the brain, then types a line to her through
   the talk box, and prints her moves and lines as they stream in.
 - `--autoplay` runs muted.
