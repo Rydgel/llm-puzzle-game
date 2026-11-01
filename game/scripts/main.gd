@@ -108,6 +108,12 @@ var rebooting := false
 var subtitle_serial := 0
 var subtitle_fade: Tween
 var voice_player: AudioStreamPlayer
+var voice_queue: Array[AudioStreamWAV] = []  # the sentences of her line that have come in but not played yet
+var line_open := false  # more of her line is still coming
+var line_voiced := false
+var talk_box: LineEdit
+var heard: Label  # what the subject just said to her
+var heard_serial := 0
 var glitch_next := false
 var test_mode := ""
 var prologue := ""  # intro, calibrate, runaway, reboot; empty once the subject is in the chambers
@@ -698,7 +704,7 @@ func build_hud() -> void:
 	hud.add_child(crosshair)
 	var help := Label.new()
 	help_label = help
-	help.text = "WASD move · Space jump · E pick up, drop, repair, switch · click throw · V visor · hold right mouse: pull her tiles · Esc free the mouse · F11 fullscreen"
+	help.text = "WASD move · Space jump · E pick up, drop, repair, switch · click throw · V visor · hold right mouse: pull her tiles · Enter talk to her · Esc free the mouse · F11 fullscreen"
 	help.position = Vector2(12, 8)
 	help.modulate = Color(1, 1, 1, 0.6)
 	hud.add_child(help)
@@ -709,7 +715,41 @@ func build_hud() -> void:
 	status.position = Vector2(12, 32)
 	status.modulate = Color(1, 1, 1, 0.6)
 	hud.add_child(status)
+	# Talking to her: Enter opens it, Enter sends, Escape closes it.
+	heard = Label.new()
+	heard.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
+	heard.offset_top = -186
+	heard.offset_bottom = -156
+	heard.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	heard.add_theme_font_size_override("font_size", 20)
+	heard.add_theme_constant_override("outline_size", 5)
+	heard.add_theme_color_override("font_outline_color", Color.BLACK)
+	heard.modulate = Color(0.75, 0.82, 0.9, 0.0)
+	hud.add_child(heard)
+	talk_box = LineEdit.new()
+	talk_box.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
+	talk_box.anchor_left = 0.2
+	talk_box.anchor_right = 0.8
+	talk_box.offset_top = -240
+	talk_box.offset_bottom = -198
+	talk_box.max_length = 160
+	talk_box.placeholder_text = "Say something to her · Enter to send · Esc to cancel"
+	talk_box.add_theme_font_size_override("font_size", 20)
+	var box := StyleBoxFlat.new()
+	box.bg_color = Color(0.03, 0.035, 0.04, 0.78)
+	box.border_color = Color(0.75, 0.82, 0.9, 0.35)
+	box.set_border_width_all(1)
+	box.set_corner_radius_all(3)
+	box.set_content_margin_all(10)
+	box.content_margin_left = 14
+	talk_box.add_theme_stylebox_override("normal", box)
+	talk_box.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+	talk_box.visible = false
+	talk_box.text_submitted.connect(_on_talked)
+	talk_box.gui_input.connect(_on_talk_key)
+	hud.add_child(talk_box)
 	voice_player = AudioStreamPlayer.new()
+	voice_player.finished.connect(_next_sentence)
 	add_child(voice_player)
 	# Her voice has a bus of its own, so her walls and light can follow how loud she is.
 	AudioServer.add_bus()
@@ -755,6 +795,12 @@ func build_hud() -> void:
 func _unhandled_input(input: InputEvent) -> void:
 	if input is InputEventKey and input.pressed and not input.echo and input.physical_keycode == KEY_V:
 		visor.toggle()
+	if input is InputEventKey and input.pressed and not input.echo and input.physical_keycode in [KEY_ENTER, KEY_KP_ENTER]:
+		if test_mode in ["", "autoplay"] and prologue == "" and not rebooting:  # in the prologue, the story runs on its own
+			get_viewport().set_input_as_handled()
+			talk_box.visible = true
+			talk_box.grab_focus()
+			player.talking = true
 	if input is InputEventKey and input.pressed and input.physical_keycode == KEY_F11:
 		var full := DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED if full else DisplayServer.WINDOW_MODE_FULLSCREEN)
@@ -966,21 +1012,61 @@ func event(text: String, glitch := false) -> void:
 	glitch_next = false
 
 
+## Her turn, a part at a time as it streams in: her move as soon as she's chosen it, then her line a sentence at a
+## time.
 func _on_reply(reply: Dictionary) -> void:
-	var move = reply.get("move")
-	if move is Dictionary:
-		apply_move(move["name"], move["arguments"])
-	if reply.get("refused"):
-		terminal_print("x refused: %s" % reply["refused"])
-	if reply.get("hint"):
-		hints_given += 1
-		terminal_print("HINT: %s" % reply["hint"])
-	if reply.get("stale") and not reply.get("hint"):
-		print("%6.1f DROPPED a line %.1f s late: %s" % [elapsed, reply["late"], reply.get("line", "")])
+	if reply.has("move"):
+		var move = reply["move"]
+		if move is Dictionary:
+			apply_move(move["name"], move["arguments"])
+		if reply.get("refused"):
+			terminal_print("x refused: %s" % reply["refused"])
+		if reply.get("hint"):
+			hints_given += 1
+			terminal_print("HINT: %s" % reply["hint"])
+	elif reply.get("stale"):
+		print("%6.1f DROPPED her line, %.1f s late" % [elapsed, reply["late"]])
+	elif reply.has("text"):
+		if reply.get("first"):
+			if reply.get("glitch"):
+				glitch_for(2.5, 0.8)
+			begin_line()
+		add_sentence(reply["text"], reply)
+	elif reply.has("line"):
+		end_line()
+
+
+## The subject talking to her, typed. It's a bonus: she can be argued with, flattered or bluffed, but every door
+## also opens by solving the chamber, and the brain decides what her words can do.
+func _on_talked(text: String) -> void:
+	close_talk()
+	text = " ".join(text.split(" ", false))
+	if text == "":
 		return
-	if reply.get("glitch"):
-		glitch_for(2.5, 0.8)
-	say(reply.get("line", ""), reply)
+	print("%6.1f SAID %s" % [elapsed, text])
+	heard.text = "YOU: " + text
+	heard.modulate.a = 1.0
+	heard_serial += 1
+	var serial := heard_serial
+	if not rebooting and prologue == "":
+		brain.send("[Subject said] " + text, glitch_next, text)
+		glitch_next = false
+	await get_tree().create_timer(6.0).timeout
+	if serial == heard_serial:
+		create_tween().tween_property(heard, "modulate:a", 0.0, 1.0)
+
+
+func _on_talk_key(input: InputEvent) -> void:
+	if input is InputEventKey and input.pressed and input.physical_keycode == KEY_ESCAPE:
+		talk_box.accept_event()  # it closes the box, and leaves the mouse where it is
+		close_talk()
+
+
+func close_talk() -> void:
+	talk_box.release_focus()
+	talk_box.clear()
+	talk_box.visible = false
+	player.talking = false
 
 
 ## Her glitch on the picture, fading out over `seconds`.
@@ -1137,29 +1223,64 @@ func terminal_print(line: String) -> void:
 		screen.text = "VESPER // SUBLEVEL NINE // CHAMBER 4\n" + "\n".join(terminal_lines)
 
 
+## Her line all at once: a written bark, or a story beat that waited for all of it.
 func say(line: String, reply := {}) -> void:
 	if line == "":
 		return
-	print("%6.1f VESPER %s" % [elapsed, line])
+	begin_line()
+	add_sentence(line, reply)
+	end_line()
+
+
+## Her line as it streams in: the subtitle grows a sentence at a time, and each sentence's voice plays after the
+## last. A newer line cuts the older one off.
+func begin_line() -> void:
 	if subtitle_fade:
 		subtitle_fade.kill()  # an older line's fade-out would hide this one
-	subtitle.text = "VESPER: " + line
-	facility.stir(0.1)
-	subtitle.modulate.a = 1.0
 	subtitle_serial += 1
-	var serial := subtitle_serial
-	var length := 4.0 + line.length() * 0.05
-	if reply.has("audio"):
-		# Her voice, from the brain: 16-bit mono PCM. A newer line cuts the older one off.
+	subtitle.text = "VESPER:"
+	voice_queue.clear()
+	voice_player.stop()
+	line_open = true
+	line_voiced = false
+
+
+func add_sentence(text: String, part := {}) -> void:
+	print("%6.1f VESPER %s" % [elapsed, text])
+	subtitle.text += " " + text
+	subtitle.modulate.a = 1.0
+	facility.stir(0.1)
+	if part.has("audio"):
+		# Her voice, from the brain: 16-bit mono PCM.
 		var stream := AudioStreamWAV.new()
 		stream.format = AudioStreamWAV.FORMAT_16_BITS
-		stream.mix_rate = int(reply["sample_rate"])
-		stream.data = Marshalls.base64_to_raw(reply["audio"])
-		voice_player.stream = stream
-		voice_player.play()
-		length = stream.get_length() + 1.5
-		print("%6.1f VOICE %.1f s" % [elapsed, stream.get_length()])
-	await get_tree().create_timer(length).timeout
+		stream.mix_rate = int(part["sample_rate"])
+		stream.data = Marshalls.base64_to_raw(part["audio"])
+		voice_queue.append(stream)
+		line_voiced = true
+		if not voice_player.playing:
+			_next_sentence()
+
+
+func end_line() -> void:
+	line_open = false
+	if not voice_player.playing and voice_queue.is_empty():
+		_fade_subtitle(1.5 if line_voiced else 4.0 + subtitle.text.length() * 0.05)
+
+
+func _next_sentence() -> void:
+	if voice_queue.is_empty():
+		if not line_open:
+			_fade_subtitle(1.5)
+		return
+	voice_player.stream = voice_queue.pop_front()
+	voice_player.play()
+	print("%6.1f VOICE %.1f s" % [elapsed, voice_player.stream.get_length()])
+
+
+func _fade_subtitle(after: float) -> void:
+	var serial := subtitle_serial
+	await get_tree().create_timer(after).timeout
 	if serial == subtitle_serial:
 		subtitle_fade = create_tween()
 		subtitle_fade.tween_property(subtitle, "modulate:a", 0.0, 1.0)
@@ -1554,11 +1675,18 @@ func autoplay() -> void:
 		[9.0, "[Event] Subject stepped onto panel B carrying the cube."],
 		[12.0, "[Event] Subject put the cube on the button. The exit opened."],
 		[16.0, "[Event] Subject walked past the exit and found VESPER's core."],
+		[24.0, "You're actually kind of funny, you know.", "typed"],
 	]
 	var start := elapsed
 	for entry in script:
 		while elapsed - start < entry[0]:
 			await get_tree().physics_frame
+		if entry.size() > 2:  # typed to her, through the keys and the box a player would use
+			_press(KEY_ENTER)
+			await get_tree().process_frame
+			talk_box.text = entry[1]
+			_press(KEY_ENTER)
+			continue
 		if "acid" in entry[1]:
 			deaths += 1
 		if "exit opened" in entry[1]:
@@ -1568,5 +1696,15 @@ func autoplay() -> void:
 	while brain.busy or not brain.pending.is_empty():
 		await get_tree().create_timer(0.2).timeout
 	await get_tree().create_timer(1.0).timeout
+	await get_tree().create_timer(6.0).timeout  # her last line's voice plays out
 	print("AUTOPLAY done")
 	get_tree().quit()
+
+
+func _press(key: Key) -> void:
+	for pressed in [true, false]:
+		var input := InputEventKey.new()
+		input.physical_keycode = key
+		input.keycode = key
+		input.pressed = pressed
+		Input.parse_input_event(input)

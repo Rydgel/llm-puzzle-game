@@ -1,6 +1,7 @@
 extends CharacterBody3D
 ## The subject, in first person: WASD to move, the mouse to look, Space to jump, E to pick up or drop
-## the cube, a click to throw it, Escape to free the mouse. The subject never speaks.
+## the cube, a click to throw it, Escape to free the mouse. The subject never speaks out loud, but can type
+## to her.
 
 signal interact
 signal threw
@@ -12,6 +13,7 @@ const SENSITIVITY := 0.0025
 var camera: Camera3D
 var held: RigidBody3D = null
 var slow := 1.0  # water at waist height halves the speed
+var talking := false  # typing to her: the keys are words, not steps
 
 
 func _ready() -> void:
@@ -49,13 +51,13 @@ func _unhandled_input(event: InputEvent) -> void:
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-	var input := Vector2(
+	var input := Vector2.ZERO if talking else Vector2(
 		float(Input.is_physical_key_pressed(KEY_D)) - float(Input.is_physical_key_pressed(KEY_A)),
 		float(Input.is_physical_key_pressed(KEY_S)) - float(Input.is_physical_key_pressed(KEY_W)))
 	var direction := (transform.basis * Vector3(input.x, 0, input.y)).normalized()
 	velocity.x = direction.x * SPEED * slow
 	velocity.z = direction.z * SPEED * slow
-	if Input.is_physical_key_pressed(KEY_SPACE) and is_on_floor():
+	if Input.is_physical_key_pressed(KEY_SPACE) and is_on_floor() and not talking:
 		velocity.y = JUMP
 	move_and_slide()
 	if held:

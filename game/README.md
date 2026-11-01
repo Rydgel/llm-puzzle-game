@@ -25,7 +25,7 @@ Without the brain she still talks, from a few written lines, but makes no moves.
 
 **Controls:** WASD to move, the mouse to look, Space to jump, E to pick up or drop the cube, repair the neuron and switch
 a nerve junction, a click to throw the cube, V for the visor, hold the right mouse button on her wall to pull a tile
-out, Escape to free the mouse, F11 for fullscreen.
+out, Enter to talk to her, Escape to free the mouse, F11 for fullscreen.
 
 ## Three ways into her body (prototypes)
 
@@ -62,16 +62,22 @@ remembers that you did it, and sends you to Chamber 4. `--skip-prologue` starts 
   from 0 to 2 (hints, open doors and shortcuts instead of traps), and the chamber starts over with her changed. E again
   breaks it, to compare.
 
-**Her voice** comes from the brain with each line: Kokoro's Bella with GLaDOS-style processing (pitch snapped to notes,
-range squeezed). Repairing her makes her more human: the processing fades and her voice softens and slows. She glitches
-when you find her core and on her first line after a reboot. A newer line cuts the older one off; subtitles stay up as
-long as she talks.
+**Her voice** comes from the brain a sentence at a time: Kokoro's Bella with GLaDOS-style processing (pitch snapped to
+notes, range squeezed). Repairing her makes her more human: the processing fades and her voice softens and slows. She
+glitches when you find her core and on her first line after a reboot. A newer line cuts the older one off; the subtitle
+grows as her sentences come in and stays up as long as she talks.
 
-**Timing:** her turns take about 3–4 seconds and run one at a time. While one runs, a single event waits, chosen by priority (entering, solving, her core, then deaths, then the rest), so a death isn't lost behind a cube pickup. If her line comes back more than 5 seconds late and something newer has happened, the line is dropped and her move still applies, except for the big moments (entering, solving, her core), which are worth hearing a little late. Restarting the chamber discards everything from before it.
+**Timing:** her turns stream (`scripts/brain.gd`): her move lands about 1 second after the event, and her first sentence
+plays at about 1.5–2.5 seconds while she writes the next. Turns run one at a time. While one runs, a single event waits, chosen by priority (entering, solving, her core and anything you say to her, then deaths, then the rest), so a death isn't lost behind a cube pickup. If her line starts more than 5 seconds late and something newer has happened, the line is dropped and her move still applies, except for the big moments and your words, which are worth hearing a little late. Restarting the chamber discards everything from before it.
 
 **What the game tells her:** entering, picking up the cube, stepping onto a panel, falling in the acid, being shot, the
 cube in the acid (thrown or dropped), staring at her camera for 3 seconds, standing at the locked exit, no progress for a
-while, solving the chamber, finding her core. The subject never speaks.
+while, solving the chamber, finding her core.
+
+**Talking to her** is a bonus (see `../DESIGN.md`): Enter opens a box, Enter sends, Escape closes it, and you stand
+still while you type. Argue, flatter or bluff; she answers in her own words, and the brain still decides which of her
+moves are legal, so talk can earn a hint or a shortcut but never skips the chamber. The subject never speaks out loud,
+and talking is off during the prologue, while the story runs.
 
 ## How it looks
 
@@ -123,7 +129,6 @@ Arguments go after `--`:
 - `-- --pour` is a 22-second camera on her flood, from the edge of the pit as it overflows (`--quit-after 660`).
 - `godot --path game -- --prologue-test` plays the prologue on its own (the dial turns by itself) and prints her
   lines, then one line in Chamber 4 to check she remembers you.
-- `godot --path game -- --autoplay` sends five scripted events through the brain and prints her moves and lines.
-- `godot --path game -- --tts` speaks her lines with Godot's own text-to-speech instead, when the brain runs with
-  `--no-voice` (needs `speech-dispatcher`).
+- `godot --path game -- --autoplay` sends a burst of scripted events through the brain, then types a line to her through
+  the talk box, and prints her moves and lines as they stream in.
 - `--autoplay` runs muted.
